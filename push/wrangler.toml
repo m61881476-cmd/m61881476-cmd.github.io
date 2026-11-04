@@ -1,0 +1,19 @@
+name = "daftar-push"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+# بعد ما تعمل: npx wrangler kv namespace create SUBS  ← حط الـ id اللي طلع هنا
+[[kv_namespaces]]
+binding = "SUBS"
+id = "PUT_YOUR_KV_NAMESPACE_ID_HERE"
+
+[vars]
+VAPID_PUBLIC_KEY = "PUT_YOUR_VAPID_PUBLIC_KEY_HERE"
+# لازم mailto: أو https:  — أبل بترفض من غيره
+VAPID_SUBJECT = "https://YOUR-SITE.github.io/daftar/"
+# اختياري: رابط موقع دفتر بس هو اللي يقدر يسجّل اشتراكات (افصل بفاصلة لو أكتر من واحد)
+ALLOWED_ORIGINS = "*"
+
+# الأسرار (مش هنا!):
+#   npx wrangler secret put VAPID_PRIVATE_KEY
+#   npx wrangler secret put ADMIN_TOKEN
