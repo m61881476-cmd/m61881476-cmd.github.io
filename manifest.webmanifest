@@ -11,15 +11,83 @@
   "lang": "ar",
   "theme_color": "#f4f6f8",
   "background_color": "#f4f6f8",
-  "categories": ["finance", "business", "productivity"],
+  "categories": [
+    "finance",
+    "business",
+    "productivity"
+  ],
   "icons": [
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ],
   "shortcuts": [
-    { "name": "قيد جديد", "short_name": "قيد جديد", "description": "افتح المحادثة وسجّل عملية", "url": "./#chat", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
-    { "name": "القوائم المالية", "short_name": "القوائم", "description": "قائمة الدخل والمركز المالي والتدفقات", "url": "./#statements", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
-    { "name": "الدفتر", "short_name": "الدفتر", "description": "كل القيود والبحث فيها", "url": "./#journal", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
+    {
+      "name": "قيد جديد",
+      "short_name": "قيد جديد",
+      "description": "افتح المحادثة وسجّل عملية",
+      "url": "./#chat",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "النوتة",
+      "short_name": "النوتة",
+      "description": "الزباين والموردين ومين عليه فلوس",
+      "url": "./#book",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "الورشة",
+      "short_name": "الورشة",
+      "description": "فواتير وتقارير وعقود",
+      "url": "./#ws",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "التحليلات",
+      "short_name": "التحليلات",
+      "description": "الأرقام وقفلة اليوم",
+      "url": "./#analytics",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
   ]
 }
