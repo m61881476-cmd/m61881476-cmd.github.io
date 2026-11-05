@@ -1569,6 +1569,7 @@ select.row-sel{appearance:none;-webkit-appearance:none;color:var(--muted)!import
 .btn.plain:active{opacity:.4;background:none}
 .lsum b,.lsum b .num{color:var(--fg)}
 .lrows{display:flex;flex-direction:column}
+.v2-body{display:flex;flex-direction:column;gap:16px}
 .lr{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;border-top:var(--hair) solid var(--line);min-height:44px}
 .lr .t,.lr .v{display:flex;flex-direction:column;min-width:0}
 .lr .v{align-items:flex-end;text-align:end;flex:none;max-width:52%}
@@ -1587,6 +1588,104 @@ select.row-sel{appearance:none;-webkit-appearance:none;color:var(--muted)!import
 .sugs{background:var(--fill4)}
 .chat-head [data-net]{display:none!important}
 .slip-actions .btn.ghost{background:none!important;border:0;color:var(--accent)}
+/* V2CSS-BEGIN */
+/* ===== v2.0 ===== */
+.p-ava{--ph:210;width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:700;font-size:15px;color:#fff;background:linear-gradient(180deg,hsl(var(--ph) 55% 62%),hsl(var(--ph) 55% 48%));letter-spacing:-.5px}
+.p-ava.lg{width:56px;height:56px;font-size:20px}.p-ava.xl{width:76px;height:76px;font-size:28px}
+/* ask sheet */
+.ask{display:flex;flex-direction:column;gap:10px}.ask-intro{color:var(--muted);font-size:var(--f-sub);margin:0}
+.ask-steps{display:flex;gap:6px;justify-content:center;margin:2px 0 4px}.ask-steps i{width:7px;height:7px;border-radius:50%;background:var(--fill1);transition:all .3s var(--spring-soft,ease)}.ask-steps i.on{width:20px;border-radius:4px;background:var(--accent)}.ask-steps i.done{background:var(--accent);opacity:.45}
+.ask-h{font-size:var(--f-cap1);font-weight:600;color:var(--accent);text-transform:none}.ask-q{font-size:var(--f-t3,20px);line-height:1.35;margin:0 0 4px;font-weight:700}.ask-tip{margin:-4px 0 0;color:var(--muted);font-size:var(--f-foot)}
+.ask-opt .lbl small{display:block;color:var(--muted);font-size:var(--f-foot);margin-top:2px;font-weight:400}.ask-opt{min-height:52px}
+.ask-l{display:block}.ask-opt .rec{display:inline-block;font-style:normal;font-size:var(--f-cap2);font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:1px 6px;margin-inline-start:8px;vertical-align:2px}
+.ask-mark{width:24px;height:24px;border-radius:50%;border:2px solid var(--fill1);display:grid;place-items:center;flex:none;transition:all .2s}.ask-mark svg{width:14px;height:14px;opacity:0;stroke-width:3;color:#fff}
+.ask-opt[aria-checked="true"] .ask-mark{background:var(--accent);border-color:var(--accent)}.ask-opt[aria-checked="true"] .ask-mark svg{opacity:1}.ask-opt[aria-checked="true"]{background:var(--accent-soft)}
+.ask-other .row-inp{text-align:start}
+/* النوتة */
+.book-hero,.tax-hero{background:var(--app-grad);color:#fff;border-radius:18px;padding:18px 18px 14px;display:flex;flex-direction:column;gap:2px;box-shadow:0 8px 24px color-mix(in srgb,var(--blue) 30%,transparent)}
+.tax-hero{background:linear-gradient(180deg,#FF7A6B 0%,#E5372A 100%);box-shadow:0 8px 24px color-mix(in srgb,var(--red) 25%,transparent)}
+.bh-k{font-size:var(--f-sub);opacity:.85;font-weight:600}.bh-v{font-size:40px;line-height:1.15;font-weight:800;letter-spacing:-1px;display:flex;align-items:baseline;gap:6px}.bh-v small{font-size:var(--f-sub);font-weight:600;opacity:.85;letter-spacing:0}
+.bh-s{font-size:var(--f-foot);opacity:.9}.bh-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.25)}.bh-row div{display:flex;flex-direction:column}.bh-row span{font-size:var(--f-cap1);opacity:.8}.bh-row b{font-size:var(--f-head)}
+.book-tools{display:flex;flex-direction:column;gap:10px}.book-tools .search{flex:none}
+.p-list{display:flex;flex-direction:column}.p-row,.it-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border:0;background:none;width:100%;text-align:start;color:var(--fg);min-height:62px;position:relative}
+.p-row+.p-row,.it-row+.it-row,.pm-row+.pm-row,.doc-card+.doc-card{border-top:var(--hair) solid var(--line)}
+.p-row:active,.it-row:active{background:var(--press)}.p-tx{display:flex;flex-direction:column;min-width:0;flex:1}.p-tx b{font-weight:600;font-size:var(--f-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.p-tx small{color:var(--muted);font-size:var(--f-foot)}.p-tx small.late{color:var(--neg)}
+.p-amt{font-weight:700;font-size:var(--f-body);white-space:nowrap}.p-amt.due{color:var(--fg)}.p-amt.late{color:var(--neg)}.p-amt.owe{color:var(--orange)}
+.book-add{align-self:center}
+.party{display:flex;flex-direction:column;gap:16px}.pt-head{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}.pt-bal{font-size:34px;font-weight:800;letter-spacing:-.8px}.pt-bal.due{color:var(--fg)}.pt-bal.owe{color:var(--orange)}.pt-bal small{font-size:var(--f-sub);color:var(--muted);font-weight:600}
+.pt-acts{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.pt-act{display:flex;flex-direction:column;align-items:center;gap:6px;border:0;background:var(--surface);border-radius:14px;padding:10px 6px;min-width:76px;flex:1 1 0;max-width:110px;color:var(--accent);font-size:var(--f-cap1);font-weight:600;text-decoration:none}
+.pt-act:disabled{opacity:.4}.pa-ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff}.pa-ic svg{width:20px;height:20px}.pa-ic.g{background:#25D366}.pa-ic.b{background:var(--blue)}.pa-ic.o{background:var(--orange)}.pa-ic.p{background:var(--purple)}.pa-ic.gr{background:var(--green)}
+.pt-pay{background:var(--fill4);border-radius:14px;padding:10px}
+.aging{padding:14px 16px;display:flex;flex-direction:column;gap:10px}.ag-bar{display:flex;height:10px;border-radius:6px;overflow:hidden;gap:2px}.ag-bar i,.ag-leg i{background:var(--green)}.ag-bar i.a1,.ag-leg i.a1{background:var(--yellow)}.ag-bar i.a2,.ag-leg i.a2{background:var(--orange)}.ag-bar i.a3,.ag-leg i.a3{background:var(--red)}
+.ag-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:var(--f-foot);color:var(--muted)}.ag-leg span{display:inline-flex;align-items:center;gap:5px}.ag-leg i{width:8px;height:8px;border-radius:50%;display:inline-block}.ag-leg b{color:var(--fg)}
+.pm-list{display:flex;flex-direction:column}.pm-row{display:flex;align-items:center;gap:10px;padding:9px 14px;min-height:52px}.pm-ic{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex:none}.pm-ic svg{width:15px;height:15px;stroke-width:2.4}
+.pm-ic.up{background:var(--pos-soft);color:var(--pos)}.pm-ic.down{background:var(--neg-soft);color:var(--neg)}.pm-tx{flex:1;min-width:0;display:flex;flex-direction:column}.pm-tx b{font-weight:500;font-size:var(--f-sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pm-tx small{color:var(--muted);font-size:var(--f-cap1)}
+.pm-v{display:flex;flex-direction:column;align-items:flex-end}.pm-v b{font-weight:600;font-size:var(--f-sub)}.pm-v small{color:var(--muted);font-size:var(--f-cap1)}
+/* وضع الزبون */
+.cv{position:fixed;inset:0;z-index:80;background:var(--bg);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .38s var(--spring-soft,cubic-bezier(.22,1,.36,1));padding-top:env(safe-area-inset-top)}.cv.in{transform:none}
+.cv-bar{display:flex;align-items:center;gap:8px;height:52px;padding:0 12px;font-weight:600}.cv-bar span{flex:1;text-align:center}.cv-sp{width:36px;flex:none!important}.cv-x{width:36px;height:36px;border-radius:50%;border:0;background:var(--fill3);display:grid;place-items:center;color:var(--fg)}.cv-x svg{width:18px;height:18px}
+.cv-scroll{flex:1;overflow:auto;padding:4px 16px 16px}.cv-card{max-width:440px;margin:0 auto;background:var(--surface);border-radius:22px;padding:20px 18px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--card-shadow)}
+.cv-shop{display:flex;align-items:center;gap:10px}.cv-shop b{display:block;font-size:var(--f-head)}.cv-shop small{color:var(--muted);font-size:var(--f-foot)}
+.cv-who{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}.cv-who b{font-size:var(--f-t3,20px)}.cv-who small{color:var(--muted);font-size:var(--f-foot)}
+.cv-total{background:var(--fill4);border-radius:16px;padding:14px;display:flex;flex-direction:column;align-items:center}.cv-total>span{color:var(--muted);font-size:var(--f-sub);font-weight:600}.cv-total b{font-size:42px;font-weight:800;letter-spacing:-1px}.cv-total small{font-size:var(--f-sub);color:var(--muted)}
+.cv-list{display:flex;flex-direction:column}.cv-row{display:flex;justify-content:space-between;gap:10px;padding:9px 2px;border-top:var(--hair) solid var(--line)}.cv-row>span{display:flex;flex-direction:column}.cv-row>span:last-child{align-items:flex-end}.cv-row small{color:var(--muted);font-size:var(--f-cap1)}.cv-row b{font-weight:500}.cv-row .minus b{color:var(--pos)}
+.cv-pay{display:flex;align-items:center;gap:12px;border:var(--hair) solid var(--line);border-radius:14px;padding:10px 12px}.cv-pay span{display:block;color:var(--muted);font-size:var(--f-foot)}.cv-pay b{font-size:var(--f-body)}.cv-qr svg{width:84px;height:84px;display:block;background:#fff;border-radius:8px;padding:4px}
+.cv-foot{text-align:center;color:var(--muted);font-size:var(--f-foot);margin:0}.cv-actions{display:flex;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--material);border-top:var(--hair) solid var(--line)}.cv-actions .btn{flex:1;min-height:46px;font-size:var(--f-body)}
+/* المخزون */
+.st-acts{display:flex;gap:8px;flex-wrap:wrap}.st-acts .btn{flex:1 1 auto}.it-ic{width:36px;height:36px;border-radius:10px;background:var(--fill3);display:grid;place-items:center;color:var(--orange);flex:none}.it-ic svg{width:20px;height:20px}
+.it-q{display:flex;flex-direction:column;align-items:flex-end}.it-q b{font-size:var(--f-head);font-weight:700}.it-q small{color:var(--muted);font-size:var(--f-cap1)}.it-q.low b,.it-q.neg b{color:var(--neg)}
+.cnt-list,.cc-list{display:flex;flex-direction:column}.cnt-row,.cc-row{display:flex;align-items:center;gap:10px;padding:8px 14px;min-height:56px}.cnt-row+.cnt-row,.cc-row+.cc-row{border-top:var(--hair) solid var(--line)}
+.cnt-in{max-width:90px;background:var(--fill3)!important;border-radius:8px;padding:6px 8px!important;text-align:center!important}.cnt-d{min-width:48px;text-align:center;font-weight:700}.cnt-d.neg{color:var(--neg)}.cnt-d.pos{color:var(--pos)}.cnt-d.ok{color:var(--pos)}
+.cnt-sum{text-align:center;padding:12px;font-size:var(--f-sub);color:var(--muted);line-height:1.8}.cnt-sum b{color:var(--fg)}.cnt-sum .neg{color:var(--neg)}.cnt-sum .pos{color:var(--pos)}
+.cc-n{flex:1;font-weight:700;font-size:var(--f-head)}.cc-in{width:56px;text-align:center!important;background:transparent!important}
+/* البوصلة */
+.cmp-status{display:flex;gap:12px;align-items:center;border-radius:16px;padding:14px 16px}.cmp-status.ok{background:var(--pos-soft)}.cmp-status.bad{background:var(--neg-soft)}.cmp-status>div{display:flex;flex-direction:column;gap:2px}.cmp-status b{font-size:var(--f-head)}.cmp-status span{font-size:var(--f-foot);color:var(--muted)}
+.cs-ic{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;flex:none}.cmp-status.ok .cs-ic{background:var(--pos)}.cmp-status.bad .cs-ic{background:var(--neg)}.cs-ic svg{width:22px;height:22px;stroke-width:2.4}
+.cmp-legend{display:flex;justify-content:space-between;font-size:var(--f-foot);color:var(--muted);margin-top:6px}.cmp-legend b{color:var(--fg)}.cmp-legend .pos{color:var(--pos)}.cmp-legend .neg{color:var(--neg)}
+.cmp-tip{display:flex;align-items:center;gap:10px;background:var(--surface);border-radius:14px;padding:12px 14px;font-size:var(--f-sub)}.cmp-tip svg{width:20px;height:20px;color:var(--orange);flex:none}.cmp-tip span{flex:1}
+/* الضرايب */
+.tx-meter{height:8px;border-radius:5px;background:rgba(255,255,255,.3);overflow:hidden;margin-top:12px}.tx-meter i{display:block;height:100%;background:#fff;border-radius:5px}.tx-meter i.hot{background:#FFD60A}.tx-ml{display:flex;justify-content:space-between;font-size:var(--f-cap2);opacity:.8;margin-top:4px}
+.set-row.tx-on{background:var(--accent-soft)}.set-row.tx-on .val{color:var(--accent);font-weight:700}
+/* hub */
+.hub{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}@media (min-width:700px){.hub{grid-template-columns:repeat(3,minmax(0,1fr))}}@media (min-width:1200px){.hub{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.hub-t{display:flex;flex-direction:column;align-items:flex-start;gap:6px;background:var(--surface);border:0;border-radius:16px;padding:12px 12px 10px;text-align:start;color:var(--fg);min-width:0;box-shadow:var(--card-shadow);transition:transform .15s}
+.hub-t:active{transform:scale(.97)}.hub-t b{font-size:var(--f-sub);font-weight:600}.hub-t small{font-size:var(--f-cap1);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.hub-t small .neg{color:var(--neg)}.hub-t small .pos{color:var(--pos)}
+.hub-t.hub-ws{background:linear-gradient(135deg,color-mix(in srgb,var(--purple) 14%,var(--surface)),var(--surface))}
+.ws-card{display:flex;align-items:center;gap:14px;width:100%;border:0;border-radius:16px;padding:14px 16px;text-align:start;color:#fff;background:linear-gradient(135deg,#8E5BFF 0%,#5856D6 55%,#2F6BFF 100%);box-shadow:0 8px 24px rgba(88,86,214,.3);margin:10px 0 4px}
+.ws-card .chev{color:rgba(255,255,255,.8)}.ws-ic{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.2);display:grid;place-items:center;flex:none}.ws-ic svg{width:24px;height:24px;color:#fff}.ws-tx{flex:1;display:flex;flex-direction:column;gap:2px}.ws-tx b{font-size:var(--f-head)}.ws-tx small{font-size:var(--f-foot);opacity:.9}
+/* الورشة */
+.ws{position:fixed;inset:0;z-index:70;background:var(--bg);display:flex;flex-direction:column;transform:translateX(-100%);transition:transform .38s var(--spring-soft,cubic-bezier(.22,1,.36,1));padding-top:env(safe-area-inset-top)}.ws.in{transform:none}
+html.ws-open body{overflow:hidden}
+.ws-top{display:flex;align-items:center;height:52px;padding:0 8px;gap:8px;background:var(--material);-webkit-backdrop-filter:saturate(1.8) blur(20px);backdrop-filter:saturate(1.8) blur(20px)}.ws-back{position:static!important}
+.ws-title{flex:1;display:flex;flex-direction:column;align-items:center;line-height:1.2}.ws-title b{font-size:var(--f-head)}.ws-title small{font-size:var(--f-cap1);color:var(--muted)}.ws-sp{width:70px}
+.ws-seg{padding:6px 16px 10px;background:var(--material)}.ws-body{flex:1;min-height:0;position:relative;max-width:900px;width:100%;margin:0 auto}
+.ws-pane{position:absolute;inset:0;display:none;flex-direction:column;overflow:auto;padding:12px 16px 20px}.ws-pane.on{display:flex}.ws-pane[data-pane="tasks"]{padding:0;overflow:hidden}
+.ws-msgs{flex:1;overflow:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.ws-msg{max-width:88%;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .3s var(--spring-soft,ease)}.ws-msg.enter{opacity:1;transform:none}.ws-msg.me{align-self:flex-start;background:var(--accent);color:#fff;border-radius:18px;padding:8px 14px;font-size:var(--f-body)}
+[dir="rtl"] .ws-msg.me{align-self:flex-start}.ws-msg.bot{align-self:flex-end;width:88%}
+.ws-hello{background:var(--surface);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}.ws-hello .ws-ic{background:linear-gradient(135deg,#8E5BFF,#2F6BFF)}.ws-hello b{font-size:var(--f-head)}.ws-hello p{margin:0;color:var(--muted);font-size:var(--f-sub)}
+.ws-sugs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.ws-sugs .chip{font-size:var(--f-foot);color:var(--accent);background:var(--surface);border:var(--hair) solid var(--line)}
+.ws-steps{background:var(--surface);border-radius:14px;padding:10px 14px;display:flex;flex-direction:column;gap:8px}.ws-step{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:var(--f-sub)}
+.ws-step i{width:18px;height:18px;border-radius:50%;border:2px solid var(--fill1);flex:none;position:relative}.ws-step.run i{border-color:var(--accent);border-top-color:transparent;animation:wsspin .7s linear infinite}.ws-step.ok{color:var(--fg)}.ws-step.ok i{background:var(--pos);border-color:var(--pos)}
+.ws-step.ok i::after{content:"";position:absolute;inset:3px 4px 5px;border:solid #fff;border-width:0 0 2px 2px;transform:rotate(-45deg)}@keyframes wsspin{to{transform:rotate(360deg)}}
+.ws-comp{border-top:var(--hair) solid var(--line);background:var(--material)}
+.ws-q{background:var(--surface);border-radius:14px;padding:12px 14px;font-size:var(--f-sub)}.ws-qa{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.doc-card{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--surface);border:0;width:100%;text-align:start;color:var(--fg);flex-wrap:wrap;cursor:pointer}.list .doc-card{border-radius:0}.doc-card.big{border-radius:16px;box-shadow:var(--card-shadow)}
+.doc-acts{display:flex;gap:6px;flex-wrap:wrap;width:100%}.doc-acts .btn{flex:1 1 auto}
+.ws-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}@media (min-width:700px){.ws-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.tpl{display:flex;flex-direction:column;align-items:flex-start;gap:6px;background:var(--surface);border:0;border-radius:16px;padding:14px;text-align:start;color:var(--fg);box-shadow:var(--card-shadow)}.tpl b{font-size:var(--f-sub)}.tpl small{font-size:var(--f-cap1);color:var(--muted);line-height:1.35}.tpl:active{transform:scale(.97)}
+#wsLib{display:flex;flex-direction:column;gap:16px}
+.doc-prev{background:var(--fill3);border-radius:12px;overflow:hidden;padding:10px}.doc-scale{transform-origin:top right;width:794px;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.tf{display:flex;flex-direction:column;gap:14px}.tf-lines{display:flex;flex-direction:column}.tf-line{display:grid;grid-template-columns:minmax(0,1fr) 70px 90px 36px;gap:6px;padding:8px 10px;align-items:center}.tf-line+.tf-line{border-top:var(--hair) solid var(--line)}.tf-line .inp{min-width:0}
+.tf-total{text-align:end;font-size:var(--f-sub);color:var(--muted);padding:4px 4px 0}.tf-total b{color:var(--fg);font-size:var(--f-head)}
+@media (min-width:1024px){.cv{left:auto;width:480px;box-shadow:var(--shadow-lg)}.ws{left:0}}
+@media (prefers-reduced-motion:reduce){.cv,.ws,.ws-msg{transition:none}}
+html[data-motion="reduce"] .cv,html[data-motion="reduce"] .ws,html[data-motion="reduce"] .ws-msg{transition:none}
+.cv-total b{display:block;line-height:1.2;margin-top:4px}
+.cc-in,.cnt-in{border:0!important;outline:0;box-shadow:none!important;-webkit-appearance:none;appearance:none}
+.hub-t.hub-ws{grid-column:span 2}@media (min-width:700px){.hub-t.hub-ws{grid-column:span 1}}
+
+/* V2CSS-END */
 </style>
 
 </head>
@@ -1708,6 +1807,10 @@ select.row-sel{appearance:none;-webkit-appearance:none;color:var(--muted)!import
         <div id="anBody" style="display:flex;flex-direction:column;gap:16px"></div>
       </section>
 
+      <section class="view" id="v-book" aria-labelledby="wTitle"><div id="bookBody" class="v2-body"></div></section>
+      <section class="view" id="v-stock" aria-labelledby="wTitle"><div id="stockBody" class="v2-body"></div></section>
+      <section class="view" id="v-compass" aria-labelledby="wTitle"><div id="compassBody" class="v2-body"></div></section>
+      <section class="view" id="v-tax" aria-labelledby="wTitle"><div id="taxBody" class="v2-body"></div></section>
       <section class="view" id="v-prefs" aria-labelledby="wTitle"><div class="set-root" id="setRoot"></div></section>
     </div>
   </main>
@@ -1929,6 +2032,7 @@ const defaults = () => ({
   settings: { biz: '', owner: '', cur: 'EGP', theme: 'system', palette: 'blue', font: 'IBM Plex Sans Arabic', remind: 7, onboarded: false },
   ui: { period: 'month', cFrom: '', cTo: '', st: 'income', jf: 'all', lAcc: '', wview: 'analytics' },
   entries: [], accounts: {}, rules: [], seq: 0, messages: [], pendingQ: null, lastBackup: 0, createdAt: Date.now(),
+  items: [], docs: [], parties: {}, counts: [],
 });
 let S = defaults();
 let storageMode = 'memory', idb = null;
@@ -1936,7 +2040,8 @@ function hydrate(s) {
   const d = defaults(); if (!s || typeof s !== 'object') return d;
   return { ...d, ...s, settings: { ...d.settings, ...(s.settings || {}) }, ui: { ...d.ui, ...(s.ui || {}) },
     entries: Array.isArray(s.entries) ? s.entries : [], messages: Array.isArray(s.messages) ? s.messages : [],
-    accounts: s.accounts && typeof s.accounts === 'object' ? s.accounts : {}, rules: Array.isArray(s.rules) ? s.rules : [] };
+    accounts: s.accounts && typeof s.accounts === 'object' ? s.accounts : {}, rules: Array.isArray(s.rules) ? s.rules : [],
+    items: Array.isArray(s.items) ? s.items : [], docs: Array.isArray(s.docs) ? s.docs : [], parties: s.parties && typeof s.parties === 'object' ? s.parties : {}, counts: Array.isArray(s.counts) ? s.counts : [] };
 }
 function idbOpen() {
   return new Promise((res, rej) => {
@@ -2085,6 +2190,10 @@ function normalize(raw, opts = {}) {
     source: raw.source || opts.source || 'manual',
     createdAt: raw.createdAt || Date.now(),
     note: raw.note ? clean(raw.note).slice(0, 200) : undefined,
+    party: raw.party ? clean(raw.party).slice(0, 60) : undefined,
+    due: validDate(raw.due) ? raw.due : undefined,
+    items: Array.isArray(raw.items) && raw.items.length ? raw.items.filter(x => x && x.id && +x.q).map(x => ({ id: String(x.id), q: +x.q, c: +x.c || 0, p: +x.p || 0 })) : undefined,
+    kind: raw.kind ? String(raw.kind).slice(0, 20) : undefined,
     lines: [],
   };
   let lines = (Array.isArray(raw.lines) ? raw.lines : []).map(l => {
@@ -2477,7 +2586,7 @@ const M_WORDS = {
 };
 const M_RES = Object.entries(M_WORDS).flatMap(([m, list]) => list.map(w => ({ m, re: wordRe(w) })));
 function methodHits(u) {
-  const v = u.replace(/(?:ال)?لي (?:عليا|علينا|عليه|عليهم|عليها)|كشير/g, m => ' '.repeat(m.length)).replace(/(?:ال)?حساب (?:ال)?بنك(?:ي)?/g, m => ' '.repeat(m.length - 3) + 'بنك');
+  const v = u.replace(/(?:ال)?لي (?:عليا|علينا|عليه|عليهم|عليها)|كشير|كارت شحن|كروت شحن|كارت (?:فكه|رصيد)/g, m => ' '.repeat(m.length)).replace(/(?:ال)?حساب (?:ال)?بنك(?:ي)?/g, m => ' '.repeat(m.length - 3) + 'بنك');
   const hits = [];
   for (const { m, re } of M_RES) { re.lastIndex = 0; let x; while ((x = re.exec(v))) { const s = x.index + x[0].length - x[1].length; hits.push({ m, i: s, j: s + x[1].length }); } }
   hits.sort((a, b) => a.i - b.i || (b.j - b.i) - (a.j - a.i));
@@ -2533,7 +2642,7 @@ const EXP_MAP = [
   [/كهربا(?!ئي)|الميه|مياه|(?:^|\s)(?:و)?ميه(?=\s+\d)|فاتوره المي|(?:^|\s)(?:ال)?غاز|عداد/, 'مصروف كهرباء ومياه', 'سداد فاتورة الكهرباء والمياه', 'الفاتورة'],
   [/اعلان|تسويق|دعايه|ممول|سوشيال|فيسبوك|فيس بوك|انستجرام|بروشور|يافطه|لافته|بوستر|تيك توك|جوجل ادز|منشورات|فلاير/, 'مصروف تسويق', 'مصروفات دعاية وإعلان', 'الإعلانات'],
   [/انترنت|(?:^|\s)(?:ال)?نت(?:\s|$)|موبايل|تليفون|رصيد|باقه|كارت شحن|اتصالات/, 'مصروف إنترنت واتصالات', 'مصروف إنترنت واتصالات', 'الباقة'],
-  [/(?:^|\s)(?:ال)?نقل|شحن|توصيل|مواصلات|بنزين|سولار|تاكسي|اوبر|نولون|دليفري|عربيه نص نقل|تحميل|تنزيل البضاعه/, 'مصروف نقل', 'مصروفات نقل وشحن', 'النقل'],
+  [/(?:^|\s)(?:ال)?نقل|شحن|توصيل|مواصلات|بنزين|سولار|تاكسي|اوبر|ميكروباص|مكروباص|توكتوك|ونش|نولون|دليفري|عربيه نص نقل|تحميل|تنزيل البضاعه/, 'مصروف نقل', 'مصروفات نقل وشحن', 'النقل'],
   [/صيانه|تصليح|اصلاح|صلحت|صلحنا|صلحلي|صلحنالي|(?:^|\s)صلح(?:\s|$)|سباك|نقاش|كهربائي|ميكانيكي|(?:^|\s)(?:لل|ال|ل)?فني(?:\s|$)/, 'مصروف صيانة', 'مصروفات صيانة', 'الصيانة'],
   [/(?:عموله|مصاريف|رسوم|مصروفات)(?:\s+\S+){0,3}\s+(?:لل|ل|ال)?بنك|(?:ال)?بنك(?:\s+\S+){0,2}\s+(?:عموله|مصاريف|رسوم)|مصاريف بنكيه|رسوم تحويل|عموله تحويل|عموله (?:علي )?(?:ال)?تحويل|مصاريف (?:ال)?حساب|مصاريف (?:ال)?فيزا/, 'مصروفات بنكية', 'مصروفات وعمولات بنكية', 'العمولة'],
   [/ادوات مكتبيه|ورق|اكياس|منظفات|مستلزمات|تغليف|حبر|ادوات نظافه|كراتين فاضيه/, 'مصروف أدوات ومستلزمات', 'شراء أدوات ومستلزمات', 'المستلزمات'],
@@ -2545,7 +2654,13 @@ const MAINT_RE = /صيانه|تصليح|اصلاح|صلحت|صلحنا|صلحل�
 const FARE_RE = /(?:اجره|اجرة|نولون|حساب)\s+(?:ال)?(?:تاكسي|عربيه|عربيات|نقل|توصيل|شحن|مواصلات|اوبر|توكتوك|ميكروباص|سواق|السواق|ونش|نص نقل|العربيه)/;
 function expHit(t) {
   const by = acc => EXP_MAP.find(x => x[1] === acc);
-  const bank = by('مصروفات بنكية'); if (bank[0].test(t)) return bank;
+  const bank = by('مصروفات بنكية');
+  if (bank[0].test(t)) {
+    // «مصاريف شحن … تحويل بنكي» is shipping paid by bank, not a bank fee
+    const strong = /(?:^|\s)(?:ال)?بنك\s+(?:خصم|سحب|اخد|خد)|عموله|عمولات|مصاريف بنكيه|رسوم تحويل|مصاريف (?:ال)?حساب|رسوم (?:ال)?بنك|مصاريف (?:ال)?بنك|مصاريف (?:ال)?فيزا/.test(t);
+    const other = strong ? null : EXP_MAP.find(x => x !== bank && x[0].test(t));
+    return other || bank;
+  }
   if (MAINT_RE.test(t) && !/(?:^|\s)(?:بعت|بعنا|قبضت|خدمه|خدمات)(?:\s|$)/.test(t)) return by('مصروف صيانة');
   if (FARE_RE.test(t)) return by('مصروف نقل');
   return EXP_MAP.find(([re]) => re.test(t)) || null;
@@ -2575,11 +2690,11 @@ function detectIntent(t) {
   if (has(/سلفه|سلف(?:\s|$)/) && has(/عامل|موظف|صنايعي|لواحد|للولد|عمال|شغيل|صبي|لمحمد|ل[؀-ۿ]+ بتاع/)) return 'advance';
   if (has(/مقدم|مقدما|عن (?:\d+ )?(?:شهور|اشهر|سنه)/) && has(/ايجار|تامين|اشتراك|اعلان|تأمين/) && !has(/اشتريت|بعت|والباقي/)) return 'prepaid';
   if ((has(/سددت|سددنا|سداد|دفعت|دفعنا|حولت|حولنا|اديت|ادينا/) || (has(/بعتله|بعتلهم|(?:^|\s)بعت ل/) && !has(/بضاعه|بضايع|تكلفت|بتكلف|منتج|حاجات|كراتين/))) && has(/المورد|للمورد|موردين|تاجر الجمله|لتاجر|حساب المورد|اللي علينا|اللي عليا|مستحقات المورد|للشركه|لشركه|لمصنع|للمصنع|لمؤسسه|للمؤسسه|لمعرض|للمعرض/) && !has(/ايجار|كهربا|مرتب|اشتريت|بضاعه بـ|فاتوره (?:ال)?(?:كهربا|ميه|نت)/)) return 'paySupplier';
-  if (has(new RegExp(`^(?:ال)?(?:عميل|زبون|زباين|شركه|مطعم|محل|مكتب|صيدليه|مؤسسه|موسسه|معرض|مصنع|حاج|حاجه|استاذ|معلم|مدام|دكتور|مهندس|${NAMES})(?:\\s+[^\\s\\d]+){0,2}\\s+(?:سدد|سددت|دفع|دفعت|دفعلي|دفعلنا|حول|حولت|حولي|اداني|ادانا|اديني|بعتلي|بعتلنا|سددلي)(?:\\s|$)`)) && !has(/بضاعه|بضايع|اشتري|رجع/)) return 'collect';
-  if (has(/استلمت|استلمنا|قبضت|قبضنا|حصلت|حصلنا|تحصيل|استلام|اداني|ادانا|اديني|(?:^|\s)خدت|اخدت|جالي|جالنا|دفعلي|دفعلنا|دفعتلي|سددلي|سددلنا|حولي|حول لي|حولنا|بعتلي|بعتلنا|وصلني|وصلنا|دخلي/) && !has(/بعت |بعنا|اشتريت|بضاعه من|طلبيه|شحنه|بضايع|خدمه|شغلانه|عملت|خلصت/) && !(has(/صيانه|تصليح|تركيب|تصميم|استشاره|اتعاب/) && !has(/اللي عليه|اللي عليها|من حسابه/)) && has(new RegExp(`عميل|زبون|زباين|مستحقات|اللي عليه|اللي عليها|اللي عليهم|حسابه|حسابها|من شركه|من مطعم|من محل|من مكتب|من صيدليه|من الحاج|من المعلم|من الاستاذ|من مدرسه|من مستشفي|من فندق|من مؤسسه|من معرض|دفعه من|من (?:${NAMES})(?:\\s|$)|شيك من|شيك العميل`))) return 'collect';
+  if (has(new RegExp(`^(?:ال)?(?:(?:ام|ابو|عم|طنط|خالتي)\\s+[^\\s\\d]+|عميل|زبون|زباين|شركه|مطعم|محل|مكتب|صيدليه|مؤسسه|موسسه|معرض|مصنع|حاج|حاجه|استاذ|معلم|مدام|دكتور|مهندس|${NAMES})(?:\\s+[^\\s\\d]+){0,2}\\s+(?:سدد|سددت|دفع|دفعت|دفعلي|دفعلنا|حول|حولت|حولي|اداني|ادانا|اديني|بعتلي|بعتلنا|سددلي|جابلي|جابلنا|جاب)(?:\\s|$)`)) && !has(/بضاعه|بضايع|اشتري|رجع/)) return 'collect';
+  if (has(/استلمت|استلمنا|قبضت|قبضنا|حصلت|حصلنا|تحصيل|استلام|اداني|ادانا|اديني|جابلي|جابلنا|(?:^|\s)خدت|اخدت|جالي|جالنا|دفعلي|دفعلنا|دفعتلي|سددلي|سددلنا|حولي|حول لي|حولنا|بعتلي|بعتلنا|وصلني|وصلنا|دخلي/) && !has(/بعت |بعنا|اشتريت|بضاعه من|طلبيه|شحنه|بضايع|خدمه|شغلانه|عملت|خلصت/) && !(has(/صيانه|تصليح|تركيب|تصميم|استشاره|اتعاب/) && !has(/اللي عليه|اللي عليها|من حسابه/)) && has(new RegExp(`عميل|زبون|زباين|مستحقات|اللي عليه|اللي عليها|اللي عليهم|حسابه|حسابها|من شركه|من مطعم|من محل|من مكتب|من صيدليه|من الحاج|من المعلم|من الاستاذ|من مدرسه|من مستشفي|من فندق|من مؤسسه|من معرض|دفعه من|من (?:${NAMES})(?:\\s|$)|شيك من|شيك العميل`))) return 'collect';
   if (has(/استلمت|قبضت|جالي|جالنا|حصلت|(?:^|\s)دخل/) && has(/ايجار|عموله|فوائد|ايراد|تعويض|منحه|هديه|مكافاه|كاش باك|cashback/) && !has(/بعت|بعنا/)) return 'otherIncome';
   if (has(/خدمه|خدمات|صيانه|تصليح|تركيب|استشاره|تصميم|شغلانه|مشروع ل|اتعاب|كشف/) && has(/بعت|بعنا|قبضت|قبضنا|استلمت|خلصت|عملت|حصلت|فاتوره|ايراد|اخدت|خدت/) && !has(/دفعت|اشتريت|دفعنا|اللي عليه|اللي عليها|من حسابه/)) return 'service';
-  if (has(/(?:^|\s)(?:و)?(?:بعت|بعنا|بعتها|بعته|بعتهم|بعناها|بعتله|بعتلها|بعتلهم|بعناله|باع|اتباع|اتباعت|بيع|ببيع|بيعه|مبيعات|المبيعات|بايع)(?:\s|$)|فاتوره بيع|اتباع/)) return 'sale';
+  if (has(/(?:^|\s)(?:و)?(?:بعت|بعنا|بعتها|بعته|بعتهم|بعناها|بعتله|بعتلها|بعتلهم|بعناله|باع|اتباع|اتباعت|بيع|البيع|ببيع|بيعه|مبيعات|المبيعات|بايع)(?:\s|$)|فاتوره بيع|اتباع|(?:عميل|زبون|زباين)\s+(?:اخد|خد|سحب|شال)\s+(?:بضاعه|بضايع|حاجات)/)) return 'sale';
   if ((has(OUT_PAID) || has(/جبت|جبنا/)) && !has(/اشتريت|اشترينا|اشتري|شريت|شرينا|شراء|مشتريات|تمن (?:ال)?بضاعه/) && (MAINT_RE.test(t) || FARE_RE.test(t) || /(?:^|\s)(?:شحن|نقل|توصيل|تحميل|نولون)\s/.test(t))) return 'expense';
   if (has(/اشتريت|اشترينا|اشتري|شريت|شرينا|شراء|مشتريات|جبت|جبنا|(?:استلمت|اخدت|خدت|وصلت|وصلتني|وصلتنا|جاتلي|جاتلنا|نزلت) (?:بضاعه|بضايع|طلبيه|شحنه)|طلبيه|حجزت/)) return 'purchase';
   if (expHit(t)) return 'expense';
@@ -2636,7 +2751,7 @@ const mName = { cash: 'الدرج (النقدية بالصندوق)', bank: 'ا�
 const acctOf = (m, creditAcc) => m === 'cash' ? CASH : m === 'bank' ? BANK : creditAcc;
 function splitSegments(t) {
   const V = 'اشتريت|اشترينا|شريت|شرينا|بعت|بعنا|دفعت|دفعنا|استلمت|استلمنا|قبضت|قبضنا|حصلت|حصلنا|سحبت|سحبنا|اودعت|اودعنا|حطيت|حطينا|سددت|سددنا|صرفت|صرفنا|خدت|اخدت|خدنا|اخدنا|جبت|جبنا|حولت|حولنا|ادينا|اديت|جالي|جالنا|رجعت|رجعنا|رجعلي|تم|سداد|شراء|بيع|تحصيل|ايداع|عليا|علينا';
-  const re = new RegExp(`\\n+|[؛;]|،(?!\\s*(?:و\\s*)?(?:ال)?باقي)|,(?!\\d)|\\.(?!\\d)|\\s+(?:وبعدين|ثم|وكمان)\\s+|\\s+و(?=\\s*(?:${V})(?![\\u0600-\\u06FF]))`, 'g');
+  const re = new RegExp(`\\n+|[؛;]|،(?!\\s*(?:و\\s*)?(?:ال)?باقي)|,(?!\\d)|\\.(?!\\d)|\\s+(?:وبعدين|ثم|وكمان)\\s+|\\s+و(?=\\s*(?:${V})(?![\\u0600-\\u06FF]))|\\s+و(?=(?:ال)?(?:عميل|زبون|مورد)\\s+(?:رجع|سدد|دفع|حول|اداني))`, 'g');
   const segs = []; let last = 0, x;
   while ((x = re.exec(t))) { if (!x[0].length) { re.lastIndex++; continue; } segs.push([last, x.index]); last = x.index + x[0].length; }
   segs.push([last, t.length]);
@@ -2688,9 +2803,10 @@ function parseLocal(text, ctx = {}) {
     const c = shared && !segMethod(t1) ? { ...ctx, defMethod: shared } : ctx;
     let r;
     try { r = parseSegment(t1, o, c); } catch (e) { console.warn(e); r = {}; }
+    if (r.entry) { try { r = v2Enrich(r, t1, o, c); } catch (e) { console.warn(e); } }
     if (r.entry && Math.abs(sum(r.entry.lines, l => l.debit) - sum(r.entry.lines, l => l.credit)) > 0.005) r = {};
     if (r.entry) { const w = leftoverAmounts(t1, r.entry); if (w.length) { r.assumed = true; r.entry.explanation += ` ⚠️ في كلامك رقم (${w.map(v => money(v, { dec: false })).join('، ')}) ما دخلش في القيد، راجعه قبل الحفظ.`; } }
-    if (r.entry) res.entries.push({ ...r.entry, _src: o, _learn: r.learn || null, _assumed: !!r.assumed, _warn: !!r.assumed });
+    if (r.entry) res.entries.push({ ...r.entry, _src: o, _learn: r.learn || null, _assumed: !!r.assumed, _warn: !!r.assumed, _party: r.entry.party, _due: r.entry.due, _items: r.entry.items, _kind: r.entry.kind });
     else if (r.question) res.questions.push({ ...r, text: o });
     else if (o) res.unknown.push(o);
   }
@@ -2701,6 +2817,7 @@ function leftoverAmounts(t, entry) {
   const u = numify(rf.t.replace(/([^\d\s])([،,])/g, '$1 $2 ').replace(/[+＋]/g, ' + '));
   const vals = entry.lines.flatMap(l => [l.debit, l.credit]).filter(v => v > 0);
   const known = new Set(vals.map(v => r2(v)));
+  for (const it of entry.items || []) { known.add(r2(Math.abs(it.q))); if (it.p) known.add(r2(it.p)); }
   const dr = r2(sum(entry.lines, l => l.debit)); known.add(dr);
   for (let i = 0; i < vals.length; i++) for (let j = i + 1; j < vals.length; j++) known.add(r2(vals[i] + vals[j]));
   const am = scanAmounts(u);
@@ -2744,7 +2861,7 @@ function parseSegment(t, o, ctx) {
   const vatA = amts.find(a => a.vat), vatR = amts.find(a => a.vatRate) || amts.find(a => a.pct && /ضريبه|vat|ض ?ق ?م/.test(a.before + a.after));
   const interestA = amts.find(a => a.interest);
   const L = (account, debit, credit) => ({ account, debit: r2(debit), credit: r2(credit) });
-  const mk = (description, lines, explanation, extra = {}) => ({ entry: { date, description: description + (party ? ' - ' + party : '') + (cheque && !/شيك/.test(description) ? ' (بشيك)' : ''), reference: ref, explanation, lines, source: ctx.source || 'local' }, ...extra });
+  const mk = (description, lines, explanation, extra = {}) => ({ entry: { party: party || undefined, date, description: description + (party ? ' - ' + party : '') + (cheque && !/شيك/.test(description) ? ' (بشيك)' : ''), reference: ref, explanation, lines, source: ctx.source || 'local' }, ...extra });
   const via = sp => [...new Set(sp.map(s => mName[s.m]))].join(' و');
   const assumeNote = ' (اعتبرتها كاش لأنك ما قلتش الطريقة، عدّل السطر لو اتدفعت من البنك.)';
   if (total == null && !['deprec'].includes(intent) || (intent === 'deprec' && total == null)) return amountQ(intent);
@@ -2783,7 +2900,14 @@ function parseSegment(t, o, ctx) {
       return mk('استلام قرض بنكي', [L(m, total, 0), L(LOAN, 0, total)], `البنك إداك تمويل، فالفلوس زادت في ${m === BANK ? 'البنك' : 'الدرج'} (مدين)، وقصادها التزام «قروض بنكية» (دائن) هترجّعه على أقساط.`);
     }
     case 'loanOut': {
-      let p = payment(u, cands, total, false);
+      if (!/قرض|بنك|تمويل|البنك/.test(t)) {
+        const ms = [...new Set(methodHits(u).filter(h => h.m !== 'credit').map(h => h.m))];
+        if (ms.length > 1) return methodQ('paySupplier');
+        const m0 = ms[0] || (OUT_PAID.test(t) ? 'cash' : null); if (!m0) return methodQ('paySupplier');
+        const acc0 = acctOf(m0, null);
+        return mk('سداد قسط لمورد', [L(AP, total, 0), L(acc0, 0, total)], `القسط ده من تمن حاجة اشتريتها بالتقسيط، فقلّلنا «الموردون» (مدين) والفلوس طلعت من ${mName[m0]} (دائن).${ms[0] ? '' : assumeNote}`, { assumed: !ms[0] });
+      }
+      let p = payment(u.replace(/(?:ال)?(?:قسط|اقساط|بالقسط|تقسيط|بالتقسيط)(?![\u0600-\u06FF])/g, m => ' '.repeat(m.length)), cands, total, false);
       if (p.need) p = { splits: [{ m: 'bank', amt: total }], total, assumed: false, bankDefault: true };
       p.splits.forEach(s => { s.acc = acctOf(s.m, null); });
       if (p.splits.some(s => !s.acc)) return methodQ('loanOut');
@@ -3206,6 +3330,7 @@ function saveProposal(m, pi, auto) {
   const e = normalize(raw, { source: p.source || 'local' });
   if (!e.ok) { toast(e.lines.length < 2 ? 'القيد محتاج سطرين على الأقل فيهم حسابات ومبالغ' : `القيد مش متوازن، الفرق ${money(Math.abs(e.diff))}`, { type: 'err' }); return; }
   if (p.src) e.note = clean(p.src).slice(0, 200);
+  if (p.meta) v2Attach(e, p.meta);
   postEntry(e);
   p.status = 'saved'; p.entryId = e.id;
   // learning: account edits and answers to "which account" questions
@@ -3253,7 +3378,7 @@ function respond(text, extraCtx) {
   if (r.entries.length) {
     const props = r.entries.map(en => {
       const e = normalize(en, { source: ctx.source || 'local' });
-      const p = { draft: draftOf(e), status: 'pending', warn: !!en._warn, src: en._src, orig: e.lines.filter(l => !l.is_cash).map(l => l.account), source: ctx.source || 'local' };
+      const p = { draft: draftOf(e), status: 'pending', warn: !!en._warn, meta: v2Meta(en), src: en._src, orig: e.lines.filter(l => !l.is_cash).map(l => l.account), source: ctx.source || 'local' };
       if (en._learn && en._learn.kw) p.learn = en._learn;
       if (answered && ['account', 'category'].includes(answered.qkind)) { const kw = deriveKeyword(answered.text); const tgt = e.lines.find(l => !l.is_cash && ![AR, AP, ACCR].includes(l.account)); if (kw && tgt) p.learn = { kw, account: tgt.account }; }
       return p;
@@ -3405,7 +3530,7 @@ function startRec() {
    Workspace views
    ========================================================= */
 function curPeriod() { return periodOf(S.ui.period, S.ui.cFrom, S.ui.cTo); }
-function refreshAll() { renderWork(); updateCounts(); fillDatalist(); }
+function refreshAll() { v2Init(); renderWork(); updateCounts(); fillDatalist(); }
 function updateCounts() {
   const n = S.entries.length;
   $('#railBiz').textContent = S.settings.biz || 'محاسبة بالكلام'; $('#mobBiz').textContent = S.settings.biz || 'محاسبة بالكلام';
@@ -3629,7 +3754,7 @@ function bindChart() {
 /* =========================================================
    Data mobility: Excel, report, backup
    ========================================================= */
-const XLSX_URL = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+const XLSX_URL = './lib/xlsx.full.min.js';
 let xlsxP = null;
 function loadXLSX() { if (window.XLSX) return Promise.resolve(window.XLSX); xlsxP = xlsxP || loadScript(XLSX_URL).then(() => window.XLSX); xlsxP.catch(() => { xlsxP = null; }); return xlsxP; }
 function downloadBlob(blob, name) { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.rel = 'noopener'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
@@ -3954,6 +4079,7 @@ function initStatic() {
 }
 async function boot() {
   await loadState();
+  v2Init();
   applyPrefs();
   invalidate(); applyTheme(); initStatic();
   if (storageMode === 'memory') $('#storeBanner').hidden = false;
@@ -3973,7 +4099,7 @@ async function boot() {
 /* =========================================================
    v1.1 — native feel: motion, sheets, navigation, settings, lock
    ========================================================= */
-const APP_VERSION = '1.4.0';
+const APP_VERSION = '2.0.0';
 const T0 = performance.now();
 Object.assign(P, {
   chev: '<path d="M14.5 5.5 8 12l6.5 6.5"/>',
@@ -4142,7 +4268,7 @@ function setViewCore(v, opts) {
 function syncNav() {
   const w = S.ui.wview || 'analytics';
   $$('#railNav [data-go]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.go === w)));
-  const tv = curView === 'ledger' ? 'statements' : curView;
+  let tv = curView; while (tv && !MOB_TABS.includes(tv) && PARENT_VIEW[tv]) tv = PARENT_VIEW[tv];
   $$('#tabbar [data-go]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.go === tv)));
   moveInd();
 }
@@ -4158,7 +4284,7 @@ function updateScrolled() {
 }
 $('#views').addEventListener('scroll', updateScrolled, { passive: true });
 msgsEl.addEventListener('scroll', updateScrolled, { passive: true });
-$('#navBack').addEventListener('click', () => { if (S.ui.wview === 'ledger' && !isDesk()) setView('statements'); else popPage(); });
+$('#navBack').addEventListener('click', () => { const w = S.ui.wview, pv = !isDesk() && !MOB_TABS.includes(w) ? PARENT_VIEW[w] : null; if (pv && w !== 'prefs') setView(pv); else popPage(); });
 addEventListener('resize', () => { moveInd(); });
 
 function renderWork() {
@@ -4173,9 +4299,9 @@ function renderWork() {
   const pg = setStack[setStack.length - 1];
   if (v === 'prefs' && pg !== 'root') { title = pageTitle(pg); sub = ''; }
   $('#wTitle').textContent = title; $('#wTitleS').textContent = title; $('#wSub').textContent = sub; $('#wSub').hidden = !sub;
-  const ledBack = v === 'ledger' && !isDesk();
-  $('#navBack').hidden = !((v === 'prefs' && setStack.length > 1) || ledBack);
-  if (ledBack) $('#navBackTxt').textContent = 'القوائم';
+  const parentV = !isDesk() && !MOB_TABS.includes(v) ? PARENT_VIEW[v] : null;
+  $('#navBack').hidden = !((v === 'prefs' && setStack.length > 1) || parentV);
+  if (parentV) $('#navBackTxt').textContent = (VIEWS.find(x => x.id === parentV) || {}).ar || 'رجوع';
   if (v === 'prefs' && setStack.length > 1) $('#navBackTxt').textContent = setStack.length > 2 ? pageTitle(setStack[setStack.length - 2]) : 'الإعدادات';
   const heavy = booted && S.entries.length > 250 && ['analytics', 'statements'].includes(v);
   const draw = () => {
@@ -4184,6 +4310,10 @@ function renderWork() {
     else if (v === 'ledger') renderLedger();
     else if (v === 'analytics') { renderAnalytics(); animateKPIs(); }
     else if (v === 'prefs') renderPrefs();
+    else if (v === 'book') renderBook();
+    else if (v === 'stock') renderStock();
+    else if (v === 'compass') renderCompass();
+    else if (v === 'tax') renderTax();
     fillIcons($('#work'));
   };
   if (heavy) { const box = v === 'analytics' ? $('#anBody') : $('#stBody'); box.innerHTML = skeletonHTML(v); requestAnimationFrame(() => setTimeout(draw, 40)); }
@@ -4456,7 +4586,7 @@ function findDupes(names) {
 }
 function setSetting(key, val) {
   const st = S.settings;
-  if (key === 'dec' || key === 'autoLock' || key === 'remind') val = +val;
+  if (['dec', 'autoLock', 'remind', 'creditDays', 'margin', 'compassDays', 'compassMin', 'fyStart'].includes(key)) val = +val;
   st[key] = val;
   if (['theme', 'palette', 'font'].includes(key)) applyTheme();
   if (['digits', 'dec', 'cal', 'density', 'fs', 'motion'].includes(key)) applyPrefs();
@@ -4591,7 +4721,7 @@ function resetDialog() {
     onMount: d => { const i = $('#rsIn', d), b = $('#rsOk', d); setTimeout(() => i.focus(), 120); i.addEventListener('input', () => { b.disabled = fold(i.value.trim()) !== fold('مسح'); }); b.onclick = () => { d.close(); S = defaults(); S.settings = { ...S.settings, ...DEF_SETTINGS }; setStack = ['root']; invalidate(); save(true); applyPrefs(); applyTheme(); renderChat(); refreshAll(); showOnboarding(); }; } });
 }
 function changelogSheet() {
-  openDialog({ title: 'الجديد في الإصدار', body: `<div class="changelog"><div><h3>الإصدار 1.4.0</h3><ul><li>منطق أقوى بكتير: اتختبر على 484 جملة حقيقية بالعامية والفصحى ونجح فيها كلها.</li><li>بيفهم الكمية في السعر («3 كراتين الكرتونة بـ 600» = 1,800)، وأكتر من مصروف في جملة واحدة («إيجار 4000 وكهربا 600 كله كاش»)، ونص كاش ونص آجل.</li><li>بيفرّق بين الصيانة والنقل والكهربا، وعمولات وفوايد البنك، والشريك اللي داخل أو ساحب، والعميل اللي سدّد («العميل سدد 2500»).</li><li>مبيسجّلش الأسئلة والكلام عن المستقبل («هدفع بكرة») أو التصحيح كعمليات.</li><li>لو فيه رقم في كلامك ما دخلش في القيد، دفتر بيحذّرك ومبيحفظش لوحده حتى لو الحفظ التلقائي شغال.</li></ul></div><div><h3>الإصدار 1.3.0</h3><ul><li>إشعارات على الموبايل: تحديثات وتذكيرات بتوصلك حتى والتطبيق مقفول، على أندرويد والآيفون (iOS 16.4 أو أحدث، من التطبيق المتثبّت على الشاشة الرئيسية).</li><li>تقدر تشغّلها أو تقفلها من الإعدادات ← التذكيرات.</li></ul></div><div><h3>الإصدار 1.2.0</h3><ul><li>شكل iOS الرسمي بالكامل: خط النظام (SF Arabic على الآيفون)، ألوان النظام في الوضع الفاتح والداكن، وأحجام النصوص زي الآيفون.</li><li>شريط تبويب وأشرطة تنقّل شفافة، وأيقونات بتتملي لما تختارها.</li><li>محادثة زي «الرسائل»، وبطاقة القيد بقت زي إيصال Apple Pay.</li><li>تنبيهات وقوايم إجراءات وقايمة سياق زي الآيفون بالظبط، وشاشة ترحيب زي «الجديد».</li><li>أيقونة تطبيق جديدة.</li></ul></div><div><h3>الإصدار 1.1.0</h3><ul>
+  openDialog({ title: 'الجديد في الإصدار', body: `<div class="changelog"><div><h3>الإصدار 2.0.0</h3><ul><li><b>النوتة الذكية:</b> حساب لكل زبون ومورد، «فلوسك برا» في رقم واحد، عمر الدين، وتذكير مؤدب على واتساب بدوسة.</li><li><b>وضع الزبون:</b> شاشة نضيفة فيها حساب الزبون بس، تفرّجه عليها أو تبعتها صورة.</li><li><b>المخزون:</b> أصناف بتكلفتها، «بعت 3 كراتين زيت» بتخصم الكمية وتطلّع التكلفة لوحدها (متوسط أو FIFO)، جرد للمخزون وجرد للخزنة بالفئات.</li><li><b>الورشة:</b> مساحة ملفات منفصلة، تطلب بالكلام «اعملي كشف حساب لمحمد PDF» أو من القوالب: فواتير، عروض أسعار، إيصالات، تقارير، خطابات، عقود، وتطلع PDF وWord وExcel وتتحفظ في مكتبة.</li><li><b>بوصلة السيولة:</b> رصيدك المتوقع يوم بيوم لحد شهر قدام، وتحذير لو هتتزنق.</li><li><b>الضرايب:</b> ضريبة النظام المبسط المتوقعة وإقرار القيمة المضافة الشهري.</li><li><b>شنطة المحاسب:</b> كل التقارير في Excel وPDF مرة واحدة.</li><li>منطق الفهم اتختبر على 1239 جملة ونجح فيهم كلهم، ولما يكون مش متأكد بيسأل.</li><li>إعدادات جديدة: بيانات المحل والفواتير وإنستاباي، النوتة، المخزون، الضرايب، السيولة.</li></ul></div><div><h3>الإصدار 1.4.0</h3><ul><li>منطق أقوى بكتير: اتختبر على 484 جملة حقيقية بالعامية والفصحى ونجح فيها كلها.</li><li>بيفهم الكمية في السعر («3 كراتين الكرتونة بـ 600» = 1,800)، وأكتر من مصروف في جملة واحدة («إيجار 4000 وكهربا 600 كله كاش»)، ونص كاش ونص آجل.</li><li>بيفرّق بين الصيانة والنقل والكهربا، وعمولات وفوايد البنك، والشريك اللي داخل أو ساحب، والعميل اللي سدّد («العميل سدد 2500»).</li><li>مبيسجّلش الأسئلة والكلام عن المستقبل («هدفع بكرة») أو التصحيح كعمليات.</li><li>لو فيه رقم في كلامك ما دخلش في القيد، دفتر بيحذّرك ومبيحفظش لوحده حتى لو الحفظ التلقائي شغال.</li></ul></div><div><h3>الإصدار 1.3.0</h3><ul><li>إشعارات على الموبايل: تحديثات وتذكيرات بتوصلك حتى والتطبيق مقفول، على أندرويد والآيفون (iOS 16.4 أو أحدث، من التطبيق المتثبّت على الشاشة الرئيسية).</li><li>تقدر تشغّلها أو تقفلها من الإعدادات ← التذكيرات.</li></ul></div><div><h3>الإصدار 1.2.0</h3><ul><li>شكل iOS الرسمي بالكامل: خط النظام (SF Arabic على الآيفون)، ألوان النظام في الوضع الفاتح والداكن، وأحجام النصوص زي الآيفون.</li><li>شريط تبويب وأشرطة تنقّل شفافة، وأيقونات بتتملي لما تختارها.</li><li>محادثة زي «الرسائل»، وبطاقة القيد بقت زي إيصال Apple Pay.</li><li>تنبيهات وقوايم إجراءات وقايمة سياق زي الآيفون بالظبط، وشاشة ترحيب زي «الجديد».</li><li>أيقونة تطبيق جديدة.</li></ul></div><div><h3>الإصدار 1.1.0</h3><ul>
     <li>شكل جديد كأنه تطبيق رسمي: حركات ناعمة، عناوين كبيرة بتصغر مع التمرير، وشريط تبويب زجاجي.</li>
     <li>شاشة ترحيب متحركة وشاشة بداية سريعة.</li>
     <li>إعدادات مرتبة زي الآيفون: المظهر، الأرقام والتاريخ (أرقام عربية وهجري)، الحسابات، الإدخال، الأمان، التذكيرات.</li>
@@ -4912,7 +5042,7 @@ function applyTheme() {
 
 /* tab bar: outline → filled, max five tabs on iPhone (the ledger lives under «القوائم») */
 function navHTML(list, cls) {
-  return list.filter(v => !(cls === 'tab' && v.id === 'ledger')).map(v => `<button type="button" role="tab" class="${cls}" data-go="${v.id}" aria-selected="false" aria-controls="${v.id === 'chat' ? 'chatPane' : 'work'}"><span class="tab-ic"><span class="ti-o">${ic(v.ic)}</span><span class="ti-f">${icF(v.ic)}</span></span><span class="rl">${v.ar}</span></button>`).join('');
+  return list.filter(v => !(cls === 'tab' && !MOB_TABS.includes(v.id))).map(v => `<button type="button" role="tab" class="${cls}" data-go="${v.id}" aria-selected="false" aria-controls="${v.id === 'chat' ? 'chatPane' : 'work'}"><span class="tab-ic"><span class="ti-o">${ic(v.ic)}</span><span class="ti-f">${icF(v.ic)}</span></span><span class="rl">${v.ar}</span></button>`).join('');
 }
 
 /* ---------- Messages ---------- */
@@ -5268,6 +5398,1164 @@ function setupPush() {
 }
 setupPush();
 
+/* V2-BEGIN */
+/* =========================================================
+   v2.0 — النوتة الذكية، المخزون، الورشة، السيولة، الضرايب، شنطة المحاسب
+   ========================================================= */
+const V2_SETTINGS = {
+  addr: '', phone: '', cr: '', taxId: '', ipa: '', ipaLink: '', invPrefix: 'INV-', invNext: 1, qPrefix: 'Q-', qNext: 1, docFoot: 'شكراً لتعاملكم معنا',
+  remindMsg: 'أهلاً {الاسم} 🌷\nحسابك عندنا في {المحل}: {المبلغ}.\n{الدفع}\nشكراً لذوقك.', creditDays: 30, waCode: '20',
+  costMethod: null, lowStock: true, margin: 0,
+  taxRegime: null, vatReg: false, vatRate: 14, fyStart: 1, brackets: [[500000, 0.4], [2000000, 0.5], [3000000, 0.75], [10000000, 1], [20000000, 1.5]],
+  compassMin: 0, compassDays: 30,
+};
+const SHORT_ACC = 'مصروف عجز المخزون', OVER_ACC = 'إيرادات زيادة المخزون', CASH_SHORT = 'مصروف عجز الخزينة', CASH_OVER = 'إيرادات زيادة الخزينة';
+function v2Init() {
+  S.settings = { ...V2_SETTINGS, ...S.settings };
+  if (!Array.isArray(S.items)) S.items = [];
+  if (!Array.isArray(S.docs)) S.docs = [];
+  if (!S.parties || typeof S.parties !== 'object') S.parties = {};
+  if (!Array.isArray(S.counts)) S.counts = [];
+  // older entries kept the party inside the description («بيع آجل - مطعم الريف»)
+  const touch = e => !e.party && e.lines && e.lines.some(l => l.account === AR || l.account === AP);
+  for (const e of S.entries) if (touch(e)) { const m = / - ([^-()]{2,40})(?: \(بشيك\))?$/.exec(e.description || ''); if (m) e.party = m[1].trim(); }
+  const known = [...new Set(S.entries.map(e => e.party).filter(Boolean))].sort((a, b) => b.length - a.length);
+  for (const e of S.entries) if (touch(e)) { const d = fold(e.description || '') + ' ' + fold(e.note || ''); const k = known.find(n => d.includes(fold(n))); if (k) e.party = k; }
+}
+/* proposals → saved entry */
+function v2Meta(en) { const m = {}; if (en._party) m.party = en._party; if (en._due) m.due = en._due; if (en._items) m.items = en._items; if (en._kind) m.kind = en._kind; return Object.keys(m).length ? m : null; }
+function v2Attach(e, meta) {
+  const touchesParty = e.lines.some(l => [AR, AP, 'أوراق القبض', 'أوراق الدفع', 'مردودات المبيعات'].includes(l.account));
+  if (meta.party && touchesParty) e.party = meta.party;
+  if (meta.due) e.due = meta.due;
+  // the user may have edited the lines: keep stock moves only if the inventory side is still there
+  if (meta.items && e.lines.some(l => l.account === INV)) e.items = meta.items;
+  if (meta.kind) e.kind = meta.kind;
+}
+
+/* ---------- small helpers ---------- */
+const v2wait = ms => new Promise(r => setTimeout(r, ms));
+const initials = n => { const w = clean(n).replace(/^(?:ال)?(?:حاج|حاجه|استاذ|استاذه|معلم|دكتور|مهندس|مدام|شركة|شركه|محل|مطعم|صيدلية|صيدليه|مكتب)\s+/, '').split(/\s+/).filter(Boolean).map(x => x.replace(/^(?:ال|أل)(?=[\u0600-\u06FF]{2})/, '')); return (w[0] || '؟').slice(0, 1) + (w[1] ? w[1].slice(0, 1) : ''); };
+const hueOf = s => { let h = 0; for (const ch of String(s)) h = (h * 31 + ch.charCodeAt(0)) % 360; return h; };
+const avatarFor = (name, cls = '') => `<span class="p-ava ${cls}" style="--ph:${hueOf(name)}" aria-hidden="true">${esc(initials(name))}</span>`;
+const daysAgo = d => daysBetween(d, today());
+function egPhone(p) { let d = String(p || '').replace(/[٠-٩]/g, c => '٠١٢٣٤٥٦٧٨٩'.indexOf(c)).replace(/\D/g, ''); if (!d) return ''; if (d.startsWith('00')) d = d.slice(2); if (d.startsWith('0')) d = (S.settings.waCode || '20') + d.slice(1); return d; }
+async function shareFiles(files, title, text) {
+  try { if (navigator.canShare && navigator.canShare({ files })) { await navigator.share({ files, title, text }); return true; } } catch (e) { if (e.name === 'AbortError') return true; }
+  files.forEach(f => downloadBlob(f, f.name)); return false;
+}
+const loadLib = (() => { const m = {}; return (name, global) => window[global] ? Promise.resolve(window[global]) : (m[name] = m[name] || loadScript('./lib/' + name).then(() => { if (!window[global]) throw new Error('lib ' + name); return window[global]; }).catch(e => { m[name] = null; throw e; })); })();
+
+/* =========================================================
+   Ask sheet: several questions with ready answers (like a short interview)
+   questions: [{ id, q, header, options: [{ label, desc, value, rec }], multi, other }]
+   ========================================================= */
+function askSheet({ title, intro, questions, done = 'تمام' }) {
+  return new Promise(resolve => {
+    const ans = {}; let i = 0, settled = false;
+    const finish = v => { if (settled) return; settled = true; resolve(v); };
+    const render = d => {
+      const q = questions[i], cur_ = ans[q.id];
+      const sel = v => q.multi ? (cur_ || []).includes(v) : cur_ === v;
+      $('.dlg-b', d).innerHTML = `<div class="ask">
+        ${intro && i === 0 ? `<p class="ask-intro">${esc(intro)}</p>` : ''}
+        <div class="ask-steps" aria-hidden="true">${questions.map((_, k) => `<i class="${k < i ? 'done' : k === i ? 'on' : ''}"></i>`).join('')}</div>
+        <span class="ask-h">${esc(q.header || `سؤال ${dg(i + 1)} من ${dg(questions.length)}`)}</span>
+        <h3 class="ask-q">${esc(q.q)}</h3>
+        ${q.multi ? '<p class="ask-tip">تقدر تختار أكتر من واحدة</p>' : ''}
+        <div class="list ask-opts" role="${q.multi ? 'group' : 'radiogroup'}">
+          ${q.options.map((o, k) => `<button type="button" class="set-row ask-opt" role="${q.multi ? 'checkbox' : 'radio'}" aria-checked="${sel(o.value ?? o.label)}" data-k="${k}"><span class="lbl"><span class="ask-l">${esc(o.label)}${o.rec ? '<em class="rec">المقترح</em>' : ''}</span>${o.desc ? `<small>${esc(o.desc)}</small>` : ''}</span><span class="ask-mark">${ic('check')}</span></button>`).join('')}
+          ${q.other !== false ? `<label class="set-row ask-other"><span class="lbl">حاجة تانية</span><input class="row-inp" data-other placeholder="${esc(q.otherPh || 'اكتب هنا')}" value="${esc(typeof cur_ === 'string' && !q.options.some(o => (o.value ?? o.label) === cur_) ? cur_ : '')}"></label>` : ''}
+        </div>
+      </div>`;
+      $('.dlg-f', d).innerHTML = `${i ? '<button type="button" class="btn" data-prev>رجوع</button>' : '<button type="button" class="btn" data-close>إلغاء</button>'}<button type="button" class="btn primary" data-next ${cur_ == null || (q.multi && !(cur_ || []).length) ? 'disabled' : ''}>${i === questions.length - 1 ? esc(done) : 'التالي'}</button>`;
+      fillIcons(d);
+      $$('.ask-opt', d).forEach(b => b.onclick = () => {
+        const o = q.options[+b.dataset.k], v = o.value ?? o.label;
+        if (q.multi) { const a = new Set(ans[q.id] || []); a.has(v) ? a.delete(v) : a.add(v); ans[q.id] = [...a]; render(d); }
+        else { ans[q.id] = v; haptic('tick'); render(d); if (!q.noAuto) setTimeout(() => { if (ans[q.id] === v && questions[i] === q) next(d); }, 220); }
+      });
+      const oth = $('[data-other]', d);
+      if (oth) oth.oninput = () => { const v = oth.value.trim(); if (v) ans[q.id] = q.multi ? [...(ans[q.id] || []).filter(x => q.options.some(o => (o.value ?? o.label) === x)), v] : v; else if (!q.multi) delete ans[q.id]; $('[data-next]', d).disabled = ans[q.id] == null; };
+      const pv = $('[data-prev]', d); if (pv) pv.onclick = () => { i--; render(d); };
+      $('[data-next]', d).onclick = () => next(d);
+      $$('[data-close]', d).forEach(b => b.onclick = () => d.close());
+    };
+    const next = d => { if (ans[questions[i].id] == null) return; if (i < questions.length - 1) { i++; render(d); } else { finish(ans); d.close(); } };
+    const d = openDialog({ title, body: '', foot: ' ', onMount: dd => { render(dd); dd.addEventListener('close', () => finish(null), { once: true }); } });
+    void d;
+  });
+}
+
+/* =========================================================
+   النوتة الذكية: customers & suppliers
+   ========================================================= */
+const TITLES_RE = /^(?:ال)?(?:حاج|حاجه|استاذ|استاذه|معلم|دكتور|مهندس|مدام|انسه|عم)\s+/;
+const pkey = n => fold(clean(n)).replace(TITLES_RE, '').replace(/\s+/g, ' ').trim();
+const NONAME = 'بدون اسم';
+function partyBook() {
+  const map = new Map();
+  const get = (name) => { const k = pkey(name || NONAME) || pkey(NONAME); if (!map.has(k)) map.set(k, { key: k, name: (S.parties[k] && S.parties[k].name) || clean(name || NONAME), cust: 0, supp: 0, moves: [], last: '', due: null }); return map.get(k); };
+  for (const e of [...S.entries].sort(byDate)) {
+    let ar = 0, ap = 0;
+    for (const l of e.lines) {
+      if (l.account === AR || l.account === 'أوراق القبض') ar += l.debit - l.credit;
+      else if (l.account === AP || l.account === 'أوراق الدفع') ap += l.credit - l.debit;
+    }
+    ar = r2(ar); ap = r2(ap);
+    if (!ar && !ap) continue;
+    const p = get(e.party);
+    p.cust = r2(p.cust + ar); p.supp = r2(p.supp + ap); p.last = e.date;
+    p.moves.push({ e, ar, ap });
+  }
+  for (const [k, info] of Object.entries(S.parties)) if (!map.has(k) && info && info.name) map.set(k, { key: k, name: info.name, cust: 0, supp: 0, moves: [], last: '', due: null });
+  for (const p of map.values()) { p.info = S.parties[p.key] || {}; p.aging = aging(p); }
+  return map;
+}
+/* oldest-first matching of payments to debts → what is still open and how old it is */
+function aging(p) {
+  const out = { open: [], oldest: 0, overdue: 0, b: [0, 0, 0, 0] };
+  for (const side of ['ar', 'ap']) {
+    const debts = [], pays = [];
+    for (const m of p.moves) { const v = m[side]; if (v > 0) debts.push({ date: m.e.date, due: m.e.due, amt: v, e: m.e }); else if (v < 0) pays.push(-v); }
+    let pool = sum(pays);
+    for (const d of debts) { const take = Math.min(pool, d.amt); pool = r2(pool - take); d.left = r2(d.amt - take); }
+    if (side === 'ar') for (const d of debts) if (d.left > 0.005) {
+      const dueOn = d.due || addDays(d.date, +S.settings.creditDays || 30);
+      const age = daysAgo(d.date), late = Math.max(0, daysBetween(dueOn, today()));
+      out.open.push({ ...d, dueOn, age, late });
+      out.oldest = Math.max(out.oldest, age); out.overdue = r2(out.overdue + (late > 0 ? d.left : 0));
+      out.b[age <= 30 ? 0 : age <= 60 ? 1 : age <= 90 ? 2 : 3] += d.left;
+    }
+  }
+  return out;
+}
+function partyByKey(k) { return partyBook().get(k); }
+function remindText(p) {
+  const st = S.settings, amt = money(p.cust, { dec: false }) + ' ' + cur();
+  const pay = st.ipa || st.ipaLink ? `تقدر تحوّل على إنستاباي: ${st.ipa || st.ipaLink}` : '';
+  return String(st.remindMsg || V2_SETTINGS.remindMsg).replace(/\{الاسم\}/g, p.name === NONAME ? '' : p.name).replace(/\{المبلغ\}/g, amt).replace(/\{المحل\}/g, st.biz || 'المحل').replace(/\{الدفع\}/g, pay).replace(/\{انستاباي\}/g, st.ipa || st.ipaLink || '').replace(/\n{3,}/g, '\n\n').trim();
+}
+function remindWA(p) {
+  const ph = egPhone(p.info.phone);
+  const url = `https://wa.me/${ph}?text=${encodeURIComponent(remindText(p))}`;
+  S.parties[p.key] = { ...(S.parties[p.key] || {}), name: p.name, reminded: Date.now() }; save();
+  window.open(url, '_blank', 'noopener'); haptic('success');
+}
+async function pickContact(p, after) {
+  try {
+    const [c] = await navigator.contacts.select(['name', 'tel'], { multiple: false });
+    if (c && c.tel && c.tel[0]) { S.parties[p.key] = { ...(S.parties[p.key] || {}), name: p.name, phone: c.tel[0] }; save(); toast('اتحفظ رقم ' + p.name, { icon: 'check' }); after && after(); }
+  } catch (e) { /* cancelled */ }
+}
+const canPickContact = () => 'contacts' in navigator && 'ContactsManager' in window;
+
+/* =========================================================
+   المخزون: items, average / FIFO cost, stock state
+   ========================================================= */
+const UNIT_WORDS = 'كرتونه|كراتين|كرتونات|قطعه|قطع|حته|حتت|علبه|علب|كيلو|كيلوات|شيكاره|شكاير|جوال|اجوله|متر|لتر|طن|دسته|باكو|لفه|لفات|طقم|اطقم|عبوه|عبوات|زجاجه|ازازه|ازايز|كيس|اكياس|صندوق|صناديق|وحده|وحدات';
+function itemById(id) { return S.items.find(x => x.id === id); }
+function itemNames(it) { return [it.name, ...(it.alias || [])].map(n => fold(clean(n))).filter(n => n.length >= 2); }
+function stockState(asOf) {
+  const st = new Map();
+  for (const it of S.items) { const q0 = +it.qty0 || 0, c0 = +it.cost || 0; st.set(it.id, { qty: q0, value: r2(q0 * c0), avg: c0, layers: q0 > 0 ? [{ q: q0, c: c0 }] : [], inQ: 0, outQ: 0, sold: 0, soldCost: 0 }); }
+  const fifo = S.settings.costMethod === 'fifo';
+  for (const e of [...S.entries].sort(byDate)) {
+    if (!e.items || (asOf && e.date > asOf)) continue;
+    for (const mv of e.items) {
+      const s = st.get(mv.id); if (!s) continue;
+      if (mv.q > 0) { s.qty = r2(s.qty + mv.q); s.value = r2(s.value + mv.q * mv.c); s.inQ += mv.q; if (fifo) s.layers.push({ q: mv.q, c: mv.c }); }
+      else { const q = -mv.q; s.qty = r2(s.qty - q); s.outQ += q; s.value = r2(s.value - q * mv.c); if (mv.p) { s.sold += q; s.soldCost += q * mv.c; }
+        if (fifo) { let need = q; while (need > 0 && s.layers.length) { const L0 = s.layers[0], t = Math.min(L0.q, need); L0.q -= t; need -= t; if (L0.q <= 1e-9) s.layers.shift(); } } }
+      s.avg = s.qty > 0 ? r2(s.value / s.qty) : s.avg;
+    }
+  }
+  return st;
+}
+/* unit cost for taking q out now */
+function costOut(id, q) {
+  const s = stockState().get(id); if (!s) return 0;
+  if (S.settings.costMethod !== 'fifo') return s.avg || +(itemById(id) || {}).cost || 0;
+  let need = q, val = 0; const L = s.layers.map(x => ({ ...x }));
+  while (need > 0 && L.length) { const t = Math.min(L[0].q, need); val += t * L[0].c; need -= t; L[0].q -= t; if (L[0].q <= 1e-9) L.shift(); }
+  if (need > 0) val += need * (s.avg || +(itemById(id) || {}).cost || 0);
+  return r2(val / q);
+}
+function findItem(t) {
+  let best = null;
+  for (const it of S.items) for (const n of itemNames(it)) {
+    const re = new RegExp(`(?:^|[\\s،,.])(?:و|ب|ل|بال|وال|ال|لل)?(${reEsc(n)})(?=$|[\\s،,.])`);
+    const m = re.exec(t); if (m && (!best || n.length > best.n.length)) best = { it, n, i: m.index + m[0].length - m[1].length, j: m.index + m[0].length };
+  }
+  return best;
+}
+/* quantity right before the item («3 كراتين زيت»), right after it («زيت 3 كراتين»), or a lone number at the end (answer to «بعت كام؟») */
+function itemQty(u, hit, used) {
+  const before = u.slice(0, hit.i), after = u.slice(hit.j);
+  let m = new RegExp(`(\\d+(?:\\.\\d+)?)\\s*(?:(?:${UNIT_WORDS})\\s*)?(?:من\\s*)?$`).exec(before.trimEnd());
+  if (m && !used.has(+m[1])) return +m[1];
+  m = new RegExp(`^\\s*(\\d+(?:\\.\\d+)?)\\s*(?:${UNIT_WORDS})(?![\\u0600-\\u06FF])`).exec(after);
+  if (m && !used.has(+m[1])) return +m[1];
+  m = /(?:^|\s)(\d+(?:\.\d+)?)\s*$/.exec(u);
+  if (m && !used.has(+m[1]) && +m[1] <= 100000) return +m[1];
+  return null;
+}
+
+/* parser enrichment: party, due date, stock movements + cost of goods sold */
+function dueFrom(t, date) {
+  if (/اخر (?:ال)?شهر|نهايه (?:ال)?شهر/.test(t)) { const d = parseYmd(date); return ymd(new Date(d.getFullYear(), d.getMonth() + 1, 0)); }
+  if (/(?:ال)?شهر (?:ال)?جاي|بعد شهر/.test(t)) return addDays(date, 30);
+  if (/(?:ال)?اسبوع (?:ال)?جاي|بعد اسبوع/.test(t)) return addDays(date, 7);
+  let m = /بعد (\d+) (?:يوم|ايام)/.exec(t); if (m) return addDays(date, +m[1]);
+  m = /بعد (\d+) (?:شهور|اشهر)/.exec(t); if (m) return addDays(date, 30 * +m[1]);
+  if (/(?:^|\s)بكره(?:\s|$)/.test(t)) return addDays(date, 1);
+  return undefined;
+}
+function v2Enrich(r, t, o, ctx) {
+  const e = r.entry; if (!e) return r;
+  const has = acc => e.lines.some(l => l.account === acc);
+  if (has(AR) || has(AP)) { const d = dueFrom(t, e.date); if (d) e.due = d; }
+  if (!(has(AR) || has(AP) || has('أوراق القبض') || has('أوراق الدفع') || has('مردودات المبيعات'))) delete e.party;
+  const isSale = e.lines.some(l => l.account === SALES && l.credit > 0);
+  const isBuy = e.lines.some(l => l.account === INV && l.debit > 0) && !e.lines.some(l => l.account === INV && l.credit > 0);
+  const hasCogs = has(COGS);
+  if (S.items && S.items.length && (isSale || isBuy) && !hasCogs) {
+    const u = numify(t.replace(/([^\d\s])([،,])/g, '$1 $2 '));
+    const hit = findItem(u);
+    if (hit) {
+      const it = hit.it;
+      const net = isSale ? sum(e.lines.filter(l => l.account === SALES), l => l.credit) : sum(e.lines.filter(l => l.account === INV), l => l.debit);
+      const used = new Set(e.lines.flatMap(l => [l.debit, l.credit]).filter(Boolean).map(v => r2(v)));
+      let q = itemQty(u, hit, used);
+      if (!q && isSale && +it.price > 0 && Number.isInteger(r2(net / it.price))) q = r2(net / it.price);
+      if (!q && isBuy && +it.cost > 0 && Number.isInteger(r2(net / it.cost))) q = r2(net / it.cost);
+      if (!q) return Q(`${isSale ? 'بعت' : 'اشتريت'} كام ${it.unit || 'وحدة'} من «${it.name}»؟`, ['1', '2', '3', '5', '10'], 'qty');
+      if (isSale) {
+        const c = costOut(it.id, q), stock = stockState().get(it.id);
+        if (c > 0) { const cogs = r2(c * q); e.lines.push({ account: COGS, debit: cogs, credit: 0 }, { account: INV, debit: 0, credit: cogs }); e.explanation += ` وطلّعنا تكلفة ${dg(q)} ${it.unit || ''} ${it.name} (${money(cogs)}) من «المخزون» لـ «تكلفة المبيعات» عشان مكسبك يبان صح.`; }
+        else { r.assumed = true; e.explanation += ` ⚠️ «${it.name}» ملهوش تكلفة متسجّلة، فالمكسب مش هيبان صح. حط تكلفته من صفحة المخزون.`; }
+        e.items = [{ id: it.id, q: -q, c, p: r2(net / q) }];
+        if (stock && stock.qty - q < -1e-9) { r.assumed = true; e.explanation += ` ⚠️ المخزون المتسجّل من «${it.name}» (${dg(r2(stock.qty))}) أقل من اللي اتباع.`; }
+      } else {
+        e.items = [{ id: it.id, q, c: r2(net / q) }];
+        e.explanation += ` ودخلنا ${dg(q)} ${it.unit || ''} ${it.name} على المخزون بتكلفة ${money(r2(net / q))} للوحدة.`;
+      }
+      return r;
+    }
+  }
+  const margin = +S.settings.margin || 0;
+  if (isSale && !hasCogs && margin > 0 && margin < 100 && !e.items) {
+    const net = sum(e.lines.filter(l => l.account === SALES), l => l.credit), cogs = r2(net * (1 - margin / 100));
+    if (cogs > 0) { e.lines.push({ account: COGS, debit: cogs, credit: 0 }, { account: INV, debit: 0, credit: cogs }); e.explanation += ` والتكلفة اتحسبت تقديري (${dg(margin)}% مكسب) من الإعدادات: ${money(cogs)}.`; }
+  }
+  return r;
+}
+
+/* =========================================================
+   v2 views: النوتة · المخزون · السيولة · الضرايب · hub · settings
+   ========================================================= */
+Object.assign(P, {
+  users: '<circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9.5" r="2.4"/><path d="M15.6 14.3c2.4.1 4.2 1.7 4.9 4.7"/>',
+  box: '<path d="M3.8 7.6 12 3.5l8.2 4.1v8.8L12 20.5l-8.2-4.1z"/><path d="M3.8 7.6 12 11.7l8.2-4.1M12 11.7v8.8"/>',
+  compass: '<circle cx="12" cy="12" r="8.6"/><path d="m15.4 8.6-2 5-4.8 1.8 2-5z"/>',
+  receipt: '<path d="M6 3.5h12v17l-2-1.3-2 1.3-2-1.3-2 1.3-2-1.3-2 1.3z"/><path d="M9 8h6M9 11.5h6M9 15h3.5"/>',
+  brief: '<rect x="3.5" y="7" width="17" height="12.5" rx="2.2"/><path d="M9 7V5.6c0-.9.7-1.6 1.6-1.6h2.8c.9 0 1.6.7 1.6 1.6V7M3.5 12.5h17"/>',
+  wand: '<path d="m4 20 10.5-10.5M13 5.5l1.5-1.5M18.5 11 20 9.5M16.5 4v2.5M20 7.5h-2.5"/><path d="m13 8 3 3"/>',
+  folder: '<path d="M3.5 7.2c0-1 .8-1.7 1.7-1.7h4.2l2 2.2h7.4c1 0 1.7.8 1.7 1.7v8.4c0 1-.8 1.7-1.7 1.7H5.2c-1 0-1.7-.8-1.7-1.7z"/>',
+  eye: '<path d="M2.8 12S6 5.8 12 5.8 21.2 12 21.2 12 18 18.2 12 18.2 2.8 12 2.8 12z"/><circle cx="12" cy="12" r="2.8"/>',
+  phone: '<path d="M6.6 3.8h2.6l1.4 4-2 1.4a10.8 10.8 0 0 0 6.2 6.2l1.4-2 4 1.4v2.6c0 1-.8 1.8-1.8 1.8A15.6 15.6 0 0 1 4.8 5.6c0-1 .8-1.8 1.8-1.8z"/>',
+  store: '<path d="M4 9.5 5.5 4.5h13L20 9.5M4 9.5v10h16v-10M4 9.5c0 1.4 1.1 2.5 2.7 2.5S9.3 10.9 9.3 9.5c0 1.4 1.2 2.5 2.7 2.5s2.7-1.1 2.7-2.5c0 1.4 1.1 2.5 2.6 2.5S20 10.9 20 9.5"/><path d="M10 19.5v-4.5h4v4.5"/>',
+  doc: '<path d="M13.5 3.5H7A1.5 1.5 0 0 0 5.5 5v14A1.5 1.5 0 0 0 7 20.5h10a1.5 1.5 0 0 0 1.5-1.5V8.5z"/><path d="M13.5 3.5v5h5M8.5 12.5h7M8.5 16h5"/>',
+  word: '<path d="M13.5 3.5H7A1.5 1.5 0 0 0 5.5 5v14A1.5 1.5 0 0 0 7 20.5h10a1.5 1.5 0 0 0 1.5-1.5V8.5z"/><path d="M13.5 3.5v5h5"/><path d="m8.2 11.5 1.3 5 1.5-4 1.5 4 1.3-5"/>',
+  cash: '<rect x="2.8" y="6.5" width="18.4" height="11" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9.5v5M18 9.5v5"/>',
+  warn: '<path d="M12 4 21 19.5H3z"/><path d="M12 10v4.2M12 16.8v.2"/>',
+  qr: '<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2.5v2.5H14zM17.5 17.5H20V20h-2.5zM14 18.5v1.5M20 14v1.5"/>',
+  arrowup: '<path d="M12 19V5M6.5 10.5 12 5l5.5 5.5"/>', arrowdown: '<path d="M12 5v14M6.5 13.5 12 19l5.5-5.5"/>',
+});
+Object.assign(PF, {
+  book: '<path d="M9 3.6a3.4 3.4 0 1 1 0 6.8 3.4 3.4 0 0 1 0-6.8zM2.8 19.4c.7-3.7 3.2-5.9 6.2-5.9s5.5 2.2 6.2 5.9zM17 6.8a2.6 2.6 0 1 1 0 5.2 2.6 2.6 0 0 1 0-5.2zM15.8 13.6c2.9.1 5 2 5.6 5.8h-4.6c-.3-2.4-.6-4-1-5.8z"/>',
+});
+VIEWS.splice(2, 0, { id: 'book', ar: 'النوتة', ic: 'users' });
+VIEWS.splice(VIEWS.findIndex(v => v.id === 'prefs'), 0, { id: 'stock', ar: 'المخزون', ic: 'box' }, { id: 'compass', ar: 'بوصلة السيولة', ic: 'compass' }, { id: 'tax', ar: 'الضرايب', ic: 'receipt' });
+Object.assign(SUB, { book: 'الزباين والموردين وفلوسك اللي برا', stock: 'الأصناف والكميات والجرد', compass: 'رصيدك المتوقع لحد 30 يوم قدام', tax: 'الضريبة المتوقعة وضريبة القيمة المضافة' });
+const MOB_TABS = ['chat', 'journal', 'book', 'analytics', 'prefs'];
+const PARENT_VIEW = { ledger: 'statements', statements: 'analytics', stock: 'analytics', compass: 'analytics', tax: 'analytics' };
+
+/* ---------- النوتة view ---------- */
+function bookTotals(book) {
+  let out = 0, n = 0, overdue = 0, owe = 0;
+  for (const p of book) { if (p.cust > 0.005) { out += p.cust; n++; overdue += p.aging.overdue; } if (p.supp > 0.005) owe += p.supp; }
+  return { out: r2(out), n, overdue: r2(overdue), owe: r2(owe) };
+}
+function renderBook() {
+  const box = $('#bookBody'); if (!box) return;
+  const book = [...partyBook().values()].filter(p => p.key !== pkey(NONAME) || p.cust || p.supp);
+  const T = bookTotals(book), side = S.ui.bookSide || 'cust', q = fold(clean(S.ui.bookQ || ''));
+  const bal = p => side === 'cust' ? p.cust : p.supp;
+  let list = book.filter(p => side === 'cust' ? (p.cust || (p.info.kind || 'cust') === 'cust' && !p.supp) : (p.supp || p.info.kind === 'supp'));
+  if (q) list = list.filter(p => fold(p.name).includes(q));
+  const open = list.filter(p => Math.abs(bal(p)) > 0.005).sort((a, b) => (b.aging.overdue - a.aging.overdue) || (bal(b) - bal(a)));
+  const settled = list.filter(p => Math.abs(bal(p)) <= 0.005).sort((a, b) => (b.last || '').localeCompare(a.last || ''));
+  const row = p => {
+    const v = bal(p), late = side === 'cust' && p.aging.overdue > 0;
+    const sub = side === 'cust' ? (v > 0 ? (late ? `متأخر ${dg(p.aging.open.filter(x => x.late > 0).reduce((m, x) => Math.max(m, x.late), 0))} يوم` : `من ${dg(p.aging.oldest)} يوم`) : v < 0 ? 'ليه عندك رصيد' : 'خالص') : (v > 0 ? 'عليك' : v < 0 ? 'رصيد ليك عنده' : 'خالص');
+    return `<button type="button" class="p-row" data-party="${esc(p.key)}">${avatarFor(p.name)}<span class="p-tx"><b>${esc(p.name)}</b><small class="${late ? 'late' : ''}">${sub}${p.last ? ` · آخر حركة ${esc(fmtShort(p.last))}` : ''}</small></span><span class="p-amt ${v > 0 ? (side === 'cust' ? (late ? 'late' : 'due') : 'owe') : ''}"><span class="num">${money(Math.abs(v), { dec: false })}</span></span>${chev()}</button>`;
+  };
+  box.innerHTML = `
+  <div class="book-hero">
+    <span class="bh-k">فلوسك برا</span>
+    <b class="bh-v"><span class="num" data-count="${T.out}">${money(T.out, { dec: false })}</span><small>${esc(cur())}</small></b>
+    <span class="bh-s">${T.n ? `عند ${dg(T.n)} ${T.n === 1 ? 'زبون' : 'زباين'}${T.overdue ? ` · منهم <b class="num">${money(T.overdue, { dec: false })}</b> متأخر` : ''}` : 'محدش عليه فلوس ليك دلوقتي 👌'}</span>
+    <div class="bh-row"><div><span>عليك للموردين</span><b class="num">${money(T.owe, { dec: false })}</b></div><div><span>الصافي</span><b class="num">${money(r2(T.out - T.owe), { dec: false })}</b></div></div>
+  </div>
+  <div class="book-tools">
+    <div class="seg full" role="tablist"><button type="button" role="tab" data-bside="cust" aria-selected="${side === 'cust'}">الزباين</button><button type="button" role="tab" data-bside="supp" aria-selected="${side === 'supp'}">الموردين</button></div>
+    <label class="search"><span data-ic="search"></span><span class="sr">بحث</span><input type="search" id="bookQ" placeholder="دوّر على اسم" value="${esc(S.ui.bookQ || '')}"></label>
+  </div>
+  ${open.length ? `<div class="list p-list">${open.map(row).join('')}</div>` : !settled.length ? `<div class="empty">${emptyArt('book')}<b>${side === 'cust' ? 'لسه مفيش زباين عليهم فلوس' : 'لسه مفيش موردين ليهم فلوس'}</b><p>${side === 'cust' ? 'لما تبيع آجل وتقول اسم الزبون («بعت لمحمد بضاعة بـ 2000 على الحساب») هيظهر هنا بحسابه.' : 'لما تشتري على الحساب من مورد («اشتريت بضاعة من شركة النيل بـ 5000 آجل») هيظهر هنا.'}</p></div>` : ''}
+  ${settled.length ? `<div class="group"><div class="group-h">خالصين</div><div class="list p-list">${settled.slice(0, 40).map(row).join('')}</div></div>` : ''}
+  <button type="button" class="btn plain book-add" data-act2="newParty">${ic('plus')}${side === 'cust' ? 'زبون جديد' : 'مورد جديد'}</button>
+  <p class="group-f">الأسماء بتتاخد من كلامك في المحادثة. لو قلت «بعت آجل» من غير اسم، العملية بتظهر تحت «${NONAME}».</p>`;
+  fillIcons(box);
+}
+document.addEventListener('click', e => {
+  const pr = e.target.closest('[data-party]'); if (pr) { openParty(pr.dataset.party); return; }
+  const bs = e.target.closest('[data-bside]'); if (bs) { S.ui.bookSide = bs.dataset.bside; save(); renderBook(); haptic('tick'); return; }
+  const a2 = e.target.closest('[data-act2]'); if (!a2) return;
+  const act = a2.dataset.act2;
+  if (act === 'newParty') newPartySheet();
+  else if (act === 'goView') setView(a2.dataset.view);
+  else if (act === 'bag') bagDialog();
+  else if (act === 'ws') openWS();
+  else if (act === 'stockSetup') stockSetup();
+  else if (act === 'newItem') itemSheet();
+  else if (act === 'count') countSheet();
+  else if (act === 'taxSetup') taxSetup();
+  else if (act === 'cashCount') cashCountSheet();
+});
+document.addEventListener('input', e => { if (e.target.id === 'bookQ') { S.ui.bookQ = e.target.value; const pos = e.target.selectionStart; renderBook(); const i = $('#bookQ'); if (i) { i.focus(); try { i.setSelectionRange(pos, pos); } catch (x) { /* ignore */ } } } });
+function newPartySheet() {
+  const side = S.ui.bookSide || 'cust';
+  openDialog({ title: side === 'cust' ? 'زبون جديد' : 'مورد جديد', body: `<div class="list noicons"><label class="set-row" for="npName"><span class="lbl">الاسم</span><input class="row-inp" id="npName" maxlength="60" placeholder="${side === 'cust' ? 'محمد حسن' : 'شركة النيل'}"></label><label class="set-row" for="npPhone"><span class="lbl">الموبايل</span><input class="row-inp num" id="npPhone" inputmode="tel" maxlength="20" placeholder="اختياري"></label></div><p class="group-f">الرقم بيستخدم بس عشان التذكير يروح على واتساب الشخص على طول.</p>`,
+    foot: `<button type="button" class="btn" data-close>إلغاء</button><button type="button" class="btn primary" id="npOk">إضافة</button>`,
+    onMount: d => { setTimeout(() => $('#npName', d).focus(), 120); $('#npOk', d).onclick = () => { const n = clean($('#npName', d).value); if (!n) { toast('اكتب الاسم', { type: 'err' }); return; } const k = pkey(n); S.parties[k] = { ...(S.parties[k] || {}), name: n, phone: clean($('#npPhone', d).value), kind: side }; save(); d.close(); renderBook(); toast(`اتضاف ${n}`, { icon: 'users' }); }; } });
+}
+function partyMovesHTML(p) {
+  let run = 0; const rows = p.moves.map(m => { const v = r2(m.ar - m.ap); run = r2(run + v); return { m, v, run }; }).reverse();
+  if (!rows.length) return '<p class="muted" style="padding:12px 16px;font-size:var(--t-sm)">لسه مفيش حركات.</p>';
+  return rows.slice(0, 120).map(({ m, v, run: rb }) => `<div class="pm-row"><span class="pm-ic ${v > 0 ? 'up' : 'down'}">${ic(v > 0 ? 'arrowup' : 'arrowdown')}</span><span class="pm-tx"><b>${esc(m.e.description.replace(/ - [^-]+$/, ''))}</b><small>${esc(fmtShort(m.e.date))} · <bdi class="mono">${esc(m.e.id)}</bdi>${m.e.due ? ` · الاستحقاق ${esc(fmtShort(m.e.due))}` : ''}</small></span><span class="pm-v"><b class="num">${v > 0 ? '+' : '−'}${money(Math.abs(v), { dec: false })}</b><small class="num">${money(rb, { dec: false })}</small></span></div>`).join('');
+}
+function openParty(key) {
+  const p = partyByKey(key); if (!p) return;
+  const isC = p.cust !== 0 || p.supp === 0, v = isC ? p.cust : p.supp;
+  const A = p.aging, tot = sum(A.b) || 1;
+  openDialog({ title: p.name, wide: true, body: `<div class="party">
+    <div class="pt-head">${avatarFor(p.name, 'xl')}<b class="pt-bal ${v > 0 ? (isC ? 'due' : 'owe') : ''}"><span class="num">${money(Math.abs(v), { dec: false })}</span> <small>${esc(cur())}</small></b><span class="muted">${v > 0.005 ? (isC ? 'عليه ليك' : 'ليه عندك') : v < -0.005 ? (isC ? 'ليه عندك رصيد' : 'رصيد ليك عنده') : 'الحساب خالص ✓'}</span></div>
+    <div class="pt-acts">
+      ${isC ? `<button type="button" class="pt-act" data-pa="remind" ${p.cust > 0 ? '' : 'disabled'}><span class="pa-ic g">${ic('wa')}</span><span>فكّره</span></button><button type="button" class="pt-act" data-pa="show"><span class="pa-ic b">${ic('eye')}</span><span>اعرض للزبون</span></button>` : ''}
+      <button type="button" class="pt-act" data-pa="pay"><span class="pa-ic o">${ic('cash')}</span><span>${isC ? 'استلمت دفعة' : 'دفعتله'}</span></button>
+      <button type="button" class="pt-act" data-pa="stmt"><span class="pa-ic p">${ic('doc')}</span><span>كشف حساب</span></button>
+      ${p.info.phone ? `<a class="pt-act" href="tel:${esc(p.info.phone)}"><span class="pa-ic gr">${ic('phone')}</span><span>اتصال</span></a>` : ''}
+    </div>
+    <div class="pt-pay" id="ptPay" hidden><div class="list noicons"><label class="set-row" for="ppAmt"><span class="lbl">المبلغ</span><input class="row-inp num" id="ppAmt" inputmode="decimal" placeholder="${v > 0 ? money(v, { dec: false }) : '0'}"></label><div class="set-row"><span class="lbl">إزاي</span><div class="seg" role="radiogroup" id="ppM"><button type="button" role="radio" aria-checked="true" data-m="cash">كاش</button><button type="button" role="radio" aria-checked="false" data-m="bank">بنك/إنستاباي</button></div></div></div><button type="button" class="btn primary" id="ppOk" style="width:100%;margin-top:10px">سجّل</button></div>
+    ${isC && A.open.length ? `<div class="group"><div class="group-h">عمر الدين</div><div class="list"><div class="aging"><div class="ag-bar">${A.b.map((x, k) => x ? `<i class="a${k}" style="flex:${x / tot}"></i>` : '').join('')}</div><div class="ag-leg">${['أقل من شهر', '1–2 شهر', '2–3 شهور', 'أكتر من 3 شهور'].map((t, k) => A.b[k] ? `<span><i class="a${k}"></i>${t} <b class="num">${money(A.b[k], { dec: false })}</b></span>` : '').join('')}</div></div></div></div>` : ''}
+    <div class="group"><div class="group-h">البيانات</div><div class="list noicons"><label class="set-row" for="ptPhone"><span class="lbl">الموبايل</span><input class="row-inp num" id="ptPhone" inputmode="tel" maxlength="20" value="${esc(p.info.phone || '')}" placeholder="عشان التذكير يروح له على طول"></label>${canPickContact() ? '<button type="button" class="set-row center" id="ptPick">اختار من جهات الاتصال</button>' : ''}<label class="set-row" for="ptNote"><span class="lbl">ملاحظة</span><input class="row-inp" id="ptNote" maxlength="80" value="${esc(p.info.note || '')}" placeholder="اختياري"></label></div></div>
+    <div class="group"><div class="group-h">الحركات</div><div class="list pm-list">${partyMovesHTML(p)}</div></div>
+  </div>`, onMount: d => {
+    const setInfo = (k, val) => { S.parties[p.key] = { ...(S.parties[p.key] || {}), name: p.name, [k]: val }; save(); };
+    $('#ptPhone', d).onchange = e => setInfo('phone', clean(e.target.value));
+    $('#ptNote', d).onchange = e => setInfo('note', clean(e.target.value));
+    const pk = $('#ptPick', d); if (pk) pk.onclick = () => pickContact(p, () => { d.close(); openParty(key); });
+    let pm = 'cash';
+    $$('#ppM [data-m]', d).forEach(b => b.onclick = () => { pm = b.dataset.m; $$('#ppM [data-m]', d).forEach(x => x.setAttribute('aria-checked', String(x === b))); });
+    $('#ppOk', d).onclick = () => {
+      const amt = toNum($('#ppAmt', d).value) || (v > 0 ? v : 0); if (!(amt > 0)) { toast('اكتب المبلغ', { type: 'err' }); return; }
+      const acc = pm === 'bank' ? BANK : CASH;
+      const e = normalize({ date: today(), description: (isC ? 'تحصيل من عميل' : 'سداد مستحقات مورد') + ' - ' + p.name, lines: isC ? [{ account: acc, debit: amt }, { account: AR, credit: amt }] : [{ account: AP, debit: amt }, { account: acc, credit: amt }], explanation: isC ? 'دفعة من الزبون قلّلت اللي عليه.' : 'دفعة للمورد قلّلت اللي عليك.', source: 'manual' });
+      e.party = p.name === NONAME ? undefined : p.name; postEntry(e); save(); refreshAll(); d.close(); haptic('success'); sound('success');
+      toast(`اتسجّل ${e.id}: ${money(amt, { dec: false })}`, { title: isC ? 'استلمت دفعة' : 'دفعت للمورد', icon: 'cash' });
+    };
+    $$('[data-pa]', d).forEach(b => b.onclick = () => {
+      const a = b.dataset.pa;
+      if (a === 'remind') { const cur2 = partyByKey(key); if (cur2) remindWA(cur2); }
+      else if (a === 'show') { d.close(); customerView(key); }
+      else if (a === 'pay') { const box = $('#ptPay', d); box.hidden = !box.hidden; if (!box.hidden) setTimeout(() => $('#ppAmt', d).focus(), 60); }
+      else if (a === 'stmt') { d.close(); wsQuick('statement', { party: p.name }); }
+    });
+  } });
+}
+
+/* ---------- وضع الزبون: a clean screen with this customer only ---------- */
+function customerView(key) {
+  const p = partyByKey(key); if (!p) return;
+  const st = S.settings, v = p.cust;
+  let run = 0; const rows = p.moves.map(m => { const x = r2(m.ar - m.ap); run = r2(run + x); return { m, x, run }; }).slice(-30).reverse();
+  const qrSvg = st.ipaLink ? `<div class="cv-qr" id="cvQr"></div>` : '';
+  const el = document.createElement('div'); el.className = 'cv'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', 'حساب ' + p.name);
+  el.innerHTML = `<div class="cv-bar"><button type="button" class="cv-x" aria-label="قفل">${ic('x')}</button><span>حساب الزبون</span><span class="cv-sp"></span></div>
+  <div class="cv-scroll"><div class="cv-card" id="cvCard">
+    <div class="cv-shop"><span class="avatar" data-avatar></span><div><b>${esc(st.biz || 'المحل')}</b>${st.phone ? `<small class="num">${esc(st.phone)}</small>` : ''}</div></div>
+    <div class="cv-who">${avatarFor(p.name, 'lg')}<b>${esc(p.name)}</b><small>${esc(fmtDate(today()))}</small></div>
+    <div class="cv-total"><span>${v >= 0 ? 'المطلوب' : 'رصيدك عندنا'}</span><b><span class="num">${money(Math.abs(v), { dec: false })}</span> <small>${esc(cur())}</small></b></div>
+    <div class="cv-list">${rows.map(({ m, x, run: rb }) => `<div class="cv-row"><span><b>${esc(m.e.description.replace(/ - [^-]+$/, '').replace(/^(?:بيع بضاعة|تحصيل من عميل)/, s => s === 'بيع بضاعة' ? 'مشتريات' : 'دفعة'))}</b><small>${esc(fmtShort(m.e.date))}</small></span><span class="${x > 0 ? 'plus' : 'minus'}"><b class="num">${x > 0 ? '' : '−'}${money(Math.abs(x), { dec: false })}</b><small class="num">${money(rb, { dec: false })}</small></span></div>`).join('') || '<p class="muted">مفيش حركات</p>'}</div>
+    ${st.ipa || st.ipaLink ? `<div class="cv-pay">${qrSvg}<div><span>ادفع بإنستاباي</span><b dir="ltr">${esc(st.ipa || 'امسح الكود')}</b></div></div>` : ''}
+    <p class="cv-foot">${esc(st.docFoot || 'شكراً لتعاملكم معنا')}</p>
+  </div></div>
+  <div class="cv-actions"><button type="button" class="btn" data-cv="img">${ic('image')}ابعتها صورة</button><button type="button" class="btn primary" data-cv="wa">${ic('wa')}واتساب</button></div>`;
+  document.body.appendChild(el); fillIcons(el); paintAvatars(); haptic('tick');
+  requestAnimationFrame(() => el.classList.add('in'));
+  if (st.ipaLink) loadLib('qrcode.min.js', 'qrcode').then(qrcode => { const q = qrcode(0, 'M'); q.addData(st.ipaLink); q.make(); const b = $('#cvQr', el); if (b) b.innerHTML = q.createSvgTag({ cellSize: 3, margin: 1, scalable: true }); }).catch(() => {});
+  const close = () => { el.classList.remove('in'); setTimeout(() => el.remove(), 260); document.removeEventListener('keydown', onKey); };
+  const onKey = e => { if (e.key === 'Escape') close(); };
+  document.addEventListener('keydown', onKey);
+  $('.cv-x', el).onclick = close;
+  $('[data-cv="wa"]', el).onclick = () => remindWA(p);
+  $('[data-cv="img"]', el).onclick = async () => {
+    try { const h2c = await loadLib('html2canvas.min.js', 'html2canvas'); const cv = await h2c($('#cvCard', el), { scale: 2, backgroundColor: getComputedStyle($('#cvCard', el)).backgroundColor || '#fff' }); const blob = await new Promise(r => cv.toBlob(r, 'image/png')); await shareFiles([new File([blob], `حساب-${p.name}.png`, { type: 'image/png' })], 'حساب ' + p.name, remindText(p)); }
+    catch (e) { toast('مقدرتش أعمل الصورة دلوقتي', { type: 'err' }); }
+  };
+}
+
+/* ---------- المخزون ---------- */
+async function stockSetup() {
+  const a = await askSheet({ title: 'نجهّز المخزون', intro: 'كام سؤال سريع عشان دفتر يحسب تكلفة بضاعتك ومكسبك صح.', done: 'يلا نبدأ', questions: [
+    { id: 'cm', header: 'تكلفة البضاعة', q: 'لما تشتري نفس الصنف بأسعار مختلفة، تكلفته تتحسب إزاي؟', other: false, options: [{ label: 'متوسط السعر', value: 'avg', rec: true, desc: 'الأسهل والأشهر: كل الكمية بمتوسط تمنها' }, { label: 'اللي دخل الأول يطلع الأول', value: 'fifo', desc: 'FIFO: أدق لو الأسعار بتتغير كتير' }] },
+    { id: 'low', header: 'التنبيه', q: 'عايز دفتر ينبّهك لما صنف يقرب يخلص؟', other: false, options: [{ label: 'أيوه نبّهني', value: true, rec: true }, { label: 'لأ', value: false }] },
+    { id: 'mg', header: 'البيع من غير صنف', q: 'لما تقول «بعت بضاعة بـ 3000» من غير اسم الصنف، نحسب التكلفة إزاي؟', otherPh: 'نسبة مكسب تانية، مثلاً 25', options: [{ label: 'ما تحسبش تكلفة', value: '0', desc: 'هتسجّل التكلفة بنفسك أو تقول اسم الصنف' }, { label: 'مكسبي حوالي 20%', value: '20', rec: true, desc: 'التكلفة تتحسب تقديري 80% من البيع' }, { label: 'مكسبي حوالي 30%', value: '30' }, { label: 'مكسبي حوالي 10%', value: '10' }] },
+  ] });
+  if (!a) return;
+  S.settings.costMethod = a.cm; S.settings.lowStock = a.low; S.settings.margin = Math.max(0, Math.min(90, toNum(a.mg) || 0)); save();
+  toast('المخزون جاهز. ضيف أصنافك', { icon: 'box' }); renderStock(); setTimeout(() => itemSheet(), 300);
+}
+function renderStock() {
+  const box = $('#stockBody'); if (!box) return;
+  if (!S.settings.costMethod && !S.items.length) {
+    box.innerHTML = `<div class="empty">${emptyArt('box')}<b>المخزون لسه مش متجهّز</b><p>ضيف أصنافك بتكلفتها، ودفتر هيخصم الكميات لوحده لما تقول «بعت 3 كراتين زيت بـ 600»، ويحسب مكسبك الحقيقي، ويعمل جرد في دقايق.</p><button type="button" class="btn primary" data-act2="stockSetup">${ic('box')}ابدأ المخزون</button></div>`; fillIcons(box); return;
+  }
+  const stt = stockState(); let val = 0, low = 0;
+  const rows = S.items.map(it => { const s = stt.get(it.id) || { qty: 0, avg: 0, value: 0 }; val += Math.max(0, s.value); const isLow = S.settings.lowStock && +it.min > 0 && s.qty <= +it.min; if (isLow) low++; return { it, s, isLow }; }).sort((a, b) => (b.isLow - a.isLow) || a.it.name.localeCompare(b.it.name, 'ar'));
+  box.innerHTML = `
+  <div class="list"><div class="sum-strip"><div><span>الأصناف</span><b class="num">${dg(S.items.length)}</b></div><div><span>قيمة المخزون</span><b class="num">${money(val, { dec: false })}</b></div><div><span>قربت تخلص</span><b class="num ${low ? 'neg' : ''}">${dg(low)}</b></div></div></div>
+  <div class="st-acts"><button type="button" class="btn primary" data-act2="newItem">${ic('plus')}صنف جديد</button><button type="button" class="btn" data-act2="count" ${S.items.length ? '' : 'disabled'}>${ic('check')}جرد</button><button type="button" class="btn" data-act2="cashCount">${ic('cash')}جرد الخزنة</button></div>
+  ${rows.length ? `<div class="list it-list">${rows.map(({ it, s, isLow }) => `<button type="button" class="it-row" data-item="${esc(it.id)}"><span class="it-ic">${ic('box')}</span><span class="p-tx"><b>${esc(it.name)}</b><small>${+s.avg ? `التكلفة ${money(s.avg)}` : 'من غير تكلفة'}${+it.price ? ` · البيع ${money(+it.price)}` : ''}</small></span><span class="it-q ${isLow ? 'low' : s.qty < 0 ? 'neg' : ''}"><b class="num">${dg(r2(s.qty))}</b><small>${esc(it.unit || 'وحدة')}</small></span>${chev()}</button>`).join('')}</div>` : `<p class="muted" style="text-align:center">ضيف أول صنف عشان تبدأ.</p>`}
+  <p class="group-f">طريقة التكلفة: ${S.settings.costMethod === 'fifo' ? 'اللي دخل الأول يطلع الأول (FIFO)' : 'متوسط السعر'}${+S.settings.margin ? ` · البيع من غير صنف بيتحسب بمكسب ${dg(S.settings.margin)}%` : ''}. تقدر تغيّرها من الإعدادات ← المخزون.</p>`;
+  fillIcons(box);
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-item]'); if (b) itemSheet(b.dataset.item); });
+function itemSheet(id) {
+  const it = id ? itemById(id) : null, s = it ? stockState().get(it.id) : null;
+  const moves = it ? S.entries.filter(e => (e.items || []).some(m => m.id === it.id)).sort(byDate).reverse().slice(0, 40) : [];
+  openDialog({ title: it ? it.name : 'صنف جديد', body: `
+    ${it ? `<div class="list"><div class="sum-strip"><div><span>الكمية</span><b class="num">${dg(r2(s.qty))} ${esc(it.unit || '')}</b></div><div><span>متوسط التكلفة</span><b class="num">${money(s.avg)}</b></div><div><span>اتباع</span><b class="num">${dg(r2(s.sold))}</b></div></div></div>` : ''}
+    <div class="list noicons">
+      <label class="set-row" for="iName"><span class="lbl">اسم الصنف</span><input class="row-inp" id="iName" maxlength="40" value="${esc(it ? it.name : '')}" placeholder="زيت"></label>
+      <label class="set-row" for="iUnit"><span class="lbl">الوحدة</span><input class="row-inp" id="iUnit" maxlength="15" list="unitList" value="${esc(it ? it.unit || '' : 'كرتونة')}"></label>
+      <label class="set-row" for="iCost"><span class="lbl">تكلفة الوحدة</span><input class="row-inp num" id="iCost" inputmode="decimal" value="${esc(it ? it.cost || '' : '')}" placeholder="0"></label>
+      <label class="set-row" for="iPrice"><span class="lbl">سعر البيع</span><input class="row-inp num" id="iPrice" inputmode="decimal" value="${esc(it ? it.price || '' : '')}" placeholder="اختياري"></label>
+      <label class="set-row" for="iQty"><span class="lbl">الكمية الموجودة دلوقتي</span><input class="row-inp num" id="iQty" inputmode="decimal" value="${esc(it ? it.qty0 || '' : '')}" placeholder="0" ${it && moves.length ? 'title="رصيد أول المدة"' : ''}></label>
+      <label class="set-row" for="iMin"><span class="lbl">نبّهني لما يوصل لـ</span><input class="row-inp num" id="iMin" inputmode="decimal" value="${esc(it ? it.min || '' : '')}" placeholder="اختياري"></label>
+      <label class="set-row" for="iAlias"><span class="lbl">أسماء تانية</span><input class="row-inp" id="iAlias" maxlength="80" value="${esc(it ? (it.alias || []).join('، ') : '')}" placeholder="زيت عباد، زيت كريستال"></label>
+    </div>
+    <datalist id="unitList">${['كرتونة', 'قطعة', 'كيلو', 'علبة', 'شيكارة', 'لتر', 'متر', 'دستة', 'كيس', 'جهاز'].map(u => `<option>${u}</option>`).join('')}</datalist>
+    <p class="group-f">${it && moves.length ? 'الكمية الموجودة هنا هي رصيد أول ما بدأت. الكمية الحالية بتتحسب من البيع والشرا والجرد.' : 'بعد كده قول «بعت 3 كراتين زيت بـ 600» أو «اشتريت 10 كراتين زيت بـ 4000» والكمية والتكلفة يتحسبوا لوحدهم.'}</p>
+    ${moves.length ? `<div class="group"><div class="group-h">الحركة</div><div class="list pm-list">${moves.map(e => { const m = e.items.find(x => x.id === it.id); return `<div class="pm-row"><span class="pm-ic ${m.q > 0 ? 'up' : 'down'}">${ic(m.q > 0 ? 'arrowdown' : 'arrowup')}</span><span class="pm-tx"><b>${esc(e.description.replace(/ - [^-]+$/, ''))}</b><small>${esc(fmtShort(e.date))} · <bdi class="mono">${esc(e.id)}</bdi></small></span><span class="pm-v"><b class="num">${m.q > 0 ? '+' : '−'}${dg(Math.abs(m.q))}</b><small class="num">${money(m.c)}</small></span></div>`; }).join('')}</div></div>` : ''}`,
+    foot: `${it && !moves.length ? '<button type="button" class="btn danger" id="iDel">حذف</button><span style="flex:1"></span>' : ''}<button type="button" class="btn" data-close>إلغاء</button><button type="button" class="btn primary" id="iOk">${it ? 'حفظ' : 'إضافة'}</button>`,
+    onMount: d => {
+      if (!it) setTimeout(() => $('#iName', d).focus(), 120);
+      const del = $('#iDel', d); if (del) del.onclick = () => { S.items = S.items.filter(x => x !== it); save(); d.close(); renderStock(); toast('الصنف اتمسح', { icon: 'trash' }); };
+      $('#iOk', d).onclick = () => {
+        const name = clean($('#iName', d).value); if (!name) { toast('اكتب اسم الصنف', { type: 'err' }); return; }
+        if (S.items.some(x => x !== it && pkey(x.name) === pkey(name))) { toast('فيه صنف بنفس الاسم', { type: 'err' }); return; }
+        const rec = it || { id: 'IT' + uid().slice(0, 6), createdAt: Date.now() };
+        const q0Old = it ? +it.qty0 || 0 : 0, c0Old = it ? +it.cost || 0 : 0;
+        Object.assign(rec, { name, unit: clean($('#iUnit', d).value) || 'وحدة', cost: toNum($('#iCost', d).value) || 0, price: toNum($('#iPrice', d).value) || 0, qty0: toNum($('#iQty', d).value) || 0, min: toNum($('#iMin', d).value) || 0, alias: $('#iAlias', d).value.split(/[،,]/).map(clean).filter(Boolean) });
+        if (!it) S.items.push(rec);
+        if (!S.settings.costMethod) S.settings.costMethod = 'avg';
+        const dv = r2(rec.qty0 * rec.cost - q0Old * c0Old);
+        save(); d.close(); renderStock();
+        if (Math.abs(dv) > 0.005) confirmDialog('رصيد أول المدة', `البضاعة الموجودة من «${name}» قيمتها ${money(rec.qty0 * rec.cost)}. تحب نضيفها لرصيد المخزون الافتتاحي في الحسابات؟ (الطرف التاني رأس المال)`, 'أضيفها', () => { setOpening(INV, r2(((S.opening || {})[INV] || 0) + dv)); save(); refreshAll(); });
+        else toast(it ? 'اتحفظ' : `اتضاف «${name}»`, { icon: 'box' });
+      };
+    } });
+}
+function countSheet() {
+  const stt = stockState();
+  openDialog({ title: 'جرد المخزون', wide: true, body: `<p class="ask-intro">اعدّ الموجود فعلاً واكتبه. اللي مش هتكتبه هيتعتبر مظبوط.</p>
+    <div class="list cnt-list">${S.items.map(it => { const s = stt.get(it.id) || { qty: 0 }; return `<div class="cnt-row" data-cid="${esc(it.id)}"><span class="p-tx"><b>${esc(it.name)}</b><small>المفروض <span class="num">${dg(r2(s.qty))}</span> ${esc(it.unit || '')}</small></span><input class="row-inp num cnt-in" inputmode="decimal" placeholder="${dg(r2(s.qty))}" aria-label="الموجود من ${esc(it.name)}"><span class="cnt-d num"></span></div>`; }).join('')}</div>
+    <div class="cnt-sum" id="cntSum"></div>`,
+    foot: `<button type="button" class="btn" data-close>إلغاء</button><button type="button" class="btn primary" id="cntOk">اعتمد الجرد</button>`,
+    onMount: d => {
+      const calc = () => { let short = 0, over = 0, n = 0; $$('.cnt-row', d).forEach(r => { const it = itemById(r.dataset.cid), s = stt.get(it.id) || { qty: 0, avg: 0 }, v = r.querySelector('input').value.trim(); const out = r.querySelector('.cnt-d'); if (v === '') { out.textContent = ''; out.className = 'cnt-d num'; return; } const diff = r2(toNum(v) - s.qty); n++; out.textContent = diff ? (diff > 0 ? '+' : '−') + dg(Math.abs(diff)) : '✓'; out.className = 'cnt-d num ' + (diff < 0 ? 'neg' : diff > 0 ? 'pos' : 'ok'); const c = s.avg || +it.cost || 0; if (diff < 0) short += -diff * c; else over += diff * c; }); $('#cntSum', d).innerHTML = n ? `عجز <b class="num neg">${money(short)}</b> · زيادة <b class="num pos">${money(over)}</b>` : ''; return { short: r2(short), over: r2(over) }; };
+      d.addEventListener('input', calc);
+      $('#cntOk', d).onclick = () => {
+        const moves = [], rows = []; let short = 0, over = 0;
+        $$('.cnt-row', d).forEach(r => { const it = itemById(r.dataset.cid), s = stt.get(it.id) || { qty: 0, avg: 0 }, v = r.querySelector('input').value.trim(); const counted = v === '' ? s.qty : toNum(v), diff = r2(counted - s.qty), c = s.avg || +it.cost || 0; rows.push({ id: it.id, name: it.name, unit: it.unit, sys: r2(s.qty), counted, diff, c }); if (!diff) return; moves.push({ id: it.id, q: diff, c }); if (diff < 0) short += -diff * c; else over += diff * c; });
+        short = r2(short); over = r2(over);
+        S.counts.push({ date: today(), at: Date.now(), rows });
+        if (moves.length) {
+          const lines = []; if (short) lines.push({ account: SHORT_ACC, type: 'expense', debit: short }, { account: INV, credit: short }); if (over) lines.push({ account: INV, debit: over }, { account: OVER_ACC, type: 'revenue', credit: over });
+          if (lines.length) { const e = normalize({ date: today(), description: 'تسوية جرد المخزون', lines, explanation: 'الفرق بين الموجود فعلاً والمتسجّل في الدفتر بعد الجرد، بتكلفة كل صنف.', source: 'manual' }); e.items = moves; e.kind = 'count'; postEntry(e); }
+          else { const e = normalize({ date: today(), description: 'تسوية جرد المخزون (كميات بس)', lines: [{ account: INV, debit: 0.01 }, { account: OVER_ACC, credit: 0.01 }], source: 'manual' }); void e; }
+        }
+        save(); refreshAll(); d.close(); haptic('success');
+        toast(moves.length ? `الجرد اتسجّل: عجز ${money(short, { dec: false })} · زيادة ${money(over, { dec: false })}` : 'الجرد مظبوط ✓ مفيش فروق', { title: 'جرد المخزون', icon: 'box' });
+      };
+    } });
+}
+/* جرد الخزنة: count the drawer by notes */
+function cashCountSheet() {
+  const exp = cashOnly(today()); const notes = [200, 100, 50, 20, 10, 5, 1, 0.5]; const cnt = {};
+  openDialog({ title: 'جرد الخزنة', body: `<p class="ask-intro">اعدّ الفلوس اللي في الدرج بالفئات.</p><div class="list cc-list">${notes.map(n => `<div class="cc-row"><span class="cc-n num">${n < 1 ? 'فكة' : dg(n)}</span><div class="stepper"><button type="button" data-cc="${n}" data-dd="-1" aria-label="أقل">${ic('minus')}</button><input class="row-inp num cc-in" data-ci="${n}" inputmode="numeric" value="" placeholder="0" aria-label="عدد ورق ${n}"><button type="button" data-cc="${n}" data-dd="1" aria-label="أكتر">${ic('plus')}</button></div></div>`).join('')}</div><div class="cnt-sum" id="ccSum"></div>`,
+    foot: `<button type="button" class="btn" data-close>إلغاء</button><button type="button" class="btn primary" id="ccOk">اعتمد</button>`,
+    onMount: d => {
+      const tot = () => r2(notes.reduce((s, n) => s + n * (cnt[n] || 0), 0));
+      const show = () => { const t = tot(), diff = r2(t - exp); $('#ccSum', d).innerHTML = `الموجود <b class="num">${money(t)}</b> · المفروض <b class="num">${money(exp)}</b><br>${Math.abs(diff) < 0.005 ? '<b class="pos">مظبوط ✓</b>' : diff < 0 ? `عجز <b class="num neg">${money(-diff)}</b>` : `زيادة <b class="num pos">${money(diff)}</b>`}`; };
+      d.addEventListener('click', e => { const b = e.target.closest('[data-cc]'); if (!b) return; const n = +b.dataset.cc; cnt[n] = Math.max(0, (cnt[n] || 0) + +b.dataset.dd); $(`[data-ci="${n}"]`, d).value = cnt[n] || ''; show(); haptic('tick'); });
+      d.addEventListener('input', e => { const n = e.target.dataset.ci; if (n == null) return; cnt[+n] = Math.max(0, toNum(e.target.value) || 0); show(); });
+      show();
+      $('#ccOk', d).onclick = () => {
+        const t = tot(), diff = r2(t - exp); d.close();
+        if (Math.abs(diff) < 0.005) { toast('الخزنة مظبوطة ✓', { icon: 'check' }); S.ui.cashOk = (S.ui.cashOk || 0) + 1; save(); return; }
+        actionSheet({ title: diff < 0 ? `عجز ${money(-diff)}` : `زيادة ${money(diff)}`, text: 'لو فيه عملية نسيت تسجّلها، سجّلها الأول والفرق هيتقفل.', actions: [
+          { label: 'نسيت أسجّل حاجة', fn: () => { setView('chat'); setTimeout(() => input.focus(), 200); } },
+          { label: diff < 0 ? 'سجّله عجز خزينة' : 'سجّله زيادة خزينة', fn: () => { const a = Math.abs(diff); const e = normalize({ date: today(), description: diff < 0 ? 'عجز في جرد الخزينة' : 'زيادة في جرد الخزينة', lines: diff < 0 ? [{ account: CASH_SHORT, type: 'expense', debit: a }, { account: CASH, credit: a }] : [{ account: CASH, debit: a }, { account: CASH_OVER, type: 'revenue', credit: a }], explanation: 'الفرق بين الفلوس الموجودة في الدرج والمتسجّلة في الدفتر.', source: 'manual' }); postEntry(e); save(); refreshAll(); toast(`اتسجّل ${e.id}`, { icon: 'cash' }); } },
+        ] });
+      };
+    } });
+}
+function cashOnly(to) { let c = 0; for (const e of S.entries) if (e.date <= to) for (const l of e.lines) if (l.account === CASH) c += l.debit - l.credit; return r2(c); }
+
+/* ---------- بوصلة السيولة ---------- */
+const median = a => { const s = [...a].sort((x, y) => x - y); return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : 0; };
+function compassModel() {
+  const td = today(), H = +S.settings.compassDays || 30, minBal = +S.settings.compassMin || 0;
+  const cashNow = cashBalance(td);
+  const ents = [...S.entries].sort(byDate);
+  const first = ents.length ? ents[0].date : td, histDays = daysBetween(first, td) + 1;
+  if (histDays < 21 || ents.length < 8) return { short: true, histDays, cashNow };
+  // recurring payments: same account paid in cash in ≥2 of the last 3 months
+  const months = [0, 1, 2, 3].map(k => { const d = parseYmd(td); d.setDate(1); d.setMonth(d.getMonth() - k); return ymd(d).slice(0, 7); });
+  const byAcc = new Map();
+  for (const e of ents) {
+    const mo = e.date.slice(0, 7); if (!months.includes(mo)) continue;
+    const cashOut = sum(e.lines.filter(l => l.is_cash || isCashAcc(l.account, l.type)), l => l.credit - l.debit); if (cashOut <= 0) continue;
+    for (const l of e.lines) if (l.debit > 0 && (classify(l.account) === 'expense' || l.account === LOAN || l.account === ACCR) && l.account !== COGS) {
+      const r = byAcc.get(l.account) || { months: new Map() }; const m = r.months.get(mo) || { amt: 0, days: [] }; m.amt += l.debit; m.days.push(+e.date.slice(8)); r.months.set(mo, m); byAcc.set(l.account, r);
+    }
+  }
+  const recur = [], recurAcc = new Set();
+  for (const [acc, r] of byAcc) {
+    const full = [...r.months.entries()].filter(([mo]) => mo !== months[0]);
+    if (full.length < 2) continue;
+    const amt = r2(median(full.map(([, m]) => m.amt))), day = Math.round(median(full.flatMap(([, m]) => m.days)));
+    if (amt <= 0) continue;
+    recurAcc.add(acc);
+    const paidThisMonth = r.months.has(months[0]);
+    for (let k = 0; k < 3; k++) { const d = parseYmd(td); d.setDate(1); d.setMonth(d.getMonth() + k); const last = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate(); d.setDate(Math.min(day, last)); const ds = ymd(d); if (k === 0 && (paidThisMonth || ds < td)) continue; if (daysBetween(td, ds) > H || ds <= td) continue; recur.push({ date: ds, amt: -amt, label: acc.replace(/^مصروف(?:ات)? /, ''), kind: 'recur' }); }
+  }
+  // expected collections / supplier dues with a due date
+  const book = [...partyBook().values()]; const events = [...recur];
+  for (const p of book) for (const o of p.aging.open) if (o.dueOn >= td && daysBetween(td, o.dueOn) <= H) events.push({ date: o.dueOn, amt: o.left, label: 'تحصيل من ' + p.name, kind: 'in' });
+  const lateIn = book.filter(p => p.aging.overdue > 0).sort((a, b) => b.aging.overdue - a.aging.overdue);
+  // baseline: average daily net cash of the last 60 days, without the recurring ones and without collections/financing
+  const from = addDays(td, -Math.min(60, histDays - 1)); let net = 0;
+  for (const e of ents) if (e.date >= from && e.date <= td) {
+    if (e.lines.some(l => recurAcc.has(l.account) && l.debit > 0)) continue;
+    if (e.lines.some(l => [AR, AP, CAP, DRAW, LOAN].includes(l.account))) continue;
+    for (const f of entryCashFlows(e)) if (f.cat === 'operating') net += f.amt;
+  }
+  const span = daysBetween(from, td) + 1, base = r2(net / span);
+  const series = []; let bal = cashNow, low = { bal: cashNow, date: td }, hit = null;
+  for (let k = 1; k <= H; k++) {
+    const ds = addDays(td, k); bal = r2(bal + base + sum(events.filter(x => x.date === ds), x => x.amt));
+    series.push({ date: ds, bal }); if (bal < low.bal) low = { bal, date: ds }; if (!hit && bal < minBal) hit = { date: ds, bal, in: k };
+  }
+  events.sort((a, b) => a.date.localeCompare(b.date));
+  return { cashNow, base, series, events, low, hit, lateIn, H, minBal, histDays };
+}
+function compassChart(M_, w) {
+  const h = 180, pad = 8, pts = [{ date: today(), bal: M_.cashNow }, ...M_.series];
+  const vals = pts.map(p => p.bal).concat([M_.minBal]); let lo = Math.min(...vals), hi = Math.max(...vals); if (hi === lo) { hi += 1; lo -= 1; }
+  const x = i => pad + i * (w - 2 * pad) / (pts.length - 1), y = v => pad + (hi - v) * (h - 2 * pad) / (hi - lo);
+  const d = pts.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(p.bal).toFixed(1)}`).join('');
+  const area = d + `L${x(pts.length - 1).toFixed(1)},${h - pad}L${x(0).toFixed(1)},${h - pad}Z`;
+  const neg = M_.hit ? 'var(--neg)' : 'var(--accent)';
+  return `<svg class="cmp-svg" viewBox="0 0 ${w} ${h}" width="100%" height="${h}" role="img" aria-label="الرصيد المتوقع"><defs><linearGradient id="cg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${neg}" stop-opacity=".22"/><stop offset="1" stop-color="${neg}" stop-opacity="0"/></linearGradient></defs><path d="${area}" fill="url(#cg)"/><line x1="${pad}" x2="${w - pad}" y1="${y(M_.minBal).toFixed(1)}" y2="${y(M_.minBal).toFixed(1)}" stroke="var(--neg)" stroke-dasharray="4 4" stroke-width="1" opacity=".6"/><path d="${d}" fill="none" stroke="${neg}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>${M_.hit ? `<circle cx="${x(M_.hit.in).toFixed(1)}" cy="${y(M_.hit.bal).toFixed(1)}" r="5" fill="var(--neg)" stroke="var(--surface)" stroke-width="2"/>` : ''}</svg>`;
+}
+function renderCompass() {
+  const box = $('#compassBody'); if (!box) return;
+  const M_ = compassModel();
+  if (M_.short) { box.innerHTML = `<div class="empty">${emptyArt('analytics')}<b>البوصلة محتاجة شوية بيانات</b><p>بعد ما تسجّل عملياتك حوالي 3 أسابيع (معاك دلوقتي ${dg(M_.histDays)} يوم)، دفتر هيتوقع رصيدك يوم بيوم ويقولك لو هتتزنق قبلها بأسابيع.</p></div>`; fillIcons(box); return; }
+  const ok = !M_.hit;
+  box.innerHTML = `
+  <div class="cmp-status ${ok ? 'ok' : 'bad'}"><span class="cs-ic">${ic(ok ? 'check' : 'warn')}</span><div><b>${ok ? `فلوسك مكفية الـ ${dg(M_.H)} يوم الجايين` : `ممكن تتزنق يوم ${esc(fmtShort(M_.hit.date))}`}</b><span>${ok ? (M_.low.date === today() ? `رصيدك متوقع يوصل <b class="num">${money(M_.series[M_.series.length - 1].bal, { dec: false })}</b> يوم ${esc(fmtShort(M_.series[M_.series.length - 1].date))}` : `أقل رصيد متوقع <b class="num">${money(M_.low.bal, { dec: false })}</b> يوم ${esc(fmtShort(M_.low.date))}`) : `بعد ${dg(M_.hit.in)} يوم · الرصيد المتوقع <b class="num">${money(M_.hit.bal, { dec: false })}</b>`}</span></div></div>
+  <div class="card"><div class="card-h"><h2>الرصيد المتوقع (درج + بنك)</h2><span class="muted">تقريبي</span></div><div id="cmpChart"></div><div class="cmp-legend"><span>النهارده <b class="num">${money(M_.cashNow, { dec: false })}</b></span><span>متوسط اليوم <b class="num ${M_.base >= 0 ? 'pos' : 'neg'}">${M_.base >= 0 ? '+' : '−'}${money(Math.abs(M_.base), { dec: false })}</b></span></div></div>
+  ${!ok && M_.lateIn.length ? `<div class="cmp-tip">${ic('spark')}<span>لو حصّلت من <b>${esc(M_.lateIn[0].name)}</b> الـ <b class="num">${money(M_.lateIn[0].aging.overdue, { dec: false })}</b> المتأخرين ${M_.hit.bal + M_.lateIn[0].aging.overdue >= M_.minBal ? 'هتعدّي الزنقة دي' : 'هتخفّ الزنقة'}.</span><button type="button" class="btn sm" data-party="${esc(M_.lateIn[0].key)}">فكّره</button></div>` : ''}
+  <div class="group"><div class="group-h">اللي جاي</div><div class="list pm-list">${M_.events.length ? M_.events.map(x => `<div class="pm-row"><span class="pm-ic ${x.amt > 0 ? 'up' : 'down'}">${ic(x.amt > 0 ? 'arrowdown' : 'arrowup')}</span><span class="pm-tx"><b>${esc(x.label)}</b><small>${esc(fmtShort(x.date))}${x.kind === 'recur' ? ' · بيتكرر كل شهر' : ' · ميعاد الاستحقاق'}</small></span><span class="pm-v"><b class="num ${x.amt > 0 ? 'pos' : ''}">${x.amt > 0 ? '+' : '−'}${money(Math.abs(x.amt), { dec: false })}</b></span></div>`).join('') : '<p class="muted" style="padding:12px 16px">مفيش مصاريف ثابتة أو تحصيلات بمواعيد معروفة لسه.</p>'}</div></div>
+  <p class="group-f">التوقع مبني على رصيدك دلوقتي، والمصاريف اللي بتتكرر كل شهر (زي الإيجار والمرتبات)، ومواعيد استحقاق الزباين، ومتوسط حركتك اليومية آخر ${dg(Math.min(60, M_.histDays))} يوم. ده تقدير مش يقين. تقدر تغيّر حد الأمان من الإعدادات ← السيولة.</p>`;
+  fillIcons(box);
+  const c = $('#cmpChart'); c.innerHTML = compassChart(M_, c.clientWidth || 600);
+}
+
+/* ---------- الضرايب ---------- */
+async function taxSetup() {
+  const a = await askSheet({ title: 'الضرايب', intro: 'سؤالين عشان دفتر يحسبلك ضريبتك المتوقعة.', questions: [
+    { id: 'reg', header: 'النظام', q: 'نشاطك ماشي على أنهي نظام ضريبي؟', other: false, options: [{ label: 'النظام المبسط', value: 'simplified', rec: true, desc: 'قانون 6 لسنة 2025: لحد 20 مليون في السنة، ضريبة نسبة من حجم الأعمال' }, { label: 'النظام العادي', value: 'normal', desc: 'ضريبة على صافي الربح، المحاسب بيحسبها' }, { label: 'مش متأكد', value: 'simplified', desc: 'هنحسبها تقديري على المبسط وتقدر تغيّر بعدين' }] },
+    { id: 'vat', header: 'القيمة المضافة', q: 'إنت مسجّل في ضريبة القيمة المضافة؟', other: false, options: [{ label: 'أيوه مسجّل', value: true, desc: 'هنحسبلك الإقرار الشهري: مبيعات − مشتريات' }, { label: 'لأ', value: false, rec: true }] },
+  ] });
+  if (!a) return; S.settings.taxRegime = a.reg; S.settings.vatReg = a.vat; save(); renderTax();
+}
+function fyRange(ref) { const st = +S.settings.fyStart || 1, d = parseYmd(ref || today()); let y = d.getFullYear(); if (d.getMonth() + 1 < st) y--; const from = ymd(new Date(y, st - 1, 1)), to = ymd(new Date(y + 1, st - 1, 0)); return { from, to }; }
+function turnover(from, to) { let t = 0; for (const e of S.entries) if (e.date >= from && e.date <= to) for (const l of e.lines) { if (l.account === SALES || l.account === SERV) t += l.credit - l.debit; else if (l.account === 'مردودات المبيعات') t -= l.debit - l.credit; } return r2(t); }
+function bracketRate(T) { const b = (S.settings.brackets || V2_SETTINGS.brackets).slice().sort((x, y) => x[0] - y[0]); for (const [lim, rate] of b) if (T <= lim) return rate; return null; }
+function vatMonth(ym) { let out = 0, inn = 0; for (const e of S.entries) if (e.date.slice(0, 7) === ym) for (const l of e.lines) { if (l.account === VAT_OUT && !e.kind) out += l.credit - l.debit; if (l.account === VAT_IN && !e.kind) inn += l.debit - l.credit; } return { out: r2(out), inn: r2(inn), net: r2(out - inn) }; }
+function renderTax() {
+  const box = $('#taxBody'); if (!box) return; const st = S.settings;
+  if (!st.taxRegime) { box.innerHTML = `<div class="empty">${emptyArt('statements')}<b>اعرف ضريبتك قبل ميعادها</b><p>دفتر يحسبلك ضريبة النظام المبسط من حجم أعمالك، وإقرار القيمة المضافة الشهري لو مسجّل.</p><button type="button" class="btn primary" data-act2="taxSetup">${ic('receipt')}ابدأ</button></div>`; fillIcons(box); return; }
+  const F = fyRange(), td = today(), end = td < F.to ? td : F.to;
+  const T = turnover(F.from, end), days = daysBetween(F.from, end) + 1, proj = r2(T / days * (daysBetween(F.from, F.to) + 1));
+  let html = '';
+  if (st.taxRegime === 'simplified') {
+    const rate = bracketRate(proj), over = rate == null, pct = Math.min(100, proj / 20e6 * 100);
+    html += `<div class="tax-hero"><span class="bh-k">الضريبة المتوقعة السنة دي</span><b class="bh-v">${over ? '—' : `<span class="num">${money(r2(proj * rate / 100), { dec: false })}</span><small>${esc(cur())}</small>`}</b><span class="bh-s">${over ? 'حجم أعمالك المتوقع فوق حد النظام المبسط (20 مليون)' : `نسبة <b class="num">${dg(rate)}%</b> من حجم أعمال متوقع <b class="num">${money(proj, { dec: false })}</b>`}</span>
+      <div class="tx-meter"><i style="width:${pct.toFixed(1)}%" class="${pct > 90 ? 'hot' : ''}"></i></div><div class="tx-ml"><span>0</span><span class="num">20,000,000</span></div></div>
+      <div class="list"><div class="sum-strip"><div><span>حجم الأعمال لحد النهارده</span><b class="num">${money(T, { dec: false })}</b></div><div><span>الضريبة عليه</span><b class="num">${over || bracketRate(T) == null ? '—' : money(r2(T * bracketRate(T) / 100), { dec: false })}</b></div><div><span>السنة المالية</span><b>${esc(fmtShort(F.from))}</b></div></div></div>
+      <div class="group"><div class="group-h">شرايح النظام المبسط</div><div class="list noicons">${(st.brackets || []).map(([lim, r], k, a) => `<div class="set-row ${rate === r && !over ? 'tx-on' : ''}"><span class="lbl">${k ? `من ${money(a[k - 1][0] + 1, { dec: false })} ` : ''}لحد ${money(lim, { dec: false })}</span><span class="val num">${dg(r)}%</span></div>`).join('')}</div><div class="group-f">النسب دي من قانون 6 لسنة 2025 حسب المنشور، والنسبة بتتطبق على حجم الأعمال كله. راجعها مع محاسبك أو بوابة مصلحة الضرايب، وتقدر تعدّلها من الإعدادات ← الضرايب.</div></div>`;
+  } else {
+    const I = incomeStmt(F.from, end);
+    html += `<div class="tax-hero"><span class="bh-k">النظام العادي</span><b class="bh-v"><span class="num">${money(I.N, { dec: false })}</span><small>${esc(cur())}</small></b><span class="bh-s">صافي الربح من أول السنة المالية. ضريبة الدخل في النظام العادي بتتحسب على الربح بعد التسويات، والمحاسب هو اللي بيحسبها.</span></div>
+    <div class="list"><div class="sum-strip"><div><span>الإيرادات</span><b class="num">${money(I.R, { dec: false })}</b></div><div><span>المصروفات</span><b class="num">${money(I.expenses, { dec: false })}</b></div><div><span>حجم الأعمال</span><b class="num">${money(T, { dec: false })}</b></div></div></div>`;
+  }
+  if (st.vatReg) {
+    const mo = [0, 1, 2, 3, 4, 5].map(k => { const d = parseYmd(td); d.setDate(1); d.setMonth(d.getMonth() - k); return ymd(d).slice(0, 7); });
+    const cm = vatMonth(mo[0]);
+    html += `<div class="group"><div class="group-h">ضريبة القيمة المضافة</div><div class="list"><div class="sum-strip"><div><span>على مبيعاتك</span><b class="num">${money(cm.out, { dec: false })}</b></div><div><span>على مشترياتك</span><b class="num">${money(cm.inn, { dec: false })}</b></div><div><span>${cm.net >= 0 ? 'المطلوب الشهر ده' : 'رصيد ليك'}</span><b class="num ${cm.net > 0 ? 'neg' : 'pos'}">${money(Math.abs(cm.net), { dec: false })}</b></div></div></div>
+      <div class="list noicons" style="margin-top:10px">${mo.slice(1).map(m => { const v = vatMonth(m); return `<div class="set-row"><span class="lbl">${esc(dfMonth.format(parseYmd(m + '-01')))}<small>مبيعات ${money(v.out, { dec: false })} · مشتريات ${money(v.inn, { dec: false })}</small></span><span class="val num">${money(v.net, { dec: false })}</span></div>`; }).join('')}</div>
+      <div class="group-f">الإقرار بيتقدّم على بوابة مصلحة الضرايب بحسابك أو حساب محاسبك. دفتر بيجهّز الأرقام بس.</div></div>`;
+  }
+  html += `<button type="button" class="btn plain" data-act2="taxSetup" style="align-self:center">${ic('edit')}غيّر النظام الضريبي</button>`;
+  box.innerHTML = html; fillIcons(box);
+}
+
+/* ---------- analytics: tools hub ---------- */
+function hubHTML() {
+  const stt = S.items.length ? stockState() : null; let low = 0, val = 0;
+  if (stt) for (const it of S.items) { const s = stt.get(it.id); if (!s) continue; val += Math.max(0, s.value); if (+it.min > 0 && s.qty <= +it.min) low++; }
+  let cmp = null; try { cmp = compassModel(); } catch (e) { /* ignore */ }
+  const T = bookTotals([...partyBook().values()]);
+  const tile = (view, color, icon, title, sub, cls = '', act) => `<button type="button" class="hub-t ${cls}" ${act ? `data-act2="${act}"` : `data-go="${view}"`}><span class="tile" style="background:var(--tile-${color})">${ic(icon)}</span><b>${title}</b><small>${sub}</small></button>`;
+  return `<div class="hub">
+    ${!isDesk() ? tile('statements', 'blue', 'statements', 'القوائم المالية', 'الدخل والمركز والميزان') : ''}
+    ${tile('book', 'green', 'users', 'النوتة', T.out ? `برا: <span class="num">${money(T.out, { dec: false })}</span>` : 'الزباين والموردين')}
+    ${tile('stock', 'orange', 'box', 'المخزون', S.items.length ? (low ? `<span class="neg">${dg(low)} قربت تخلص</span>` : `<span class="num">${money(val, { dec: false })}</span>`) : 'جهّز أصنافك')}
+    ${tile('compass', 'teal', 'compass', 'بوصلة السيولة', !cmp || cmp.short ? 'محتاجة 3 أسابيع بيانات' : cmp.hit ? `<span class="neg">زنقة يوم ${esc(fmtShort(cmp.hit.date))}</span>` : '<span class="pos">مكفية ✓</span>')}
+    ${tile('tax', 'red', 'receipt', 'الضرايب', S.settings.taxRegime ? (S.settings.taxRegime === 'simplified' ? 'النظام المبسط' : 'النظام العادي') : 'اعرف ضريبتك')}
+    ${tile('', 'indigo', 'brief', 'شنطة المحاسب', 'كل حاجة في ملف', '', 'bag')}
+    ${tile('', 'purple', 'wand', 'الورشة', 'فواتير وتقارير وعقود', 'hub-ws', 'ws')}
+  </div>`;
+}
+const _renderAnalytics = renderAnalytics;
+renderAnalytics = function () { _renderAnalytics(); const box = $('#anBody'); if (box) { box.insertAdjacentHTML('afterbegin', hubHTML()); fillIcons(box); } };
+
+/* ---------- settings: new pages ---------- */
+Object.assign(PAGE_T, { store: 'بيانات المحل والفواتير', bookset: 'النوتة', stockset: 'المخزون', taxset: 'الضرايب', compassset: 'بوصلة السيولة' });
+const inRow = (key, label, ph = '', o = {}) => `<label class="set-row" for="s2-${key}"><span class="lbl">${label}</span><input class="row-inp${o.num ? ' num' : ''}" id="s2-${key}" data-s2="${key}"${o.num ? ' data-num="1" inputmode="decimal"' : ''}${o.dir ? ` dir="${o.dir}"` : ''} maxlength="${o.max || 80}" value="${esc(S.settings[key] ?? '')}" placeholder="${esc(ph)}"></label>`;
+Object.assign(PAGES, {
+  store() {
+    return `${group('بيانات المحل', inRow('addr', 'العنوان', 'شارع، منطقة، مدينة') + inRow('phone', 'التليفون', '01xxxxxxxxx', { dir: 'ltr' }) + inRow('cr', 'السجل التجاري', 'اختياري') + inRow('taxId', 'البطاقة الضريبية', 'اختياري', { dir: 'ltr' }), 'بتظهر فوق الفواتير والتقارير وكشوف الحساب.', 'noicons')}
+    ${group('إنستاباي', inRow('ipa', 'عنوان الدفع', 'name@instapay', { dir: 'ltr' }) + inRow('ipaLink', 'رابط الدفع', 'https://ipn.eg/…', { dir: 'ltr', max: 200 }), 'العنوان ده بيخلّي الناس تبعتلك فلوس بس، محدش يقدر يسحب منك حاجة. لو حطيت رابط الدفع من تطبيق إنستاباي، هيظهر QR في الفواتير وشاشة الزبون.', 'noicons')}
+    ${group('الترقيم', inRow('invPrefix', 'بادئة الفواتير', 'INV-', { dir: 'ltr', max: 10 }) + inRow('invNext', 'رقم الفاتورة الجاية', '1', { num: true, max: 8 }) + inRow('qPrefix', 'بادئة عروض الأسعار', 'Q-', { dir: 'ltr', max: 10 }) + inRow('qNext', 'رقم العرض الجاي', '1', { num: true, max: 8 }), '', 'noicons')}
+    ${group('آخر الورقة', inRow('docFoot', 'جملة الختام', 'شكراً لتعاملكم معنا', { max: 120 }), '', 'noicons')}`;
+  },
+  bookset() {
+    const st = S.settings;
+    return `${group('رسالة التذكير', `<div class="set-row" style="flex-direction:column;align-items:stretch"><textarea class="inp" id="s2-remindMsg" data-s2="remindMsg" rows="5" maxlength="400" style="width:100%;resize:vertical">${esc(st.remindMsg)}</textarea><div class="chips" style="margin-top:8px">${['{الاسم}', '{المبلغ}', '{المحل}', '{الدفع}'].map(v => `<button type="button" class="chip" data-ins="${v}">${v}</button>`).join('')}</div></div>`, '{الدفع} بيتحط مكانه سطر إنستاباي لو مكتوب في بيانات المحل.', 'noicons')}
+    ${group('مدة الآجل', [[7, 'أسبوع'], [15, '15 يوم'], [30, 'شهر'], [60, 'شهرين']].map(([v, l]) => pickRow('creditDays', v, l, st.creditDays)).join(''), 'لو ما قلتش ميعاد («هيدفع آخر الشهر»)، الدين بيتعتبر متأخر بعد المدة دي.', 'noicons')}
+    ${group('', inRow('waCode', 'كود الدولة لواتساب', '20', { num: true, max: 4 }), 'مصر 20. بيتحط قبل أرقام الموبايل اللي بتبدأ بـ 0.', 'noicons')}`;
+  },
+  stockset() {
+    const st = S.settings;
+    return `${group('طريقة التكلفة', pickRow('costMethod', 'avg', 'متوسط السعر', st.costMethod || 'avg', 'كل الكمية بمتوسط تمنها') + pickRow('costMethod', 'fifo', 'اللي دخل الأول يطلع الأول', st.costMethod || 'avg', 'FIFO'), 'التغيير بيأثر على البيع الجاي بس، القيود القديمة بتفضل زي ما هي.', 'noicons')}
+    ${group('', swRow('lowStock', 'orange', 'bell', 'نبّهني لما صنف يقرب يخلص', st.lowStock))}
+    ${group('البيع من غير اسم صنف', [[0, 'ما تحسبش تكلفة'], [10, 'مكسبي حوالي 10%'], [20, 'مكسبي حوالي 20%'], [30, 'مكسبي حوالي 30%'], [40, 'مكسبي حوالي 40%']].map(([v, l]) => pickRow('margin', v, l, +st.margin || 0)).join(''), 'لو قلت «بعت بضاعة بـ 3000» من غير الصنف، التكلفة بتتحسب تقديري بالنسبة دي عشان مكسبك يبان أقرب للحقيقة.', 'noicons')}`;
+  },
+  taxset() {
+    const st = S.settings;
+    return `${group('النظام الضريبي', pickRow('taxRegime', 'simplified', 'النظام المبسط', st.taxRegime, 'قانون 6 لسنة 2025') + pickRow('taxRegime', 'normal', 'النظام العادي', st.taxRegime), '', 'noicons')}
+    ${group('', swRow('vatReg', 'red', 'receipt', 'مسجّل في القيمة المضافة', st.vatReg) + inRow('vatRate', 'نسبة القيمة المضافة %', '14', { num: true, max: 5 }))}
+    ${group('بداية السنة المالية', `<label class="set-row" for="s2-fy"><span class="lbl">الشهر</span><select class="row-sel" id="s2-fy" data-s2="fyStart" data-num="1">${Array.from({ length: 12 }, (_, k) => `<option value="${k + 1}"${+st.fyStart === k + 1 ? ' selected' : ''}>${esc(dfMonth.format(new Date(2025, k, 1)).replace(/\s*\d+.*$/, ''))}</option>`).join('')}</select></label>`, '', 'noicons')}
+    ${group('شرايح النظام المبسط (نسبة من حجم الأعمال)', (st.brackets || []).map(([lim, r], k) => `<div class="set-row"><span class="lbl">لحد <span class="num">${money(lim, { dec: false })}</span></span><input class="row-inp num" style="max-width:90px" data-br="${k}" inputmode="decimal" value="${esc(r)}"><span class="muted">%</span></div>`).join(''), 'القيم دي مأخوذة من المنشور عن القانون. راجعها مع المحاسب أو النص الرسمي قبل ما تعتمد عليها.', 'noicons')}`;
+  },
+  compassset() {
+    const st = S.settings;
+    return `${group('حد الأمان', inRow('compassMin', 'نبّهني لو الرصيد هينزل تحت', '0', { num: true, max: 12 }), 'البوصلة هتحذّرك لو الرصيد المتوقع (درج + بنك) هينزل تحت المبلغ ده.', 'noicons')}
+    ${group('مدة التوقع', [[14, 'أسبوعين'], [30, 'شهر'], [60, 'شهرين']].map(([v, l]) => pickRow('compassDays', v, l, +st.compassDays || 30)).join(''), '', 'noicons')}`;
+  },
+});
+const _pagesRoot = PAGES.root;
+PAGES.root = function () {
+  const html = _pagesRoot();
+  const ws = `<button type="button" class="ws-card" data-act2="ws"><span class="ws-ic">${ic('wand')}</span><span class="ws-tx"><b>الورشة</b><small>اطلب فاتورة أو كشف حساب أو تقرير أو عقد بالكلام، ويطلعلك PDF وWord وExcel</small></span>${chev()}</button>`;
+  const extra = group('', navRow('store', 'indigo', 'store', 'بيانات المحل والفواتير', S.settings.ipa ? 'إنستاباي ✓' : '') + navRow('bookset', 'green', 'users', 'النوتة') + navRow('stockset', 'orange', 'box', 'المخزون', S.settings.costMethod === 'fifo' ? 'FIFO' : S.settings.costMethod ? 'متوسط' : '') + navRow('taxset', 'red', 'receipt', 'الضرايب', S.settings.taxRegime === 'simplified' ? 'المبسط' : S.settings.taxRegime === 'normal' ? 'العادي' : '') + navRow('compassset', 'teal', 'compass', 'بوصلة السيولة'));
+  return html.replace(/(<\/button>)/, `$1${ws}`).replace(/(<div class="group">)/, `${extra}$1`);
+};
+const _pagesData = PAGES.data;
+PAGES.data = function () { return _pagesData().replace(/(<div class="group"><div class="group-h">النسخ الاحتياطي)/, `${group('', actRow('bag', 'indigo', 'brief', 'شنطة المحاسب', 'كل التقارير في Excel وPDF مرة واحدة'))}$1`); };
+setRoot.addEventListener('input', e => {
+  const k = e.target.dataset && e.target.dataset.s2; if (!k) { if (e.target.dataset && e.target.dataset.br != null) { const b = (S.settings.brackets || V2_SETTINGS.brackets).map(x => [...x]); b[+e.target.dataset.br][1] = toNum(e.target.value) || 0; S.settings.brackets = b; save(); } return; }
+  S.settings[k] = e.target.dataset.num ? (toNum(e.target.value) || 0) : e.target.value; save();
+});
+setRoot.addEventListener('change', e => { const k = e.target.dataset && e.target.dataset.s2; if (k && e.target.tagName === 'SELECT') { S.settings[k] = e.target.dataset.num ? +e.target.value : e.target.value; save(); } });
+setRoot.addEventListener('click', e => {
+  const ins = e.target.closest('[data-ins]'); if (ins) { const ta = $('#s2-remindMsg'); if (ta) { const p0 = ta.selectionStart || ta.value.length; ta.value = ta.value.slice(0, p0) + ins.dataset.ins + ta.value.slice(p0); S.settings.remindMsg = ta.value; save(); ta.focus(); } return; }
+  const a = e.target.closest('[data-act="bag"]'); if (a) { e.stopPropagation(); bagDialog(); }
+}, true);
+
+/* =========================================================
+   الورشة: a separate workspace that makes documents
+   doc model: { id, kind, title, date, number, party, blocks: [...] }
+   blocks: title · meta [[k,v]] · p · table {head, rows, foot, num:[cols]} · totals [[k,v,strong]] · note · sign [labels] · qr
+   ========================================================= */
+const DOCS = {
+  invoice: { ar: 'فاتورة', icon: 'receipt', color: 'blue', desc: 'فاتورة بيع بلوجو المحل والأصناف والإجمالي' },
+  quote: { ar: 'عرض سعر', icon: 'doc', color: 'teal', desc: 'عرض أسعار لعميل بصلاحية' },
+  receipt: { ar: 'إيصال استلام', icon: 'cash', color: 'green', desc: 'إيصال استلام نقدية من عميل' },
+  statement: { ar: 'كشف حساب', icon: 'users', color: 'indigo', desc: 'حركة زبون أو مورد ورصيده' },
+  reminder: { ar: 'خطاب مطالبة', icon: 'bell', color: 'orange', desc: 'خطاب مؤدب بالمبلغ المستحق' },
+  income: { ar: 'قائمة الدخل', icon: 'trend', color: 'blue', desc: 'الإيرادات والمصروفات وصافي الربح' },
+  balance: { ar: 'المركز المالي', icon: 'scale', color: 'purple', desc: 'الأصول والالتزامات وحقوق الملكية' },
+  tb: { ar: 'ميزان المراجعة', icon: 'ledger', color: 'gray', desc: 'أرصدة كل الحسابات مدين ودائن' },
+  cashflow: { ar: 'التدفقات النقدية', icon: 'drop', color: 'teal', desc: 'الداخل والخارج من الفلوس' },
+  journal: { ar: 'دفتر اليومية', icon: 'journal', color: 'gray', desc: 'كل القيود في الفترة' },
+  sales: { ar: 'تقرير المبيعات', icon: 'trend', color: 'green', desc: 'المبيعات يوم بيوم ولكل زبون' },
+  expenses: { ar: 'تقرير المصروفات', icon: 'trenddown', color: 'red', desc: 'المصروفات حسب النوع' },
+  debtors: { ar: 'أرصدة العملاء', icon: 'users', color: 'orange', desc: 'مين عليه كام ومن إمتى' },
+  stock: { ar: 'تقرير المخزون', icon: 'box', color: 'orange', desc: 'الأصناف والكميات والقيمة' },
+  count: { ar: 'محضر جرد', icon: 'check', color: 'indigo', desc: 'نتيجة آخر جرد بالفروق والتوقيعات' },
+  letter: { ar: 'خطاب', icon: 'edit', color: 'pink', desc: 'خطاب رسمي بأي موضوع' },
+  contract: { ar: 'عقد اتفاق', icon: 'shield', color: 'purple', desc: 'عقد بين طرفين ببنود تكتبها' },
+  memo: { ar: 'مذكرة داخلية', icon: 'doc', color: 'gray', desc: 'مذكرة للعاملين أو الشركاء' },
+};
+const PERIOD_OPTS = [{ label: 'الشهر ده', value: 'month', rec: true }, { label: 'الشهر اللي فات', value: 'lastmonth' }, { label: 'السنة دي', value: 'year' }, { label: 'كل الفترات', value: 'all' }];
+const needsPeriod = k => ['income', 'balance', 'tb', 'cashflow', 'journal', 'sales', 'expenses'].includes(k);
+const needsParty = k => ['invoice', 'quote', 'receipt', 'statement', 'reminder'].includes(k);
+const needsLines = k => ['invoice', 'quote'].includes(k);
+
+/* ---------- builders ---------- */
+function shopMeta() { const st = S.settings; return { biz: st.biz || 'المحل', owner: st.owner, addr: st.addr, phone: st.phone, cr: st.cr, taxId: st.taxId, logo: st.logo, ipa: st.ipa, ipaLink: st.ipaLink, foot: st.docFoot }; }
+const pLabel = code => { const P_ = periodOf(code); return { ...P_, text: `${P_.label}: ${fmtShort(P_.from)} – ${fmtShort(P_.to)}` }; };
+const mm = v => money(v, { dec: true });
+function nextNo(kind) { const st = S.settings; if (kind === 'invoice') { const n = +st.invNext || 1; st.invNext = n + 1; return (st.invPrefix || '') + pad(n, 4); } if (kind === 'quote') { const n = +st.qNext || 1; st.qNext = n + 1; return (st.qPrefix || '') + pad(n, 4); } return 'D-' + pad((S.docs.length || 0) + 1, 4); }
+function stmtBlocks(md) {
+  const fmt = c => c == null ? '' : money(c, { paren: true });
+  if (md.cols) { const body = md.rows.filter(r => r.kind !== 'grand'), g = md.rows.find(r => r.kind === 'grand'); return { t: 'table', head: md.cols, rows: body.map(r => r.kind === 'sec' ? { h: r.cells[0] } : r.cells.map((c, i) => i ? fmt(c) : c)), foot: g ? g.cells.map((c, i) => i ? fmt(c) : c) : undefined, num: md.cols.map((_, i) => i).slice(1) }; }
+  return { t: 'table', head: ['البند', 'المبلغ'], rows: md.rows.map(r => r.kind === 'sec' ? { h: r.label } : [(r.i2 ? '    ' : '') + r.label, fmt(r.amt)]), num: [1] };
+}
+function buildDoc(kind, a = {}) {
+  const shop = shopMeta(), date = a.date || today(), D = DOCS[kind];
+  const doc = { id: 'DOC' + uid().slice(0, 8), kind, title: D.ar, date, party: a.party || '', createdAt: Date.now(), shop, blocks: [] };
+  const B = x => doc.blocks.push(x);
+  if (kind === 'invoice' || kind === 'quote') {
+    doc.number = a.number || nextNo(kind); save();
+    const lines = (a.lines || []).filter(l => l.name && +l.qty && +l.price);
+    const sub = r2(sum(lines, l => l.qty * l.price)), disc = r2(+a.disc || 0), vatR = a.vat ? +S.settings.vatRate || 14 : 0, vat = r2((sub - disc) * vatR / 100), total = r2(sub - disc + vat);
+    doc.total = total;
+    B({ t: 'meta', rows: [[kind === 'invoice' ? 'رقم الفاتورة' : 'رقم العرض', doc.number], ['التاريخ', fmtDate(date)], ['العميل', a.party || '—'], ...(kind === 'quote' ? [['صالح لحد', fmtDate(addDays(date, +a.valid || 15))]] : []), ...(a.payment ? [['طريقة الدفع', a.payment]] : [])] });
+    B({ t: 'table', head: ['#', 'الصنف / الخدمة', 'الكمية', 'سعر الوحدة', 'الإجمالي'], rows: lines.map((l, i) => [String(i + 1), l.name + (l.unit ? ` (${l.unit})` : ''), dg(l.qty), mm(l.price), mm(l.qty * l.price)]), num: [2, 3, 4] });
+    B({ t: 'totals', rows: [['الإجمالي قبل الخصم', mm(sub)], ...(disc ? [['خصم', '− ' + mm(disc)]] : []), ...(vat ? [[`ضريبة القيمة المضافة ${dg(vatR)}%`, mm(vat)]] : []), ['الإجمالي المطلوب', mm(total) + ' ' + cur(), true]] });
+    if (a.notes) B({ t: 'note', text: a.notes });
+    if (shop.ipa || shop.ipaLink) B({ t: 'qr', text: shop.ipaLink || '', label: 'ادفع بإنستاباي', value: shop.ipa || '' });
+    B({ t: 'sign', labels: kind === 'invoice' ? ['توقيع المستلم', 'توقيع البائع'] : ['اعتماد العميل', 'عن ' + shop.biz] });
+  } else if (kind === 'receipt') {
+    doc.number = 'R-' + pad((S.docs.filter(d => d.kind === 'receipt').length || 0) + 1, 4);
+    B({ t: 'meta', rows: [['رقم الإيصال', doc.number], ['التاريخ', fmtDate(date)]] });
+    B({ t: 'p', text: `استلمنا من السيد/ة ${a.party || '..........'} مبلغ وقدره ${mm(+a.amount || 0)} ${cur()} فقط لا غير، ${a.about ? `وذلك عن ${a.about}` : 'وذلك سداداً من الحساب'}، ${a.method ? `بطريقة ${a.method}` : 'نقداً'}.` });
+    B({ t: 'totals', rows: [['المبلغ المستلم', mm(+a.amount || 0) + ' ' + cur(), true]] });
+    B({ t: 'sign', labels: ['المستلم', 'الختم'] });
+  } else if (kind === 'statement' || kind === 'reminder') {
+    const p = partyByKey(pkey(a.party || '')) || { name: a.party || '', moves: [], cust: 0, supp: 0, aging: { open: [] } };
+    const isC = p.cust !== 0 || !p.supp, bal = isC ? p.cust : p.supp;
+    if (kind === 'statement') {
+      let run = 0;
+      B({ t: 'meta', rows: [['الاسم', p.name], ['التاريخ', fmtDate(date)], ['الرصيد', mm(Math.abs(bal)) + ' ' + cur() + (bal > 0 ? (isC ? ' (مستحق لنا)' : ' (مستحق لكم)') : bal < 0 ? ' (رصيد دائن)' : '')]] });
+      B({ t: 'table', head: ['التاريخ', 'البيان', 'مدين', 'دائن', 'الرصيد'], rows: p.moves.map(m => { const v = r2(isC ? m.ar : -m.ap); run = r2(run + v); return [fmtShort(m.e.date), m.e.description.replace(/ - [^-]+$/, ''), v > 0 ? mm(v) : '', v < 0 ? mm(-v) : '', mm(run)]; }), num: [2, 3, 4] });
+      B({ t: 'totals', rows: [['الرصيد النهائي', mm(Math.abs(run)) + ' ' + cur(), true]] });
+      if (shop.ipa || shop.ipaLink) B({ t: 'qr', text: shop.ipaLink || '', label: 'ادفع بإنستاباي', value: shop.ipa || '' });
+    } else {
+      doc.title = 'خطاب مطالبة';
+      B({ t: 'meta', rows: [['التاريخ', fmtDate(date)], ['إلى', p.name]] });
+      B({ t: 'p', text: `تحية طيبة وبعد،\n\nنحيط سيادتكم علماً بأن رصيد حسابكم لدينا في ${shop.biz} بتاريخ ${fmtDate(date)} هو ${mm(Math.max(0, bal))} ${cur()}${p.aging.open.length ? `، منه مبالغ مستحقة منذ ${dg(p.aging.oldest)} يوم` : ''}.\n\nنرجو التكرم بسداد المبلغ في أقرب وقت${shop.ipa ? `، ويمكنكم التحويل على إنستاباي: ${shop.ipa}` : ''}. وفي حال تم السداد بالفعل نرجو تجاهل هذا الخطاب.\n\nشاكرين حسن تعاونكم،` });
+      if (p.aging.open.length) B({ t: 'table', head: ['تاريخ الفاتورة', 'المبلغ المتبقي', 'متأخر (يوم)'], rows: p.aging.open.map(o => [fmtShort(o.date), mm(o.left), dg(o.late)]), num: [1, 2] });
+      B({ t: 'sign', labels: ['عن ' + shop.biz] });
+    }
+  } else if (['income', 'balance', 'tb', 'cashflow'].includes(kind)) {
+    const P_ = pLabel(a.period || 'month'); doc.period = P_.text;
+    const map = { income: 'income', balance: 'balance', tb: 'tb', cashflow: 'cash' };
+    const md = stModel(map[kind], P_);
+    B({ t: 'meta', rows: [['الفترة', P_.text], ['تاريخ الإعداد', fmtDate(today())]] });
+    doc.title = md.title || doc.title; B(stmtBlocks(md));
+    if (md.check) B({ t: 'note', text: (md.check.ok ? 'متوازن ✓ ' : 'فيه فرق: ') + (md.check.label || '') });
+  } else if (kind === 'journal') {
+    const P_ = pLabel(a.period || 'month'); doc.period = P_.text;
+    const es = S.entries.filter(inP(P_.from, P_.to)).sort(byDate);
+    B({ t: 'meta', rows: [['الفترة', P_.text], ['عدد القيود', dg(es.length)]] });
+    B({ t: 'table', head: ['التاريخ', 'رقم القيد', 'البيان', 'الحساب', 'مدين', 'دائن'], rows: es.flatMap(e => e.lines.map((l, i) => [i ? '' : fmtShort(e.date), i ? '' : e.id, i ? '' : e.description, l.account, l.debit ? mm(l.debit) : '', l.credit ? mm(l.credit) : ''])), num: [4, 5] });
+  } else if (kind === 'sales' || kind === 'expenses') {
+    const P_ = pLabel(a.period || 'month'); doc.period = P_.text;
+    const es = S.entries.filter(inP(P_.from, P_.to));
+    if (kind === 'sales') {
+      const byDay = new Map(), byP = new Map(); let tot = 0;
+      for (const e of es) { const v = sum(e.lines.filter(l => l.account === SALES || l.account === SERV), l => l.credit - l.debit); if (!v) continue; tot += v; byDay.set(e.date, (byDay.get(e.date) || 0) + v); const k = e.party || 'نقدي / بدون اسم'; byP.set(k, (byP.get(k) || 0) + v); }
+      B({ t: 'meta', rows: [['الفترة', P_.text], ['إجمالي المبيعات', mm(tot) + ' ' + cur()]] });
+      B({ t: 'table', head: ['اليوم', 'المبيعات'], rows: [...byDay].sort().map(([d, v]) => [fmtShort(d), mm(v)]), foot: ['الإجمالي', mm(tot)], num: [1] });
+      B({ t: 'table', head: ['العميل', 'المبيعات', 'النسبة'], rows: [...byP].sort((x, y) => y[1] - x[1]).map(([k, v]) => [k, mm(v), tot ? dg((v / tot * 100).toFixed(1)) + '%' : '']), num: [1, 2] });
+    } else {
+      const I = incomeStmt(P_.from, P_.to);
+      B({ t: 'meta', rows: [['الفترة', P_.text], ['إجمالي المصروفات', mm(I.expenses) + ' ' + cur()]] });
+      B({ t: 'table', head: ['نوع المصروف', 'المبلغ', 'النسبة'], rows: I.exp.filter(x => x[1]).map(([k, v]) => [k, mm(v), I.expenses ? dg((v / I.expenses * 100).toFixed(1)) + '%' : '']), foot: ['الإجمالي', mm(I.expenses), '100%'], num: [1, 2] });
+    }
+  } else if (kind === 'debtors') {
+    const book = [...partyBook().values()].filter(p => p.cust > 0.005).sort((x, y) => y.cust - x.cust);
+    B({ t: 'meta', rows: [['التاريخ', fmtDate(date)], ['عدد العملاء', dg(book.length)], ['الإجمالي', mm(sum(book, p => p.cust)) + ' ' + cur()]] });
+    B({ t: 'table', head: ['العميل', 'الرصيد', 'أقل من شهر', '1–2 شهر', '2–3 شهور', '+3 شهور'], rows: book.map(p => [p.name, mm(p.cust), ...p.aging.b.map(x => x ? mm(x) : '')]), foot: ['الإجمالي', mm(sum(book, p => p.cust)), ...[0, 1, 2, 3].map(k => mm(sum(book, p => p.aging.b[k])))], num: [1, 2, 3, 4, 5] });
+  } else if (kind === 'stock') {
+    const stt = stockState(); let tv = 0;
+    const rows = S.items.map(it => { const s = stt.get(it.id) || { qty: 0, avg: 0, value: 0 }; tv += s.value; return [it.name, it.unit || '', dg(r2(s.qty)), mm(s.avg), mm(s.value), +it.min > 0 && s.qty <= +it.min ? 'قرب يخلص' : '']; });
+    B({ t: 'meta', rows: [['التاريخ', fmtDate(date)], ['طريقة التكلفة', S.settings.costMethod === 'fifo' ? 'FIFO' : 'متوسط السعر'], ['قيمة المخزون', mm(tv) + ' ' + cur()]] });
+    B({ t: 'table', head: ['الصنف', 'الوحدة', 'الكمية', 'التكلفة', 'القيمة', 'ملاحظة'], rows, foot: ['الإجمالي', '', '', '', mm(tv), ''], num: [2, 3, 4] });
+  } else if (kind === 'count') {
+    const c = S.counts[S.counts.length - 1];
+    if (!c) B({ t: 'p', text: 'لسه ما اتعملش جرد. اعمل جرد من صفحة المخزون الأول.' });
+    else {
+      doc.date = c.date;
+      B({ t: 'meta', rows: [['تاريخ الجرد', fmtDate(c.date)], ['عدد الأصناف', dg(c.rows.length)]] });
+      B({ t: 'p', text: `إنه في يوم ${fmtDate(c.date)} تم جرد بضاعة ${shop.biz}، وكانت النتيجة كالآتي:` });
+      B({ t: 'table', head: ['الصنف', 'بالدفاتر', 'الفعلي', 'الفرق', 'قيمة الفرق'], rows: c.rows.map(r => [r.name + (r.unit ? ` (${r.unit})` : ''), dg(r.sys), dg(r.counted), r.diff ? (r.diff > 0 ? '+' : '−') + dg(Math.abs(r.diff)) : '—', r.diff ? mm(Math.abs(r.diff * r.c)) : '']), num: [1, 2, 3, 4] });
+      B({ t: 'sign', labels: ['لجنة الجرد', 'المراجع', 'المدير'] });
+    }
+  } else if (kind === 'letter' || kind === 'memo') {
+    doc.title = a.subject || D.ar;
+    B({ t: 'meta', rows: [['التاريخ', fmtDate(date)], ...(a.party ? [[kind === 'memo' ? 'إلى' : 'السادة / ', a.party]] : []), ...(a.subject ? [['الموضوع', a.subject]] : [])] });
+    B({ t: 'p', text: a.body || (kind === 'memo' ? '' : 'تحية طيبة وبعد،\n\n\n\nوتفضلوا بقبول فائق الاحترام،') });
+    B({ t: 'sign', labels: [a.signer || shop.owner || shop.biz] });
+  } else if (kind === 'contract') {
+    doc.title = a.subject || 'عقد اتفاق';
+    B({ t: 'p', text: `إنه في يوم ${fmtDate(date)} تم الاتفاق بين كل من:\nالطرف الأول: ${a.partyA || shop.biz}${shop.addr ? ` — ${shop.addr}` : ''}\nالطرف الثاني: ${a.party || '....................'}\n\nوقد أقر الطرفان بأهليتهما للتعاقد، واتفقا على البنود الآتية:` });
+    const cl = String(a.clauses || '').split(/\n+/).map(clean).filter(Boolean);
+    B({ t: 'clauses', items: cl.length ? cl : ['موضوع العقد: ....................', 'المقابل المادي: ....................', 'مدة العقد: ....................', 'يختص بنظر أي نزاع ينشأ عن هذا العقد المحاكم المختصة.'] });
+    B({ t: 'p', text: 'حُرر هذا العقد من نسختين بيد كل طرف نسخة للعمل بموجبها.' });
+    B({ t: 'sign', labels: ['الطرف الأول', 'الطرف الثاني'] });
+  }
+  return doc;
+}
+
+/* ---------- renderers ---------- */
+function docHTML(doc, { forPdf } = {}) {
+  const s = doc.shop || shopMeta();
+  const logo = s.logo ? `<img class="d-logo" src="${esc(s.logo)}" alt="">` : `<div class="d-logo d-mono">${esc((s.biz || 'د').slice(0, 1))}</div>`;
+  const tbl = b => `<table class="d-tbl"><thead><tr>${b.head.map((h, i) => `<th${(b.num || []).includes(i) ? ' class="n"' : ''}>${esc(h)}</th>`).join('')}</tr></thead><tbody>${b.rows.map(r => r && r.h ? `<tr class="h"><td colspan="${b.head.length}">${esc(r.h)}</td></tr>` : `<tr>${r.map((c, i) => `<td${(b.num || []).includes(i) ? ' class="n"' : ''}>${esc(c)}</td>`).join('')}</tr>`).join('') || `<tr><td colspan="${b.head.length}" class="empty-row">مفيش بيانات</td></tr>`}</tbody>${b.foot ? `<tfoot><tr>${b.foot.map((c, i) => `<td${(b.num || []).includes(i) ? ' class="n"' : ''}>${esc(c)}</td>`).join('')}</tr></tfoot>` : ''}</table>`;
+  const body = doc.blocks.map(b => {
+    if (b.t === 'meta') return `<div class="d-meta">${b.rows.map(([k, v]) => `<div><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join('')}</div>`;
+    if (b.t === 'p') return `<div class="d-p">${esc(b.text).replace(/\n/g, '<br>')}</div>`;
+    if (b.t === 'table') return tbl(b);
+    if (b.t === 'totals') return `<div class="d-tot">${b.rows.map(([k, v, st]) => `<div class="${st ? 'st' : ''}"><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join('')}</div>`;
+    if (b.t === 'note') return `<div class="d-note">${esc(b.text)}</div>`;
+    if (b.t === 'clauses') return `<ol class="d-cl">${b.items.map(x => `<li>${esc(x)}</li>`).join('')}</ol>`;
+    if (b.t === 'sign') return `<div class="d-sign">${b.labels.map(l => `<div><span>${esc(l)}</span><i></i></div>`).join('')}</div>`;
+    if (b.t === 'qr') return `<div class="d-qr">${b.text ? `<div class="d-qrc" data-qr="${esc(b.text)}"></div>` : ''}<div><span>${esc(b.label)}</span><b dir="ltr">${esc(b.value || b.text)}</b></div></div>`;
+    return '';
+  }).join('');
+  return `<div class="dpage${forPdf ? ' pdf' : ''}" dir="rtl"><header class="d-head">${logo}<div class="d-shop"><b>${esc(s.biz)}</b><small>${[s.addr, s.phone].filter(Boolean).map(esc).join(' · ')}</small>${s.cr || s.taxId ? `<small>${[s.cr ? 'س.ت ' + esc(s.cr) : '', s.taxId ? 'ب.ض ' + esc(s.taxId) : ''].filter(Boolean).join(' · ')}</small>` : ''}</div><div class="d-kind"><b>${esc(doc.title)}</b>${doc.number ? `<small dir="ltr">${esc(doc.number)}</small>` : ''}</div></header>${body}<footer class="d-foot">${esc(s.foot || '')}<span>اتعمل بـ دفتر</span></footer></div>`;
+}
+const DOC_CSS = `.dpage{font-family:"IBM Plex Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;color:#111;background:#fff;width:794px;min-height:1000px;padding:44px 48px 36px;box-sizing:border-box;font-size:14px;line-height:1.7;display:flex;flex-direction:column;gap:18px}
+.dpage *{box-sizing:border-box}.d-head{display:flex;align-items:center;gap:14px;padding-bottom:16px;border-bottom:2px solid #111}.d-logo{width:56px;height:56px;border-radius:14px;object-fit:cover;flex:none}.d-mono{display:grid;place-items:center;background:#0A6CF2;color:#fff;font-size:26px;font-weight:700}
+.d-shop{display:flex;flex-direction:column;flex:1;min-width:0}.d-shop b{font-size:20px}.d-shop small{color:#555;font-size:12px}.d-kind{text-align:left;display:flex;flex-direction:column;align-items:flex-end}.d-kind b{font-size:22px;color:#0A6CF2}.d-kind small{color:#555;font-size:13px}
+.d-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 24px;background:#F5F6F8;border-radius:10px;padding:12px 16px}.d-meta div{display:flex;gap:8px;justify-content:space-between}.d-meta span{color:#666}.d-meta b{font-weight:600}
+.d-p{white-space:normal;font-size:15px;line-height:2}.d-tbl{width:100%;border-collapse:collapse;font-size:13px}.d-tbl th{background:#111;color:#fff;font-weight:600;padding:8px 10px;text-align:right}.d-tbl td{padding:7px 10px;border-bottom:1px solid #E3E5E8;text-align:right}.d-tbl .n{text-align:left;font-variant-numeric:tabular-nums;white-space:nowrap}
+.d-tbl tr.h td{background:#F5F6F8;font-weight:700}.d-tbl tfoot td{font-weight:700;border-top:2px solid #111;border-bottom:0}.empty-row{text-align:center!important;color:#888}
+.d-tot{align-self:flex-end;min-width:300px;display:flex;flex-direction:column;gap:4px}.d-tot div{display:flex;justify-content:space-between;gap:24px;padding:4px 0}.d-tot b{font-variant-numeric:tabular-nums}.d-tot .st{border-top:2px solid #111;padding-top:8px;font-size:17px}.d-tot .st b{color:#0A6CF2}
+.d-note{background:#FFF8E6;border-radius:8px;padding:10px 14px;font-size:13px}.d-cl{padding-inline-start:22px;margin:0;display:flex;flex-direction:column;gap:8px;font-size:15px}
+.d-sign{display:flex;justify-content:space-around;gap:24px;margin-top:auto;padding-top:28px}.d-sign div{display:flex;flex-direction:column;align-items:center;gap:36px;min-width:150px}.d-sign span{color:#444}.d-sign i{display:block;width:150px;border-bottom:1px dashed #999}
+.d-qr{display:flex;align-items:center;gap:14px;border:1px solid #E3E5E8;border-radius:12px;padding:10px 14px;align-self:flex-start}.d-qrc svg{width:84px;height:84px}.d-qr span{display:block;color:#666;font-size:12px}.d-qr b{font-size:15px}
+.d-foot{display:flex;justify-content:space-between;color:#888;font-size:11px;border-top:1px solid #E3E5E8;padding-top:10px}`;
+async function fillQRs(root) { const els = $$('[data-qr]', root); if (!els.length) return; try { const qrcode = await loadLib('qrcode.min.js', 'qrcode'); els.forEach(el => { const q = qrcode(0, 'M'); q.addData(el.dataset.qr); q.make(); el.innerHTML = q.createSvgTag({ cellSize: 3, margin: 0, scalable: true }); }); } catch (e) { /* offline: no QR */ } }
+async function docPDF(doc) {
+  const [h2c, jspdf] = await Promise.all([loadLib('html2canvas.min.js', 'html2canvas'), loadLib('jspdf.umd.min.js', 'jspdf')]);
+  const host = document.createElement('div'); host.style.cssText = 'position:fixed;left:-10000px;top:0;width:794px;background:#fff;z-index:-1';
+  host.innerHTML = `<style>${DOC_CSS}</style>${docHTML(doc, { forPdf: true })}`; document.body.appendChild(host);
+  try {
+    await fillQRs(host); if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    const page = $('.dpage', host);
+    const canvas = await h2c(page, { scale: 2, backgroundColor: '#ffffff', useCORS: true, windowWidth: 794 });
+    const pdf = new jspdf.jsPDF({ unit: 'pt', format: 'a4', compress: true });
+    const pw = pdf.internal.pageSize.getWidth(), ph = pdf.internal.pageSize.getHeight();
+    const pxPerPt = canvas.width / pw, sliceH = Math.floor(ph * pxPerPt);
+    for (let y = 0, k = 0; y < canvas.height; y += sliceH, k++) {
+      const h = Math.min(sliceH, canvas.height - y), c = document.createElement('canvas'); c.width = canvas.width; c.height = h;
+      c.getContext('2d').drawImage(canvas, 0, y, canvas.width, h, 0, 0, canvas.width, h);
+      if (k) pdf.addPage(); pdf.addImage(c.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, pw, h / pxPerPt);
+    }
+    return pdf.output('blob');
+  } finally { host.remove(); }
+}
+async function docDOCX(doc) {
+  const d = await loadLib('docx.min.js', 'docx');
+  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType, BorderStyle, ShadingType } = d;
+  const F = 'Arial', run = (text, o = {}) => new TextRun({ text: String(text ?? ''), rightToLeft: true, font: F, size: o.size || 22, bold: !!o.bold, color: o.color });
+  const para = (text, o = {}) => new Paragraph({ bidirectional: true, alignment: o.align || AlignmentType.RIGHT, spacing: { after: o.after ?? 120, line: o.line || 300 }, children: String(text ?? '').split('\n').flatMap((ln, i) => i ? [new TextRun({ break: 1, text: '' }), run(ln, o)] : [run(ln, o)]) });
+  const cell = (text, o = {}) => new TableCell({ children: [para(text, { ...o, after: 40 })], shading: o.fill ? { type: ShadingType.CLEAR, color: 'auto', fill: o.fill } : undefined, margins: { top: 60, bottom: 60, left: 100, right: 100 } });
+  const s = doc.shop || shopMeta(), kids = [];
+  kids.push(para(s.biz, { size: 32, bold: true, after: 40 }));
+  const sub = [s.addr, s.phone, s.cr ? 'س.ت ' + s.cr : '', s.taxId ? 'ب.ض ' + s.taxId : ''].filter(Boolean).join(' · '); if (sub) kids.push(para(sub, { size: 18, color: '666666' }));
+  kids.push(para(doc.title + (doc.number ? '  ' + doc.number : ''), { size: 36, bold: true, color: '0A6CF2', after: 240 }));
+  for (const b of doc.blocks) {
+    if (b.t === 'meta') kids.push(...b.rows.map(([k, v]) => para(`${k}: ${v}`, { after: 40 })), para('', { after: 80 }));
+    else if (b.t === 'p' || b.t === 'note') kids.push(para(b.text, { line: 360 }));
+    else if (b.t === 'clauses') b.items.forEach((x, i) => kids.push(para(`${i + 1}. ${x}`, { line: 340 })));
+    else if (b.t === 'totals') b.rows.forEach(([k, v, st]) => kids.push(para(`${k}: ${v}`, { bold: !!st, size: st ? 26 : 22, after: 60 })));
+    else if (b.t === 'sign') kids.push(para('', { after: 400 }), para(b.labels.map(l => `${l}: ................`).join('        '), { after: 200 }));
+    else if (b.t === 'qr') kids.push(para(`${b.label}: ${b.value || b.text}`, { bold: true }));
+    else if (b.t === 'table') {
+      const rows = [new TableRow({ tableHeader: true, children: b.head.map(h => cell(h, { bold: true, fill: 'E8EAED' })) })];
+      for (const r of b.rows) rows.push(new TableRow({ children: r && r.h ? [new TableCell({ columnSpan: b.head.length, children: [para(r.h, { bold: true, after: 40 })], shading: { type: ShadingType.CLEAR, color: 'auto', fill: 'F5F6F8' } })] : r.map(c => cell(c)) }));
+      if (b.foot) rows.push(new TableRow({ children: b.foot.map(c => cell(c, { bold: true })) }));
+      kids.push(new Table({ rows, width: { size: 100, type: WidthType.PERCENTAGE }, visuallyRightToLeft: true, borders: { top: { style: BorderStyle.SINGLE, size: 4, color: 'BBBBBB' }, bottom: { style: BorderStyle.SINGLE, size: 4, color: 'BBBBBB' }, left: { style: BorderStyle.SINGLE, size: 2, color: 'DDDDDD' }, right: { style: BorderStyle.SINGLE, size: 2, color: 'DDDDDD' }, insideHorizontal: { style: BorderStyle.SINGLE, size: 2, color: 'DDDDDD' }, insideVertical: { style: BorderStyle.SINGLE, size: 2, color: 'DDDDDD' } } }), para('', { after: 160 }));
+    }
+  }
+  if (s.foot) kids.push(para(s.foot, { size: 18, color: '888888' }));
+  const file = new Document({ creator: 'دفتر', title: doc.title, sections: [{ properties: { page: { margin: { top: 1000, bottom: 1000, left: 1000, right: 1000 } } }, children: kids }] });
+  return Packer.toBlob(file);
+}
+async function docXLSX(doc) {
+  const XL = await loadXLSX(); const wb = XL.utils.book_new(); let n = 0;
+  const meta = doc.blocks.filter(b => b.t === 'meta').flatMap(b => b.rows);
+  const tables = doc.blocks.filter(b => b.t === 'table');
+  const head = [[doc.shop ? doc.shop.biz : S.settings.biz], [doc.title + (doc.number ? ' ' + doc.number : '')], ...meta.map(([k, v]) => [k, v]), []];
+  const num = v => { const x = toNum(String(v).replace(/[^\d.\-−]/g, '').replace('−', '-')); return /^[\s\d,.\-−]+$/.test(String(v)) && String(v).trim() && isFinite(x) ? x : v; };
+  if (!tables.length) { const ws = XL.utils.aoa_to_sheet([...head, ...doc.blocks.filter(b => b.t === 'p' || b.t === 'note').flatMap(b => b.text.split('\n').map(l => [l])), ...doc.blocks.filter(b => b.t === 'totals').flatMap(b => b.rows.map(([k, v]) => [k, v]))]); ws['!cols'] = [{ wch: 40 }, { wch: 24 }]; XL.utils.book_append_sheet(wb, ws, 'المستند'); }
+  for (const t of tables) {
+    const aoa = [...(n ? [] : head), t.head, ...t.rows.map(r => r && r.h ? [r.h] : r.map((c, i) => (t.num || []).includes(i) ? num(c) : c)), ...(t.foot ? [t.foot.map((c, i) => (t.num || []).includes(i) ? num(c) : c)] : [])];
+    const tot = doc.blocks.filter(b => b.t === 'totals'); if (!n && tot.length) aoa.push([], ...tot.flatMap(b => b.rows.map(([k, v]) => [k, num(v.replace(/[^\d.,\-−\s]/g, '').trim()) || v])));
+    const ws = XL.utils.aoa_to_sheet(aoa); ws['!cols'] = t.head.map((h, i) => ({ wch: i === 0 || /البيان|الصنف|الحساب|العميل/.test(h) ? 32 : 16 })); ws['!views'] = [{ RTL: true }];
+    XL.utils.book_append_sheet(wb, ws, n ? `جدول ${n + 1}` : doc.title.slice(0, 28)); n++;
+  }
+  wb.Workbook = { Views: [{ RTL: true }] };
+  return new Blob([XL.write(wb, { bookType: 'xlsx', type: 'array' })], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+}
+const docFileName = (doc, ext) => `${doc.title}${doc.party ? ' - ' + doc.party : ''}${doc.number ? ' ' + doc.number : ''} ${doc.date}.${ext}`.replace(/[\\/:*?"<>|]/g, '-');
+async function exportDoc(doc, fmt, share) {
+  const t = toast(fmt === 'pdf' ? 'بجهّز الـ PDF…' : fmt === 'docx' ? 'بجهّز ملف Word…' : 'بجهّز ملف Excel…', { icon: 'doc', ms: 1800 }); void t;
+  try {
+    const blob = fmt === 'pdf' ? await docPDF(doc) : fmt === 'docx' ? await docDOCX(doc) : await docXLSX(doc);
+    const file = new File([blob], docFileName(doc, fmt), { type: blob.type || 'application/octet-stream' });
+    if (share) await shareFiles([file], doc.title, doc.title + (doc.party ? ' - ' + doc.party : '')); else downloadBlob(file, file.name);
+    haptic('success');
+  } catch (e) { console.warn(e); toast(navigator.onLine === false ? 'الأداة دي محتاجة نت أول مرة بس، وبعد كده تشتغل أوفلاين' : 'مقدرتش أعمل الملف دلوقتي', { type: 'err' }); }
+}
+function printDoc(doc) {
+  const pr = $('#print-root'); pr.innerHTML = `<style>@media print{body>*:not(#print-root){display:none!important}#print-root{display:block!important}@page{size:A4;margin:0}} ${DOC_CSS} .dpage{width:auto;min-height:auto}</style>${docHTML(doc)}`;
+  fillQRs(pr).then(() => setTimeout(() => window.print(), 120));
+}
+
+/* ---------- the workspace UI ---------- */
+let wsTab = 'tasks';
+function openWS(tab) {
+  let el = $('#ws');
+  if (!el) {
+    el = document.createElement('div'); el.id = 'ws'; el.className = 'ws'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', 'الورشة');
+    el.innerHTML = `<header class="ws-top"><button type="button" class="nav-back ws-back" id="wsBack">${ic('back')}<span>دفتر</span></button><div class="ws-title"><b>الورشة</b><small>مساحة الملفات</small></div><span class="ws-sp"></span></header>
+    <div class="ws-seg"><div class="seg full" role="tablist"><button type="button" role="tab" data-wst="tasks">المهام</button><button type="button" role="tab" data-wst="tpl">القوالب</button><button type="button" role="tab" data-wst="lib">المكتبة</button></div></div>
+    <div class="ws-body"><section class="ws-pane" data-pane="tasks"><div class="ws-msgs" id="wsMsgs" role="log" aria-live="polite"></div><form class="composer ws-comp" id="wsForm" autocomplete="off"><div class="comp-row"><div class="cbox"><textarea id="wsIn" rows="1" placeholder="اطلب ملف… مثلاً: اعملي كشف حساب لمحمد PDF" aria-label="اطلب ملف"></textarea><button type="submit" class="cbtn send" aria-label="إرسال">${ic('send')}</button></div></div></form></section>
+    <section class="ws-pane" data-pane="tpl"><div class="ws-grid" id="wsTpl"></div></section><section class="ws-pane" data-pane="lib"><div id="wsLib"></div></section></div>`;
+    document.body.appendChild(el); fillIcons(el);
+    $('#wsBack').onclick = closeWS;
+    el.addEventListener('click', e => { const t = e.target.closest('[data-wst]'); if (t) setWsTab(t.dataset.wst); });
+    $('#wsForm').addEventListener('submit', e => { e.preventDefault(); const v = $('#wsIn').value.trim(); if (!v) return; $('#wsIn').value = ''; wsAsk(v); });
+    $('#wsIn').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('#wsForm').requestSubmit(); } });
+    $('#wsIn').addEventListener('input', e => { e.target.style.height = 'auto'; e.target.style.height = Math.min(140, e.target.scrollHeight) + 'px'; });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#ws.in') && !dlg.open) closeWS(); });
+  }
+  el.hidden = false; requestAnimationFrame(() => el.classList.add('in')); root.classList.add('ws-open');
+  setWsTab(tab || wsTab); haptic('tick');
+  if (!$('#wsMsgs').childElementCount) wsWelcome();
+}
+function closeWS() { const el = $('#ws'); if (!el) return; el.classList.remove('in'); root.classList.remove('ws-open'); setTimeout(() => { el.hidden = true; }, 280); }
+function setWsTab(t) { wsTab = t; $$('#ws [data-wst]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.wst === t))); $$('#ws .ws-pane').forEach(p => p.classList.toggle('on', p.dataset.pane === t)); if (t === 'tpl') renderTpl(); if (t === 'lib') renderLib(); if (t === 'tasks') setTimeout(() => { const m = $('#wsMsgs'); m.scrollTop = m.scrollHeight; }, 30); }
+const wsMsgs = () => $('#wsMsgs');
+function wsSay(html, who = 'bot', cls = '') { const m = document.createElement('div'); m.className = `ws-msg ${who} ${cls}`; m.innerHTML = html; wsMsgs().appendChild(m); fillIcons(m); requestAnimationFrame(() => { m.classList.add('enter'); wsMsgs().scrollTop = wsMsgs().scrollHeight; }); return m; }
+function wsWelcome() {
+  wsSay(`<div class="ws-hello"><span class="ws-ic">${ic('wand')}</span><b>أهلاً بيك في الورشة</b><p>اطلب أي ملف بالكلام وأنا أجهّزه من بياناتك. لو محتاج حاجة ناقصة هسألك.</p></div>
+  <div class="ws-sugs">${['اعملي كشف حساب لعميل PDF', 'فاتورة لمحمد فيها 3 كراتين زيت بـ 600', 'قائمة الدخل للشهر ده Excel', 'تقرير أرصدة العملاء', 'خطاب مطالبة', 'عقد توريد Word'].map(x => `<button type="button" class="chip" data-wsug="${esc(x)}">${esc(x)}</button>`).join('')}</div>`);
+  wsMsgs().addEventListener('click', e => { const s = e.target.closest('[data-wsug]'); if (s) wsAsk(s.dataset.wsug); });
+}
+/* understand a request: kind, format, party, period, lines */
+const WS_KINDS = [
+  ['invoice', /فاتوره|فاتورة/], ['quote', /عرض سعر|عرض اسعار|عرض أسعار/], ['receipt', /ايصال|إيصال|وصل استلام/], ['statement', /كشف حساب|كشف/], ['reminder', /مطالبه|تذكير بالدفع|خطاب مطالبه/],
+  ['income', /قائمه الدخل|الدخل|ارباح وخسائر|الارباح والخسائر|كسبت كام/], ['balance', /ميزانيه|المركز المالي|مركز مالي/], ['tb', /ميزان مراجعه|ميزان المراجعه/], ['cashflow', /تدفقات/], ['journal', /اليوميه|دفتر اليوميه|كل القيود/],
+  ['sales', /تقرير المبيعات|المبيعات/], ['expenses', /المصروفات|المصاريف/], ['debtors', /ارصده العملاء|المديونيات|اللي ليا برا|فلوسي برا|العملاء/], ['count', /محضر جرد|محضر/], ['stock', /المخزون|الاصناف|تقرير الجرد|جرد/],
+  ['contract', /عقد/], ['memo', /مذكره/], ['letter', /خطاب|جواب|رساله رسميه/], ['bag', /شنطه المحاسب|للمحاسب/],
+];
+function wsParse(text) {
+  const t = fold(clean(text)), out = { text };
+  for (const [k, re] of WS_KINDS) if (re.test(t)) { out.kind = k; break; }
+  if (/pdf|بي دي اف|بى دى اف/.test(t)) out.fmt = 'pdf'; else if (/word|وورد|ورد(?:\s|$)|docx/.test(t)) out.fmt = 'docx'; else if (/excel|اكسل|إكسل|اكسيل|xlsx|شيت/.test(t)) out.fmt = 'xlsx'; else if (/اطبع|طباعه/.test(t)) out.fmt = 'print';
+  if (/الشهر ده|الشهر الحالي|هذا الشهر/.test(t)) out.period = 'month'; else if (/الشهر اللي فات|الشهر الماضي/.test(t)) out.period = 'lastmonth'; else if (/السنه|سنوي/.test(t)) out.period = 'year'; else if (/الربع/.test(t)) out.period = 'quarter'; else if (/كل الفترات|من الاول/.test(t)) out.period = 'all'; else if (/اخر 30|اخر شهر/.test(t)) out.period = '30d';
+  const book = [...partyBook().values()].filter(p => p.name !== NONAME); let best = null;
+  for (const p of book) { const k = fold(p.name), k2 = pkey(p.name); for (const n of [k, k2]) if (n.length >= 2 && new RegExp(`(?:^|\\s)(?:ل|لل|من|ب|ال)?${reEsc(n)}(?=$|\\s)`).test(t) && (!best || n.length > best.n.length)) best = { p, n }; }
+  if (best) out.party = best.p.name;
+  else { const m = /(?:ل|لـ|باسم|للعميل|للزبون|لشركه|للحاج|للاستاذ)\s*([^\s\d،,]{2,}(?:\s+[^\s\d،,]{2,})?)/.exec(clean(text).replace(/ـ/g, '')); if (m && !/^(?:الشهر|السنه|السنة|العميل|الزبون|محمد\s+فيها)$/.test(fold(m[1]))) out.party = m[1].replace(/\s+(?:فيها|فيه|بـ?|PDF|pdf|وورد|اكسل).*$/i, '').trim(); }
+  if (needsLines(out.kind)) out.lines = wsLines(text);
+  return out;
+}
+function wsLines(text) {
+  const u = numify(fold(clean(text)).replace(/([^\d\s])([،,])/g, '$1 $2 '));
+  const parts = u.split(/\s+و(?=\s*\d)|[،,]|\s+و\s+(?=\S+\s+\d)/); const lines = [];
+  for (const p of parts) {
+    let m = new RegExp(`(\\d+(?:\\.\\d+)?)\\s*((?:${UNIT_WORDS})\\s+)?([\\u0600-\\u06FF][\\u0600-\\u06FF\\s]{0,30}?)\\s*(?:ال(?:واحد|واحده|${UNIT_WORDS})\\s*)?(?:ب|بـ|بسعر|ب سعر)\\s*(\\d+(?:\\.\\d+)?)`).exec(p);
+    if (m) { lines.push({ qty: +m[1], unit: (m[2] || '').trim(), name: m[3].replace(/^(?:فيها|فيه)\s+/, '').trim(), price: +m[4] }); continue; }
+    m = /([؀-ۿ][؀-ۿ\s]{1,30}?)\s+(\d+(?:\.\d+)?)\s*[x×*]\s*(\d+(?:\.\d+)?)/.exec(p); if (m) lines.push({ name: m[1].trim(), qty: +m[2], price: +m[3] });
+  }
+  for (const l of lines) { const it = S.items.find(x => itemNames(x).some(n => fold(l.name).includes(n))); if (it) { l.name = it.name; l.unit = l.unit || it.unit; } }
+  return lines;
+}
+async function wsAsk(text, preset) {
+  wsSay(esc(text), 'me');
+  const q = preset || wsParse(text);
+  if (!q.kind) {
+    const a = await askSheet({ title: 'تحب أعملك إيه؟', questions: [{ id: 'k', q: 'مش متأكد أنهي ملف تقصد. اختار:', other: false, noAuto: false, options: Object.entries(DOCS).slice(0, 4).map(([k, v]) => ({ label: v.ar, value: k, desc: v.desc })).concat([{ label: 'حاجة تانية من القوالب', value: '_tpl' }]) }] });
+    if (!a) { wsSay('تمام، قولّي لما تحب.'); return; }
+    if (a.k === '_tpl') { setWsTab('tpl'); return; }
+    q.kind = a.k;
+  }
+  if (q.kind === 'bag') { wsSay('بجهّز شنطة المحاسب…'); bagDialog(); return; }
+  const qs = [];
+  const book = [...partyBook().values()].filter(p => p.name !== NONAME);
+  if (needsParty(q.kind) && !q.party) {
+    const top = (q.kind === 'statement' || q.kind === 'reminder' ? book.filter(p => p.cust > 0 || p.supp > 0).sort((a, b) => b.cust - a.cust) : book.sort((a, b) => (b.last || '').localeCompare(a.last || ''))).slice(0, 4);
+    qs.push({ id: 'party', header: 'العميل', q: q.kind === 'statement' ? 'كشف حساب مين؟' : 'الملف ده باسم مين؟', otherPh: 'اكتب الاسم', options: top.map(p => ({ label: p.name, desc: p.cust > 0 ? `عليه ${money(p.cust, { dec: false })}` : p.supp > 0 ? `ليه ${money(p.supp, { dec: false })}` : '' })) });
+    if (!top.length) qs[qs.length - 1].options = [{ label: 'عميل نقدي', value: 'عميل نقدي' }];
+  }
+  if (needsPeriod(q.kind) && !q.period) qs.push({ id: 'period', header: 'الفترة', q: 'عن أنهي فترة؟', other: false, options: PERIOD_OPTS });
+  if (!q.fmt) qs.push({ id: 'fmt', header: 'نوع الملف', q: 'تحبه يطلع إزاي؟', other: false, options: [{ label: 'PDF', value: 'pdf', rec: true, desc: 'للإرسال على واتساب والطباعة' }, { label: 'Word', value: 'docx', desc: 'تعدّل عليه في Word' }, { label: 'Excel', value: 'xlsx', desc: 'جداول تحسب وتعدّل فيها' }] });
+  if (qs.length) { const a = await askSheet({ title: DOCS[q.kind].ar, intro: 'محتاج كام حاجة بس:', questions: qs, done: 'اعمل الملف' }); if (!a) { wsSay('اتلغى. قولّي لو عايز حاجة تانية.'); return; } Object.assign(q, a); }
+  if (needsLines(q.kind) && !(q.lines && q.lines.length)) { tplForm(q.kind, q); return; }
+  await wsMake(q);
+}
+async function wsMake(q) {
+  const steps = { invoice: ['بجيب بيانات المحل', 'بحسب السطور والإجمالي', 'برتّب الفاتورة'], statement: ['بجيب حركات ' + (q.party || 'العميل'), 'بحسب الرصيد الجاري', 'برتّب الكشف'] }[q.kind] || ['بجمع البيانات', 'بحسب الأرقام', 'برتّب الملف'];
+  const m = wsSay(`<div class="ws-steps">${steps.map(s => `<div class="ws-step"><i></i><span>${esc(s)}</span></div>`).join('')}</div>`);
+  for (const el of $$('.ws-step', m)) { el.classList.add('run'); await v2wait(motionOK() ? 380 : 0); el.classList.remove('run'); el.classList.add('ok'); }
+  const doc = buildDoc(q.kind, q); doc.fmt = q.fmt || 'pdf';
+  S.docs.unshift(doc); if (S.docs.length > 200) S.docs.length = 200; save();
+  wsSay(docCardHTML(doc, true));
+  if (q.fmt && q.fmt !== 'print') exportDoc(doc, q.fmt, true); else if (q.fmt === 'print') printDoc(doc);
+  if (q.kind === 'invoice' && doc.total) wsSay(`<div class="ws-q">تحب أسجّل الفاتورة دي في الدفتر كمان؟<div class="ws-qa"><button type="button" class="btn sm" data-wsrec="${esc(doc.id)}" data-m="credit">على الحساب</button><button type="button" class="btn sm" data-wsrec="${esc(doc.id)}" data-m="cash">كاش</button><button type="button" class="btn sm ghost" data-wsrec="">لأ</button></div></div>`);
+}
+function docCardHTML(doc, big) {
+  const D = DOCS[doc.kind] || DOCS.letter;
+  return `<div class="doc-card${big ? ' big' : ''}" data-doc="${esc(doc.id)}"><span class="tile" style="background:var(--tile-${D.color})">${ic(D.icon)}</span><span class="p-tx"><b>${esc(doc.title)}${doc.number ? ` <bdi class="mono">${esc(doc.number)}</bdi>` : ''}</b><small>${[doc.party, doc.period || fmtShort(doc.date)].filter(Boolean).map(esc).join(' · ')}</small></span>${big ? '' : chev()}${big ? `<div class="doc-acts"><button type="button" class="btn sm" data-dx="view" data-id="${esc(doc.id)}">${ic('eye')}عرض</button><button type="button" class="btn sm" data-dx="pdf" data-id="${esc(doc.id)}">PDF</button><button type="button" class="btn sm" data-dx="docx" data-id="${esc(doc.id)}">Word</button><button type="button" class="btn sm" data-dx="xlsx" data-id="${esc(doc.id)}">Excel</button></div>` : ''}</div>`;
+}
+document.addEventListener('click', e => {
+  const x = e.target.closest('[data-dx]');
+  if (x) { const doc = S.docs.find(d => d.id === x.dataset.id); if (!doc) return; if (x.dataset.dx === 'view') docViewer(doc); else exportDoc(doc, x.dataset.dx, true); return; }
+  const c = e.target.closest('.doc-card:not(.big)'); if (c) { const doc = S.docs.find(d => d.id === c.dataset.doc); if (doc) docViewer(doc); return; }
+  const r = e.target.closest('[data-wsrec]');
+  if (r) { const box = r.closest('.ws-q'); if (box) box.querySelectorAll('button').forEach(b => { b.disabled = true; }); const doc = S.docs.find(d => d.id === r.dataset.wsrec); if (!doc) { wsSay('تمام 👍'); return; } closeWS(); setView('chat'); const party = doc.party && doc.party !== 'عميل نقدي' ? ` لـ ${doc.party}` : ''; setTimeout(() => respond(`بعت بضاعة${party} بـ ${doc.total} ${r.dataset.m === 'cash' ? 'كاش' : 'على الحساب'} فاتورة ${doc.number}`), 300); }
+});
+function docViewer(doc) {
+  openDialog({ title: doc.title, wide: true, body: `<div class="doc-prev"><style>${DOC_CSS}</style><div class="doc-scale">${docHTML(doc)}</div></div>`,
+    foot: `<button type="button" class="btn danger" id="dvDel">${ic('trash')}</button><span style="flex:1"></span><button type="button" class="btn" id="dvPrint">${ic('print')}طباعة</button><button type="button" class="btn" data-dx="docx" data-id="${esc(doc.id)}">Word</button><button type="button" class="btn" data-dx="xlsx" data-id="${esc(doc.id)}">Excel</button><button type="button" class="btn primary" data-dx="pdf" data-id="${esc(doc.id)}">${ic('upload')}PDF</button>`,
+    onMount: d => {
+      const box = $('.doc-prev', d), sc = $('.doc-scale', d); const fit = () => { const w = box.clientWidth || 340; const k = Math.min(1, w / 794); sc.style.transform = `scale(${k})`; sc.style.height = ($('.dpage', sc).offsetHeight * k) + 'px'; };
+      fillQRs(sc).then(fit); requestAnimationFrame(fit);
+      $('#dvPrint', d).onclick = () => { d.close(); printDoc(doc); };
+      $('#dvDel', d).onclick = () => { S.docs = S.docs.filter(x => x !== doc); save(); d.close(); renderLib(); toast('الملف اتمسح', { icon: 'trash' }); };
+    } });
+}
+function renderTpl() {
+  $('#wsTpl').innerHTML = Object.entries(DOCS).map(([k, v]) => `<button type="button" class="tpl" data-tpl="${k}"><span class="tile" style="background:var(--tile-${v.color})">${ic(v.icon)}</span><b>${esc(v.ar)}</b><small>${esc(v.desc)}</small></button>`).join('') + `<button type="button" class="tpl" data-act2="bag"><span class="tile" style="background:var(--tile-indigo)">${ic('brief')}</span><b>شنطة المحاسب</b><small>كل التقارير في Excel وPDF</small></button>`;
+  fillIcons($('#wsTpl'));
+}
+document.addEventListener('click', e => { const t = e.target.closest('[data-tpl]'); if (t) tplForm(t.dataset.tpl, {}); });
+function renderLib() {
+  const box = $('#wsLib'); if (!box) return;
+  if (!S.docs.length) { box.innerHTML = `<div class="empty">${emptyArt('statements')}<b>المكتبة فاضية</b><p>كل ملف تعمله في الورشة بيتحفظ هنا، تفتحه وتبعته تاني في أي وقت.</p></div>`; fillIcons(box); return; }
+  const groups = new Map(); for (const d of S.docs) { const k = d.date.slice(0, 7); if (!groups.has(k)) groups.set(k, []); groups.get(k).push(d); }
+  box.innerHTML = [...groups].map(([k, ds]) => `<div class="group"><div class="group-h">${esc(dfMonth.format(parseYmd(k + '-01')))}</div><div class="list">${ds.map(d => docCardHTML(d)).join('')}</div></div>`).join('');
+  fillIcons(box);
+}
+/* fill a template by hand */
+function tplForm(kind, pre = {}) {
+  if (kind === 'bag') { bagDialog(); return; }
+  const D = DOCS[kind], book = [...partyBook().values()].filter(p => p.name !== NONAME);
+  const partyRow = needsParty(kind) || ['letter', 'memo', 'contract'].includes(kind) ? `<label class="set-row" for="tfP"><span class="lbl">${kind === 'contract' ? 'الطرف التاني' : kind === 'memo' ? 'إلى' : kind === 'letter' ? 'إلى السادة' : 'العميل'}</span><input class="row-inp" id="tfP" list="tfPL" maxlength="60" value="${esc(pre.party || '')}" placeholder="الاسم"></label><datalist id="tfPL">${book.map(p => `<option>${esc(p.name)}</option>`).join('')}</datalist>` : '';
+  const perRow = needsPeriod(kind) ? `<label class="set-row" for="tfPer"><span class="lbl">الفترة</span><select class="row-sel" id="tfPer">${[['month', 'الشهر ده'], ['lastmonth', 'الشهر اللي فات'], ['quarter', 'الربع ده'], ['year', 'السنة دي'], ['all', 'كل الفترات']].map(([v, l]) => `<option value="${v}"${pre.period === v ? ' selected' : ''}>${l}</option>`).join('')}</select></label>` : '';
+  const lines = pre.lines && pre.lines.length ? pre.lines : [{ name: '', qty: 1, price: '' }];
+  const lineRow = (l, i) => `<div class="tf-line" data-li="${i}"><input class="inp" data-lf="name" list="tfIL" placeholder="الصنف أو الخدمة" value="${esc(l.name || '')}"><input class="inp num" data-lf="qty" inputmode="decimal" placeholder="الكمية" value="${esc(l.qty ?? '')}"><input class="inp num" data-lf="price" inputmode="decimal" placeholder="السعر" value="${esc(l.price ?? '')}"><button type="button" class="btn ghost icon" data-ldel="${i}" aria-label="شيل السطر">${ic('x')}</button></div>`;
+  const linesBox = needsLines(kind) ? `<div class="group"><div class="group-h">السطور</div><div class="list tf-lines" id="tfLines">${lines.map(lineRow).join('')}</div><datalist id="tfIL">${S.items.map(it => `<option value="${esc(it.name)}">${esc(money(+it.price || 0))}</option>`).join('')}</datalist><button type="button" class="btn plain" id="tfAdd" style="align-self:flex-start">${ic('plus')}سطر</button><div class="tf-total" id="tfTot"></div></div>
+    <div class="list noicons"><label class="set-row" for="tfDisc"><span class="lbl">خصم</span><input class="row-inp num" id="tfDisc" inputmode="decimal" placeholder="0"></label>${S.settings.vatReg ? `<div class="set-row"><span class="lbl" id="lb-tfVat">ضريبة القيمة المضافة ${dg(S.settings.vatRate || 14)}%</span><button type="button" class="switch" role="switch" aria-checked="true" aria-labelledby="lb-tfVat" id="tfVat"></button></div>` : ''}${kind === 'invoice' ? `<label class="set-row" for="tfPay"><span class="lbl">طريقة الدفع</span><select class="row-sel" id="tfPay"><option>نقداً</option><option>على الحساب</option><option>تحويل / إنستاباي</option></select></label>` : `<label class="set-row" for="tfValid"><span class="lbl">صلاحية العرض (يوم)</span><input class="row-inp num" id="tfValid" inputmode="numeric" value="15"></label>`}<label class="set-row" for="tfNotes"><span class="lbl">ملاحظات</span><input class="row-inp" id="tfNotes" maxlength="160" placeholder="اختياري"></label></div>` : '';
+  const recRow = kind === 'receipt' ? `<label class="set-row" for="tfAmt"><span class="lbl">المبلغ</span><input class="row-inp num" id="tfAmt" inputmode="decimal" value="${esc(pre.amount || '')}"></label><label class="set-row" for="tfAbout"><span class="lbl">وذلك عن</span><input class="row-inp" id="tfAbout" maxlength="80" placeholder="سداد من الحساب"></label><label class="set-row" for="tfMeth"><span class="lbl">الطريقة</span><select class="row-sel" id="tfMeth"><option>نقداً</option><option>تحويل بنكي</option><option>إنستاباي</option><option>شيك</option></select></label>` : '';
+  const textRows = ['letter', 'memo', 'contract'].includes(kind) ? `<label class="set-row" for="tfSubj"><span class="lbl">${kind === 'contract' ? 'عنوان العقد' : 'الموضوع'}</span><input class="row-inp" id="tfSubj" maxlength="80" placeholder="${kind === 'contract' ? 'عقد توريد' : 'الموضوع'}" value="${esc(pre.subject || '')}"></label>` : '';
+  const textArea = ['letter', 'memo'].includes(kind) ? `<div class="group"><div class="group-h">النص</div><textarea class="inp" id="tfBody" rows="8" style="width:100%">${esc(kind === 'letter' ? 'تحية طيبة وبعد،\n\n\n\nوتفضلوا بقبول فائق الاحترام،' : '')}</textarea></div>` : kind === 'contract' ? `<div class="group"><div class="group-h">البنود (كل بند في سطر)</div><textarea class="inp" id="tfCl" rows="8" style="width:100%" placeholder="يلتزم الطرف الأول بتوريد…&#10;يدفع الطرف الثاني مبلغ…&#10;مدة العقد سنة تبدأ من…"></textarea></div>` : '';
+  openDialog({ title: D.ar, wide: true, body: `<div class="tf"><div class="list noicons">${partyRow}${perRow}${recRow}${textRows}<label class="set-row" for="tfDate"><span class="lbl">التاريخ</span><input type="date" class="row-inp" id="tfDate" value="${esc(pre.date || today())}"></label></div>${linesBox}${textArea}
+    <div class="group"><div class="group-h">نوع الملف</div><div class="seg full" role="radiogroup" id="tfFmt">${[['pdf', 'PDF'], ['docx', 'Word'], ['xlsx', 'Excel'], ['none', 'احفظ بس']].map(([v, l]) => `<button type="button" role="radio" aria-checked="${(pre.fmt || 'pdf') === v}" data-f="${v}">${l}</button>`).join('')}</div></div></div>`,
+    foot: `<button type="button" class="btn" data-close>إلغاء</button><button type="button" class="btn primary" id="tfOk">${ic('wand')}اعمل الملف</button>`,
+    onMount: d => {
+      let fmt = pre.fmt || 'pdf';
+      $$('#tfFmt [data-f]', d).forEach(b => b.onclick = () => { fmt = b.dataset.f; $$('#tfFmt [data-f]', d).forEach(x => x.setAttribute('aria-checked', String(x === b))); });
+      const vatSw = $('#tfVat', d); if (vatSw) vatSw.onclick = () => vatSw.setAttribute('aria-checked', String(vatSw.getAttribute('aria-checked') !== 'true'));
+      const readLines = () => $$('.tf-line', d).map(r => ({ name: clean($('[data-lf="name"]', r).value), qty: toNum($('[data-lf="qty"]', r).value), price: toNum($('[data-lf="price"]', r).value) })).filter(l => l.name);
+      const tot = () => { const el = $('#tfTot', d); if (el) el.innerHTML = `الإجمالي <b class="num">${money(sum(readLines(), l => l.qty * l.price))}</b>`; };
+      const box = $('#tfLines', d);
+      if (box) {
+        box.addEventListener('input', e => { if (e.target.dataset.lf === 'name') { const it = S.items.find(x => pkey(x.name) === pkey(e.target.value)); const r = e.target.closest('.tf-line'); if (it && it.price && !$('[data-lf="price"]', r).value) $('[data-lf="price"]', r).value = it.price; } tot(); });
+        box.addEventListener('click', e => { const b = e.target.closest('[data-ldel]'); if (b && $$('.tf-line', d).length > 1) { b.closest('.tf-line').remove(); tot(); } });
+        $('#tfAdd', d).onclick = () => { box.insertAdjacentHTML('beforeend', lineRow({ qty: 1 }, $$('.tf-line', d).length)); fillIcons(box); $$('.tf-line', d).pop().querySelector('input').focus(); };
+        tot();
+      }
+      $('#tfOk', d).onclick = async () => {
+        const v = id => { const el = $('#' + id, d); return el ? el.value : undefined; };
+        const q = { kind, fmt: fmt === 'none' ? null : fmt, party: clean(v('tfP') || ''), period: v('tfPer'), date: v('tfDate') || today(), lines: box ? readLines() : undefined, disc: toNum(v('tfDisc')), vat: vatSw ? vatSw.getAttribute('aria-checked') === 'true' : false, payment: v('tfPay'), valid: toNum(v('tfValid')) || 15, notes: clean(v('tfNotes') || ''), amount: toNum(v('tfAmt')), about: clean(v('tfAbout') || ''), method: v('tfMeth'), subject: clean(v('tfSubj') || ''), body: v('tfBody'), clauses: v('tfCl') };
+        if (needsLines(kind) && !q.lines.length) { toast('ضيف سطر واحد على الأقل', { type: 'err' }); return; }
+        if (kind === 'receipt' && !(q.amount > 0)) { toast('اكتب المبلغ', { type: 'err' }); return; }
+        d.close(); if (!$('#ws') || $('#ws').hidden) openWS('tasks'); else setWsTab('tasks');
+        await v2wait(200); wsSay(esc(`${D.ar}${q.party ? ' لـ ' + q.party : ''}`), 'me'); await wsMake(q);
+      };
+    } });
+}
+function wsQuick(kind, pre) { openWS('tasks'); setTimeout(() => wsAsk(`${DOCS[kind].ar}${pre.party ? ' لـ ' + pre.party : ''}`, { kind, ...pre }), 300); }
+
+/* ---------- شنطة المحاسب ---------- */
+function bagDialog() {
+  openDialog({ title: 'شنطة المحاسب', body: `<p class="ask-intro">ملف Excel واحد فيه كل اللي المحاسب محتاجه، ومعاه ملخص PDF. ابعتهم له على واتساب أو الإيميل.</p>
+    <div class="list noicons"><label class="set-row" for="bgPer"><span class="lbl">الفترة</span><select class="row-sel" id="bgPer">${[['month', 'الشهر ده'], ['lastmonth', 'الشهر اللي فات'], ['quarter', 'الربع ده'], ['year', 'السنة دي'], ['all', 'كل الفترات']].map(([v, l]) => `<option value="${v}"${v === 'lastmonth' ? ' selected' : ''}>${l}</option>`).join('')}</select></label></div>
+    <div class="group"><div class="group-h">جوه الشنطة</div><div class="list noicons bag-list">${['دفتر اليومية', 'ميزان المراجعة', 'قائمة الدخل', 'المركز المالي', 'التدفقات النقدية', 'أرصدة العملاء والموردين', 'المخزون', 'ضريبة القيمة المضافة', 'ملخص PDF'].map(x => `<div class="set-row"><span class="lbl">${x}</span>${ic('check', 'ok')}</div>`).join('')}</div></div>`,
+    foot: `<button type="button" class="btn" data-close>إلغاء</button><button type="button" class="btn primary" id="bgOk">${ic('brief')}جهّز الشنطة</button>`,
+    onMount: d => { fillIcons(d); $('#bgOk', d).onclick = async () => { const per = $('#bgPer', d).value; d.close(); await makeBag(per); }; } });
+}
+async function makeBag(code) {
+  toast('بجهّز شنطة المحاسب…', { icon: 'brief', ms: 2500 });
+  try {
+    const P_ = pLabel(code), XL = await loadXLSX(), wb = XL.utils.book_new();
+    const add = (name, aoa, cols) => { const ws = XL.utils.aoa_to_sheet(aoa); ws['!cols'] = cols || aoa[0].map((_, i) => ({ wch: i ? 16 : 34 })); ws['!views'] = [{ RTL: true }]; XL.utils.book_append_sheet(wb, ws, name); };
+    const es = S.entries.filter(inP(P_.from, P_.to)).sort(byDate);
+    add('ملخص', [[S.settings.biz || 'النشاط'], ['شنطة المحاسب', P_.text], ['تاريخ الإعداد', today()], [], ['عدد القيود', es.length], ['الإيرادات', incomeStmt(P_.from, P_.to).R], ['المصروفات', incomeStmt(P_.from, P_.to).expenses], ['صافي الربح', incomeStmt(P_.from, P_.to).N]]);
+    add('دفتر اليومية', [['التاريخ', 'رقم القيد', 'البيان', 'الطرف', 'الحساب', 'مدين', 'دائن'], ...es.flatMap(e => e.lines.map(l => [e.date, e.id, e.description, e.party || '', l.account, l.debit || '', l.credit || '']))], [{ wch: 12 }, { wch: 10 }, { wch: 36 }, { wch: 20 }, { wch: 28 }, { wch: 14 }, { wch: 14 }]);
+    for (const [k, nm] of [['tb', 'ميزان المراجعة'], ['income', 'قائمة الدخل'], ['balance', 'المركز المالي'], ['cash', 'التدفقات النقدية']]) { const ws = XL.utils.aoa_to_sheet(sheetFromModel(stModel(k, P_))); ws['!cols'] = [{ wch: 40 }, { wch: 16 }, { wch: 16 }, { wch: 16 }]; ws['!views'] = [{ RTL: true }]; XL.utils.book_append_sheet(wb, ws, nm); }
+    const book = [...partyBook().values()]; add('العملاء والموردين', [['الاسم', 'عليه (عملاء)', 'ليه (موردين)', 'أقل من شهر', '1–2 شهر', '2–3 شهور', '+3 شهور', 'الموبايل'], ...book.filter(p => p.cust || p.supp).map(p => [p.name, p.cust || '', p.supp || '', ...p.aging.b.map(x => x || ''), p.info.phone || ''])]);
+    if (S.items.length) { const stt = stockState(P_.to); add('المخزون', [['الصنف', 'الوحدة', 'الكمية', 'متوسط التكلفة', 'القيمة'], ...S.items.map(it => { const s = stt.get(it.id) || { qty: 0, avg: 0, value: 0 }; return [it.name, it.unit || '', s.qty, s.avg, s.value]; })]); }
+    const months = []; for (let d = parseYmd(P_.from.slice(0, 7) + '-01'); ymd(d) <= P_.to; d.setMonth(d.getMonth() + 1)) months.push(ymd(d).slice(0, 7));
+    add('القيمة المضافة', [['الشهر', 'ضريبة المخرجات', 'ضريبة المدخلات', 'الصافي'], ...months.slice(-24).map(m => { const v = vatMonth(m); return [m, v.out, v.inn, v.net]; })]);
+    const xfile = new File([XL.write(wb, { bookType: 'xlsx', type: 'array' })], `شنطة المحاسب - ${S.settings.biz || 'دفتر'} - ${P_.from} إلى ${P_.to}.xlsx`, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const files = [xfile];
+    try { const sumDoc = buildDoc('income', { period: code }); sumDoc.title = 'ملخص للمحاسب'; const I = incomeStmt(P_.from, P_.to); sumDoc.blocks.splice(1, 0, { t: 'totals', rows: [['الإيرادات', mm(I.R)], ['المصروفات', mm(I.expenses)], ['صافي الربح', mm(I.N) + ' ' + cur(), true]] }); const pb = await docPDF(sumDoc); files.push(new File([pb], `ملخص للمحاسب ${P_.from}.pdf`, { type: 'application/pdf' })); } catch (e) { /* PDF needs the library once */ }
+    await shareFiles(files, 'شنطة المحاسب', `شنطة المحاسب: ${P_.text}`); haptic('success');
+  } catch (e) { console.warn(e); toast('مقدرتش أجهّز الشنطة دلوقتي', { type: 'err' }); }
+}
+
+window.__v2 = { buildDoc, docPDF, docDOCX, docXLSX, partyBook: () => [...partyBook().values()], stockState: () => [...stockState()], compassModel, makeBag, get S() { return S; } };
+
+/* V2-END */
 window.__daftar = { parseLocal, normalize, readInvoice, invoiceSentence, deriveKeyword, get S() { return S; }, today, addDays, send: t => send(t) };
 boot();
 })();

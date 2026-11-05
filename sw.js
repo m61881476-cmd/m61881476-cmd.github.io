@@ -1,5 +1,5 @@
 /* دفتر — service worker: offline app shell + cache-first runtime for fonts and libraries + Web Push */
-const VERSION = 'daftar-shell-v1.4.0';
+const VERSION = 'daftar-shell-v2.0.0';
 try { importScripts('./push-config.js'); } catch (e) { self.DAFTAR_PUSH = {}; }
 const RUNTIME = 'daftar-runtime-v1';
 const SHELL = [

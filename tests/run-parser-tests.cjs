@@ -4,7 +4,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs'), http = require('http'), path = require('path');
 const ROOT = path.join(__dirname, '..');
-const cases = JSON.parse(fs.readFileSync(path.join(__dirname, 'parser-cases.json'), 'utf8'));
+const cases = JSON.parse(fs.readFileSync(process.argv[2] || path.join(__dirname, 'parser-cases.json'), 'utf8'));
 const TYPES = { '.js': 'text/javascript', '.html': 'text/html', '.json': 'application/json', '.png': 'image/png', '.webmanifest': 'application/manifest+json' };
 const srv = http.createServer((q, r) => {
   let p = decodeURIComponent(q.url.split('?')[0]); if (p === '/') p = '/index.html';

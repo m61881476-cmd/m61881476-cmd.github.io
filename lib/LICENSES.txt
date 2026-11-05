@@ -1,0 +1,6 @@
+Third-party libraries bundled in this folder (all MIT licensed):
+- docx 8.5.0 — https://github.com/dolanmiu/docx
+- html2canvas 1.4.1 — https://github.com/niklasvh/html2canvas
+- jsPDF 2.5.1 — https://github.com/parallax/jsPDF
+- qrcode-generator 1.4.4 — https://github.com/kazuhikoarase/qrcode-generator
+- SheetJS (xlsx) 0.18.5 — https://sheetjs.com (Apache-2.0)
