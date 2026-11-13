@@ -1,6 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, CanvasImage, interpolate, staticFile, useCurrentFrame} from 'remotion';
-import {Entry} from '../Entry';
+import {Crop, Phone, Screen} from '../App';
 import {C, clamp, display, enter, lin, text} from '../theme';
 import {Glass, Pop, Words} from '../ui';
 
@@ -31,8 +31,7 @@ export const Demo: React.FC = () => {
       clamp,
     ),
   );
-  const sent = enter(frame, 180, 12);
-  const lift = enter(frame, 180, 16);
+  const sheet = enter(frame, 182, 16);
   return (
     <AbsoluteFill>
       {/* وده دفتر */}
@@ -61,69 +60,59 @@ export const Demo: React.FC = () => {
         </Pop>
       </AbsoluteFill>
 
-      {/* header */}
-      <div style={{position: 'absolute', top: 70, right: 110}}>
-        <Pop at={30} y={-30}>
-          <div dir="rtl" style={{display: 'flex', alignItems: 'center', gap: 22}}>
-            <Logo size={84} />
-            <span style={{fontFamily: display, fontWeight: 800, fontSize: 56, color: C.ink}}>
-              دفتر
-            </span>
-          </div>
+      {/* the real app */}
+      <div style={{position: 'absolute', left: 170, top: 44}}>
+        <Pop at={30} x={-90} y={40} dur={20}>
+          <Phone width={442} style={{rotate: '-2.5deg'}}>
+            <Screen name={`type_${String(typed).padStart(2, '0')}`} />
+            <Screen
+              name="proposed"
+              style={{opacity: sheet > 0 ? 1 : 0, translate: `0px ${(1 - sheet) * 100}%`}}
+            />
+          </Phone>
         </Pop>
       </div>
 
       {/* بقوله ... */}
-      <div
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: interpolate(lift, [0, 1], [400, 150]),
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Pop at={31} y={20} style={{marginBottom: 26, opacity: 1}}>
+      <div style={{position: 'absolute', right: 110, top: 300, width: 1080}}>
+        <Pop at={31} out={178} y={30}>
           <div
             dir="rtl"
             style={{
               fontFamily: text,
               fontWeight: 600,
-              fontSize: 54,
+              fontSize: 56,
               color: C.mute,
-              opacity: 1 - lift,
+              marginBottom: 28,
+              textAlign: 'right',
             }}
           >
             بقوله بالعامية…
           </div>
-        </Pop>
-        <Pop at={33} from={0.9}>
           <Glass
             style={{
-              width: 1380,
-              height: 150,
-              borderRadius: 75,
+              height: 170,
+              borderRadius: 85,
               display: 'flex',
               alignItems: 'center',
-              padding: '0 34px 0 56px',
-              gap: 30,
+              padding: '0 34px 0 50px',
+              gap: 26,
             }}
           >
             <div
               style={{
-                width: 92,
-                height: 92,
+                width: 104,
+                height: 104,
+                flexShrink: 0,
                 borderRadius: 999,
-                background: sent > 0.5 ? C.green : C.accent,
-                boxShadow: `0 0 40px ${sent > 0.5 ? C.green : C.accent}`,
+                background: C.accent,
+                boxShadow: `0 0 40px ${C.accent}`,
                 display: 'grid',
                 placeItems: 'center',
                 color: '#fff',
-                fontSize: 50,
+                fontSize: 56,
                 fontWeight: 800,
-                scale: 1 + 0.18 * Math.sin(Math.PI * lin(frame, 176, 188)),
+                scale: 1 + 0.2 * Math.sin(Math.PI * lin(frame, 170, 182)),
               }}
             >
               ↑
@@ -135,46 +124,43 @@ export const Demo: React.FC = () => {
                 flex: 1,
                 fontFamily: text,
                 fontWeight: 600,
-                fontSize: 62,
+                fontSize: 58,
                 color: C.ink,
                 whiteSpace: 'nowrap',
               }}
             >
               {PROMPT.slice(0, typed)}
-              {frame < 180 && Math.floor(frame / 8) % 2 === 0 ? (
+              {Math.floor(frame / 8) % 2 === 0 ? (
                 <span style={{color: C.accentHi}}>|</span>
               ) : null}
             </div>
           </Glass>
+          <Words
+            size={92}
+            glow
+            style={{textAlign: 'right', marginTop: 40}}
+            words={[
+              {t: 'شراء خامات', at: 44},
+              {t: '40 ألف', at: 78, color: C.accentHi},
+              {t: 'آجل', at: 119, color: C.accentHi},
+            ]}
+          />
         </Pop>
       </div>
 
       {/* والقيد بيتكتب */}
-      <div
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: 500,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 36,
-        }}
-      >
-        <Pop at={184} y={70}>
-          <Entry at={186} width={1380} />
-        </Pop>
-      </div>
-      <div style={{position: 'absolute', left: 0, right: 0, bottom: 40}}>
+      <div style={{position: 'absolute', right: 150, top: 96, width: 1000}}>
         <Words
-          size={92}
+          size={110}
           glow
           words={[
             {t: 'والقيد', at: 186},
             {t: 'بيتكتب', at: 198, color: C.accentHi},
           ]}
         />
+        <Pop at={186} y={70} style={{marginTop: 36, display: 'flex', justifyContent: 'center'}}>
+          <Crop name="entry" width={840} ratio={790 / 995} />
+        </Pop>
       </div>
     </AbsoluteFill>
   );
@@ -334,15 +320,15 @@ export const Scan: React.FC = () => {
           />
         </Pop>
       </div>
-      <div style={{position: 'absolute', right: 110, top: 170, width: 1060}}>
+      <div style={{position: 'absolute', right: 130, top: 110}}>
         <Pop at={46} out={86} x={80} y={0}>
-          <Entry at={48} width={1060} title="قيد من الفاتورة" />
+          <Crop name="entry" width={860} ratio={790 / 995} glow="rgba(48,209,88,0.35)" />
         </Pop>
       </div>
-      <div style={{position: 'absolute', right: 110, top: 640, width: 1060}}>
+      <div style={{position: 'absolute', right: 130, top: 830, width: 860}}>
         <Pop at={50} out={86}>
           <Words
-            size={110}
+            size={104}
             glow
             words={[
               {t: 'والقيد', at: 50},
@@ -411,8 +397,8 @@ export const Scan: React.FC = () => {
           gap: 320,
         }}
       >
-        <Account at={104} name="المشتريات" v="40,000" side="مدين" />
-        <Account at={110} name="الموردين" v="40,000" side="دائن" />
+        <Account at={104} name="المخزون" v="40,000" side="مدين" />
+        <Account at={110} name="الموردون" v="40,000" side="دائن" />
       </div>
     </AbsoluteFill>
   );
