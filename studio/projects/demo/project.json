@@ -1,0 +1,40 @@
+{
+  "title": "تجربة الاستوديو",
+  "format": { "w": 1080, "h": 1920, "fps": 30 },
+  "final": "final.mp4",
+  "sources": {
+    "a": { "file": "a.mp4", "label": "لقطة أ", "audio": false },
+    "b": { "file": "b.mp4", "label": "لقطة ب", "audio": false },
+    "c": { "file": "c.mp4", "label": "لقطة ج", "audio": false }
+  },
+  "music": { "file": "music.m4a", "label": "إيقاع تجريبي", "volume": 0.8, "start": 0 },
+  "look": { "exposure": 1.06, "contrast": 1.12, "saturation": 1.25, "temp": 0.15 },
+  "captionStyle": { "style": "pop", "font": "Cairo", "color": "#ffd60a", "position": 0.7, "size": 1 },
+  "segments": [
+    { "src": "a", "in": 0.5, "out": 2.7, "zoom": [1, 1.12] },
+    { "src": "b", "in": 1.0, "out": 3.1, "zoom": [1.15, 1], "transition": "flash" },
+    { "src": "c", "in": 0.4, "out": 2.6, "transition": "punch" },
+    { "src": "a", "in": 3.6, "out": 5.7, "zoom": [1, 1.2], "transition": "flash" },
+    { "src": "b", "in": 4.0, "out": 6.1, "transition": "punch" },
+    { "src": "c", "in": 3.5, "out": 5.7, "zoom": [1.2, 1.05], "transition": "flash" },
+    { "src": "a", "in": 5.0, "out": 6.9, "zoom": [1, 1.1], "transition": "punch" },
+    { "src": "b", "in": 0.2, "out": 2.4, "zoom": [1.05, 1.18], "transition": "flash" }
+  ],
+  "captions": [
+    { "start": 0.3, "end": 2.6, "text": "ده ستوديو المونتاج بتاعك" },
+    { "start": 2.8, "end": 4.7, "text": "قولّي عايز فيديو إيه" },
+    { "start": 4.9, "end": 6.9, "text": "والوكلاء يقصّوا ويرتّبوا" },
+    { "start": 7.1, "end": 8.9, "text": "ترجمة كلمة بكلمة" },
+    { "start": 9.1, "end": 10.9, "text": "ألوان وزووم ومؤثرات" },
+    { "start": 11.1, "end": 13.0, "text": "وموسيقى تحت الكلام" },
+    { "start": 13.2, "end": 14.9, "text": "وكله قدام عينك" },
+    { "start": 15.1, "end": 16.9, "text": "ابعت لقطاتك ونبدأ" }
+  ],
+  "pieces": [
+    { "type": "bar", "start": 0, "color": "#a8f05a" },
+    { "type": "title", "start": 0.2, "end": 2.6, "text": "ستوديو المونتاج", "sub": "مونتاج بالوكلاء", "color": "#a8f05a" },
+    { "type": "lower", "start": 4.9, "end": 8.8, "text": "١٢ وكيل", "sub": "كل واحد ماسك شغلانة", "color": "#5ac8fa" },
+    { "type": "sticker", "start": 9.1, "end": 10.8, "text": "واو!", "x": 0.5, "y": 0.36, "color": "#ff6482" },
+    { "type": "cta", "start": 15.0, "end": 17.1, "text": "ابعت لقطاتك دلوقتي", "color": "#ffd60a" }
+  ]
+}

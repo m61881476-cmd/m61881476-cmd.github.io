@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#07090d">
+<title>ستوديو المونتاج</title>
+<link rel="stylesheet" href="studio.css">
+</head>
+<body>
+<div id="stage" class="L">
+  <header id="top" class="panel">
+    <div class="brand"><i></i><b>ستوديو</b><span>المونتاج</span></div>
+    <nav><span>ملف</span><span>تحرير</span><span>لقطة</span><span>ترجمة</span><span>صوت</span><span>وكلاء</span></nav>
+    <div class="proj"><b id="projTitle">…</b><small id="status">جاري التحميل</small></div>
+    <div id="dots"></div>
+    <div class="count"><i></i><span id="agentCount">0</span> وكيل شغّال</div>
+    <a id="exportBtn"><em></em><span>تصدير</span></a>
+  </header>
+
+  <section id="bin" class="panel">
+    <h3>المكتبة <small id="binCount"></small></h3>
+    <div id="thumbs"></div>
+    <h3>الصوت</h3>
+    <div id="audioChips"></div>
+    <h3>العناصر</h3>
+    <div id="pieceList"></div>
+  </section>
+
+  <section id="raw" class="panel">
+    <h3>الخام <small id="rawLabel"></small></h3>
+    <div class="cv"><canvas id="rawCv" width="320" height="200"></canvas><span class="tag">الأصل · بدون فلاتر</span></div>
+  </section>
+
+  <section id="log" class="panel">
+    <h3>سجل المونتاج <small id="logCount"></small></h3>
+    <div id="logLines"></div>
+  </section>
+
+  <section id="prev" class="panel">
+    <h3>النتيجة <small id="tcTop">00:00:00</small></h3>
+    <div class="cv"><canvas id="pv" width="540" height="960"></canvas></div>
+  </section>
+
+  <section id="scopes" class="panel">
+    <h3>الإضاءة</h3>
+    <canvas id="wave" width="280" height="130"></canvas>
+    <h3>الألوان</h3>
+    <canvas id="vec" width="200" height="200"></canvas>
+    <h3>الصوت</h3>
+    <div id="meters">
+      <div><label>المايك</label><b><i id="mMic"></i></b></div>
+      <div><label>الموسيقى</label><b><i id="mMus"></i></b></div>
+      <div><label>الإجمالي</label><b><i id="mAll"></i></b></div>
+    </div>
+  </section>
+
+  <section id="insp" class="panel">
+    <h3>تصحيح الألوان</h3>
+    <div id="wheels">
+      <div class="wheel" id="wh0"><i></i><label>الظلال</label></div>
+      <div class="wheel" id="wh1"><i></i><label>الوسط</label></div>
+      <div class="wheel" id="wh2"><i></i><label>الإضاءات</label></div>
+    </div>
+    <div id="sliders"></div>
+    <h3>الترجمة</h3>
+    <div id="capOpts">
+      <div class="row"><label>الستايل</label><div class="chips" id="optStyle"></div></div>
+      <div class="row"><label>الخط</label><div class="fonts" id="optFont"></div></div>
+      <div class="row"><label>اللون</label><div class="sw" id="optColor"></div></div>
+      <div class="row"><label>المكان</label><div class="slider" id="optPos"><i></i></div></div>
+    </div>
+  </section>
+
+  <section id="tl" class="panel">
+    <div id="transport">
+      <button id="btnPlay">▶</button>
+      <b id="tc">00:00:00</b><small id="tcTotal"></small>
+      <span id="phase"></span>
+      <span class="sp"></span>
+      <button id="btnMute">🔊</button>
+      <button id="btnResult">النتيجة</button>
+      <button id="btnReplay">إعادة العرض</button>
+      <small id="fmt"></small>
+    </div>
+    <div id="tracks">
+      <div id="ruler"></div>
+      <div id="lanes"></div>
+      <div id="playhead"></div>
+    </div>
+  </section>
+
+  <div id="cursors"></div>
+
+  <div id="start">
+    <div>
+      <div class="brand big"><i></i><b>ستوديو</b><span>المونتاج</span></div>
+      <h1 id="startTitle"></h1>
+      <p id="startInfo">جاري تجهيز الخامات…</p>
+      <button id="startBtn" disabled>▶ شغّل الاستوديو</button>
+      <div id="projList"></div>
+    </div>
+  </div>
+</div>
+<script src="studio.js"></script>
+</body>
+</html>

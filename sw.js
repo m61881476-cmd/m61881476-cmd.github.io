@@ -25,6 +25,8 @@ self.addEventListener('fetch', event => {
   const req = event.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
+  // ستوديو المونتاج صفحة مستقلة: مايتخزّنش ولا يتحوّل لصفحة دفتر
+  if (url.origin === self.location.origin && url.pathname.includes('/studio/')) return;
   if (url.origin === self.location.origin) {
     if (req.mode === 'navigate') {
       event.respondWith((async () => (await caches.match('./index.html')) || fetch(req))());
