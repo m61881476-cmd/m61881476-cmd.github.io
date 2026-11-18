@@ -1,0 +1,33 @@
+name: IndexNow — بلّغ محركات البحث بالتحديثات
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'mohamed-hany-elsheikh/**'
+      - 'sitemap.xml'
+      - 'llms.txt'
+      - 'index.html'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: استنى لحد ما GitHub Pages يخلّص النشر
+        run: sleep 120
+      - name: ابعت الروابط لـ IndexNow (Bing و Yandex وغيرهم)
+        run: |
+          curl -sS -w '\nHTTP %{http_code}\n' -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d '{
+              "host": "m61881476-cmd.github.io",
+              "key": "a294a055e97106a249fcb6df2505f934",
+              "keyLocation": "https://m61881476-cmd.github.io/a294a055e97106a249fcb6df2505f934.txt",
+              "urlList": [
+                "https://m61881476-cmd.github.io/mohamed-hany-elsheikh/",
+                "https://m61881476-cmd.github.io/mohamed-hany-elsheikh/en/",
+                "https://m61881476-cmd.github.io/",
+                "https://m61881476-cmd.github.io/llms.txt"
+              ]
+            }'
