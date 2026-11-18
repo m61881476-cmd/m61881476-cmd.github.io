@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://m61881476-cmd.github.io/sitemap.xml
