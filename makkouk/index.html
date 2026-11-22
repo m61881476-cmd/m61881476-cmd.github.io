@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>مكوك — جدولة التشغيل المتوازنة</title>
+<meta name="description" content="نموذج تجريبي لجدولة التشغيل: بيحسب قيود الإنتاج والمخازن والمشتريات والمالية والتصدير مع بعض في لحظة واحدة، ويطلّع جدول تشغيل واحد متوازن بأعلى ربحية ممكنة.">
+<meta name="theme-color" content="#0f766e">
+<link rel="icon" href="../favicon.ico">
+<style>
+:root{
+  --bg:#f4f6f8;--card:#fff;--ink:#14212b;--mute:#5b6b78;--line:#e1e7ec;
+  --brand:#0f766e;--brand-2:#115e59;--brand-soft:#e1f4f1;
+  --ok:#15803d;--ok-soft:#e3f6e9;--bad:#b91c1c;--bad-soft:#fde8e8;--warn:#b45309;--warn-soft:#fdf0d9;
+  --chip:#eef2f5;--shadow:0 1px 2px rgba(20,33,43,.06),0 8px 24px rgba(20,33,43,.06);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0d1419;--card:#151f27;--ink:#e8eef2;--mute:#97a8b5;--line:#25343f;
+  --brand:#2dd4bf;--brand-2:#5eead4;--brand-soft:#12332f;
+  --ok:#4ade80;--ok-soft:#10301c;--bad:#f87171;--bad-soft:#3a1717;--warn:#fbbf24;--warn-soft:#3a2b0d;
+  --chip:#1d2a33;--shadow:none;
+}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",Tahoma,"Noto Naskh Arabic",sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:16px 14px 80px}
+header.hero{padding:28px 0 8px}
+.eyebrow{display:inline-block;background:var(--brand-soft);color:var(--brand-2);font-weight:700;font-size:13px;padding:3px 12px;border-radius:99px}
+h1{font-size:clamp(26px,5vw,40px);line-height:1.25;margin:10px 0 8px}
+h2{font-size:22px;margin:0 0 6px}
+h3{font-size:17px;margin:0 0 4px}
+p{margin:6px 0}
+.lead{color:var(--mute);max-width:760px;font-size:17px}
+section{margin-top:34px}
+.sub{color:var(--mute);margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:12px}
+.g5{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g6{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.mgr .role{font-weight:800}
+.mgr .want{color:var(--mute);font-size:14.5px;margin:2px 0 8px}
+.mgr .pill{display:block;font-size:13px;border-radius:8px;padding:3px 9px;margin-top:5px;background:var(--bad-soft);color:var(--bad)}
+.mgr .pill.ok{background:var(--ok-soft);color:var(--ok)}
+.mgr .pill.warn{background:var(--warn-soft);color:var(--warn)}
+.mgr .tag{font-size:12px;color:var(--mute);margin-top:8px;display:block}
+details.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;box-shadow:var(--shadow)}
+details.panel>summary{cursor:pointer;list-style:none;padding:14px 16px;font-weight:800;display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.panel>summary::-webkit-details-marker{display:none}
+details.panel>summary::after{content:"▾";color:var(--mute);transition:transform .2s}
+details.panel[open]>summary::after{transform:rotate(180deg)}
+details.panel>.body{padding:0 16px 16px}
+label.f{display:block;font-size:13.5px;color:var(--mute)}
+label.f input{display:block;width:100%;margin-top:2px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:7px 10px;min-height:40px}
+input[type=number]{direction:ltr;text-align:right}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;vertical-align:middle}
+th{font-size:13px;color:var(--mute);font-weight:700;white-space:nowrap}
+td input{width:86px;min-height:34px;padding:3px 7px}
+td input.wide{width:130px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scroll.tall{max-height:340px;overflow-y:auto}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:10px 18px;min-height:44px;font-weight:700;background:var(--chip);color:var(--ink)}
+button.primary{background:var(--brand);color:#fff;font-size:17px;padding:12px 26px}
+@media (prefers-color-scheme:dark){button.primary{color:#04201c}}
+button:disabled{opacity:.55;cursor:progress}
+.bar{height:8px;background:var(--chip);border-radius:99px;overflow:hidden;margin-top:12px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .15s}
+.kpi{padding:12px 14px}
+.kpi b{display:block;font-size:24px;line-height:1.3}
+.kpi span{color:var(--mute);font-size:13.5px}
+.badge{display:inline-block;border-radius:8px;padding:1px 9px;font-size:13px;font-weight:700}
+.badge.ok{background:var(--ok-soft);color:var(--ok)}
+.badge.bad{background:var(--bad-soft);color:var(--bad)}
+.badge.warn{background:var(--warn-soft);color:var(--warn)}
+tr.best td{background:var(--brand-soft);font-weight:700}
+.muted{color:var(--mute)}
+.stale{background:var(--warn-soft);color:var(--warn);border-radius:12px;padding:10px 14px;margin-bottom:12px;display:none}
+.board td,.board th{text-align:center;padding:6px 5px;white-space:nowrap}
+.board td.day{font-weight:800;text-align:right}
+.board td.cell.on{background:var(--brand-soft);color:var(--brand-2);font-weight:800}
+.hbar{position:relative;height:18px;min-width:90px;background:var(--chip);border-radius:6px;overflow:hidden}
+.hbar i{position:absolute;inset:0 auto 0 0;background:var(--brand)}
+.hbar span{position:relative;font-size:12px;font-weight:700;color:var(--ink);mix-blend-mode:normal}
+.insights li{margin:6px 0}
+.insights{padding-inline-start:20px;margin:0}
+svg text{font:12px system-ui,sans-serif;fill:var(--mute)}
+.chart h3{margin-bottom:6px}
+.legend{font-size:12.5px;color:var(--mute);display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:5px;vertical-align:middle}
+.note{font-size:13.5px;color:var(--mute)}
+footer{margin-top:40px;color:var(--mute);font-size:13.5px}
+a{color:var(--brand)}
+#results{display:none}
+.chip{display:inline-block;background:var(--chip);border-radius:8px;padding:0 8px;margin:1px 2px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <span class="eyebrow">نموذج تجريبي</span>
+    <h1>مكوك — جدول تشغيل واحد يرضي كل الإدارات</h1>
+    <p class="lead">كل مدير بياخد قرار «صح» من وجهة نظر إدارته، لكن القرارات دي بتتصادم مع بعض. مكوك بيحسب قيود الإنتاج والمخازن والمشتريات والمالية والتصدير <b>كلها مع بعض في لحظة واحدة</b>، ويطلّع جدول تشغيل واحد متوازن بأعلى ربحية للمصنع ككل.</p>
+    <p class="note">الأرقام تحت افتراضية (مصنع بسكويت وحلويات، 100 طلبية في الأسبوع). عدّلها بأرقامك واضغط «احسب».</p>
+  </header>
+
+  <section>
+    <h2>١) المشكلة: خمس قرارات كلها صح… وكلها بتضر</h2>
+    <p class="sub">كل كارت تحت بيعرض الخطة اللي هيعملها المدير لو مشي على مزاجه لوحده، ونتيجتها على المصنع كله.</p>
+    <div class="grid g5" id="managers"></div>
+  </section>
+
+  <section>
+    <h2>٢) بيانات المصنع</h2>
+    <p class="sub">كل الأرقام قابلة للتعديل. أي تعديل بيحدّث الكروت اللي فوق فورًا.</p>
+    <div id="inputs"></div>
+    <div class="row" style="margin-top:14px">
+      <label class="f">جودة البحث
+        <select id="quality">
+          <option value="fast">سريع (حوالي ثانيتين)</option>
+          <option value="normal" selected>متوازن (حوالي 4 ثواني)</option>
+          <option value="deep">عميق (حوالي 10 ثواني)</option>
+        </select>
+      </label>
+      <button class="primary" id="run">احسب الجدول المتوازن</button>
+    </div>
+    <div class="bar" id="barWrap" style="display:none"><i id="bar"></i></div>
+  </section>
+
+  <section id="results">
+    <h2>٣) النتيجة: جدول التشغيل المتوازن</h2>
+    <div class="stale" id="stale">عدّلت في البيانات بعد آخر حساب. اضغط «احسب» تاني عشان الجدول يتحدّث.</div>
+    <div class="grid g6" id="kpis"></div>
+
+    <h3 style="margin-top:22px">المقارنة: كل مدير لوحده في مقابل مكوك</h3>
+    <div class="card scroll"><table id="compare"></table></div>
+    <p class="note">الربح بيتحسب بنفس المعادلة لكل الخطط. الخطة اللي بتكسر قيد (طاقة، مخزن، سيولة، صلاحية، ميعاد شحن) مش قابلة للتنفيذ حتى لو ربحها على الورق عالي.</p>
+
+    <h3 style="margin-top:22px">ليه القرارات دي؟</h3>
+    <div class="card"><ul class="insights" id="insights"></ul></div>
+
+    <h3 style="margin-top:22px">جدول التشغيل (كرتونة لكل تشغيلة)</h3>
+    <div class="card scroll"><table class="board" id="board"></table></div>
+
+    <div class="grid g3" style="margin-top:14px">
+      <div class="card chart"><h3>الطاقة التشغيلية (ساعات)</h3><div id="chCap"></div><div class="legend"><span><i style="background:var(--brand)"></i>ساعات مستخدمة</span><span><i style="background:var(--bad)"></i>الحد المتاح</span></div></div>
+      <div class="card chart"><h3>المخزن (طبلية)</h3><div id="chSpace"></div><div class="legend"><span><i style="background:#6366f1"></i>خامات</span><span><i style="background:var(--brand)"></i>منتج تام</span><span><i style="background:var(--bad)"></i>السعة</span></div></div>
+      <div class="card chart"><h3>رصيد النقدية (ألف ج.م)</h3><div id="chCash"></div><div class="legend"><span><i style="background:var(--brand)"></i>الرصيد</span><span><i style="background:var(--bad)"></i>حد الائتمان</span></div></div>
+    </div>
+
+    <h3 style="margin-top:22px">خطة الشراء</h3>
+    <div class="card scroll"><table id="buys"></table></div>
+
+    <h3 style="margin-top:22px">الطلبيات ويوم تشغيل كل واحدة</h3>
+    <div class="card scroll tall"><table id="ordersOut"></table></div>
+    <div class="row" style="margin-top:12px"><button id="csv">تنزيل الجدول (CSV)</button></div>
+  </section>
+
+  <footer>
+    نموذج توضيحي للفكرة: بيستخدم محاكاة التبريد (Simulated Annealing) وبرمجة ديناميكية لخطة الشراء، وبيشتغل بالكامل على جهازك من غير سيرفر. الأرقام الافتراضية للتوضيح فقط وليست بيانات مصنع حقيقي.
+  </footer>
+</div>
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
