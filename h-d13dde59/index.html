@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#b0304a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="♥">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<title>♥</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Aref+Ruqaa:wght@400;700&display=swap">
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}
+body{font-family:Cairo,system-ui,sans-serif;background:linear-gradient(160deg,#fff1f2,#fde7e9 45%,#fbe3d6);color:#3b2a2a;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{width:100%;max-width:420px;background:rgba(255,255,255,.9);border-radius:28px;padding:32px 26px;box-shadow:0 20px 60px -20px rgba(176,48,74,.35);border:1px solid #f3d3d8;text-align:center}
+.heart{font-size:56px;color:#b0304a;animation:beat 1.2s infinite}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.18)}30%{transform:scale(1)}45%{transform:scale(1.12)}}
+h1{font-family:'Aref Ruqaa',serif;font-size:34px;margin:6px 0;background:linear-gradient(90deg,#b0304a,#e8a05a);-webkit-background-clip:text;background-clip:text;color:transparent}
+p.sub{color:#8a6d6d;font-size:14px;margin:0 0 20px}
+label{display:block;text-align:right;font-size:14px;margin:0 0 6px}
+input{width:100%;padding:13px 16px;border-radius:14px;border:1px solid #ecc9cf;background:#fffafa;font:inherit;font-size:16px;margin-bottom:14px;outline:none}
+input:focus{border-color:#b0304a;box-shadow:0 0 0 3px rgba(176,48,74,.15)}
+button{width:100%;padding:14px;border:0;border-radius:999px;font:inherit;font-weight:700;font-size:16px;color:#fff;background:linear-gradient(90deg,#b0304a,#e8a05a);box-shadow:0 10px 30px -10px rgba(176,48,74,.6);cursor:pointer}
+button:disabled{opacity:.6}
+.err{color:#b0304a;font-size:14px;min-height:20px;margin:0 0 10px}
+.hide{display:none}
+.foot{margin-top:16px;font-size:12px;color:#a58a8a}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="heart">♥</div>
+  <form id="s1">
+    <h1>ليكي… وبس</h1>
+    <p class="sub">الباب ده مبيتفتحش غير لواحدة… أثبتيلي إنك انتي.</p>
+    <label>تاريخ ميلادك</label>
+    <input id="d" inputmode="numeric" placeholder="مثال: 01/01/2000" autocomplete="off">
+    <label>كلمة السر بتاعتنا</label>
+    <input id="s" placeholder="بالعربي… الكلمة اللي بتقوليهالي ♥" autocomplete="off">
+    <p class="err" id="e1"></p>
+    <button id="b1">افتحي قلبي</button>
+  </form>
+  <form id="s2" class="hide">
+    <h1>برافو ♥</h1>
+    <p class="sub">فاضل باب أخير… اكتبي كلمة المرور</p>
+    <input id="l" dir="ltr" placeholder="Password…" autocomplete="off" style="text-align:center">
+    <p class="err" id="e2"></p>
+    <button id="b2">افتحي ♥</button>
+  </form>
+  <div id="nokey" class="hide">
+    <h1>الرابط ناقص 🙈</h1>
+    <p class="sub">الصفحة دي مبتفتحش غير من الرابط الخاص اللي اتبعتلك. افتحيه من الرسالة تاني.</p>
+  </div>
+  <p class="foot">♥</p>
+</div>
+<script>
+const C={"v":"mwqw9lp4","ia":300000,"ib":300000,"sa":"GqGxmS2szA-gKBnQZ2EOhw","sb":"UcmlDME0E889_0xnBFGKTQ","ci":"XAJuFQYunBZAsLPq","c":"XzZ0k2TPnGK1gVDFb29LwKpp_HUt","iv":"5kLVLqoEscWjQ2Pe"};
+const AR="٠١٢٣٤٥٦٧٨٩";
+const norm=v=>v.trim().toLowerCase().replace(/[٠-٩]/g,d=>String(AR.indexOf(d))).replace(/[\u064B-\u0652\u0640]/g,"").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/[\s\-.\\/_]+/g,"");
+const ub=s=>{s=s.replace(/-/g,"+").replace(/_/g,"/");const b=atob(s+"===".slice((s.length+3)%4));return Uint8Array.from(b,c=>c.charCodeAt(0))};
+const hex=u=>Array.from(u,b=>b.toString(16).padStart(2,"0")).join("");
+const te=new TextEncoder();
+async function kdf(p,salt,it){const k=await crypto.subtle.importKey("raw",te.encode(p),"PBKDF2",false,["deriveBits"]);return new Uint8Array(await crypto.subtle.deriveBits({name:"PBKDF2",hash:"SHA-256",salt,iterations:it},k,256))}
+const aes=b=>crypto.subtle.importKey("raw",b,"AES-GCM",false,["decrypt"]);
+const $=id=>document.getElementById(id);
+
+let key=null;
+const m=location.hash.match(/k=([A-Za-z0-9_-]+)/);
+if(m){key=m[1];try{localStorage.setItem("lk",key)}catch(e){}}
+else{try{key=localStorage.getItem("lk")}catch(e){}}
+if(!key){$("s1").classList.add("hide");$("nokey").classList.remove("hide")}
+
+let bitsA=null;
+const payloadP=fetch("payload.bin?v="+C.v).then(r=>{if(!r.ok)throw 0;return r.arrayBuffer()});
+payloadP.catch(()=>{});
+
+$("s1").onsubmit=async e=>{
+  e.preventDefault();$("e1").textContent="";$("b1").disabled=true;$("b1").textContent="ثانية واحدة… ♥";
+  try{
+    const b=await kdf(key+"|"+norm($("d").value)+"|"+norm($("s").value),ub(C.sa),C.ia);
+    await crypto.subtle.decrypt({name:"AES-GCM",iv:ub(C.ci)},await aes(b),ub(C.c));
+    bitsA=b;$("s1").classList.add("hide");$("s2").classList.remove("hide");$("l").focus();
+  }catch(x){$("e1").textContent="تاريخ الميلاد أو كلمة السر غلط… جربي تاني ♥"}
+  $("b1").disabled=false;$("b1").textContent="افتحي قلبي";
+};
+$("s2").onsubmit=async e=>{
+  e.preventDefault();$("e2").textContent="";$("b2").disabled=true;$("b2").textContent="بفتحلك… ♥";
+  let html;
+  try{
+    const b=await kdf(hex(bitsA)+"|"+norm($("l").value),ub(C.sb),C.ib);
+    const data=await payloadP;
+    html=new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:ub(C.iv)},await aes(b),data));
+  }catch(x){$("e2").textContent="دي مش كلمة المرور 😂 ٣ كلمات بالإنجليزي وبتقوليهالي كتير ♥";$("b2").disabled=false;$("b2").textContent="افتحي ♥";return}
+  document.open();document.write(html);document.close();
+};
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>

@@ -27,7 +27,8 @@ self.addEventListener('fetch', event => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin === self.location.origin) {
-    if (req.mode === 'navigate') {
+    const scope = new URL(self.registration.scope).pathname;
+    if (req.mode === 'navigate' && (url.pathname === scope || url.pathname === scope + 'index.html')) {
       event.respondWith((async () => (await caches.match('./index.html')) || fetch(req))());
       return;
     }
