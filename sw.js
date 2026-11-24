@@ -1,10 +1,11 @@
 /* دفتر — service worker: offline app shell + cache-first runtime for fonts and libraries + Web Push */
-const VERSION = 'daftar-shell-v2.2.0';
+const VERSION = 'daftar-shell-v3.0.0';
 try { importScripts('./push-config.js'); } catch (e) { self.DAFTAR_PUSH = {}; }
 const RUNTIME = 'daftar-runtime-v1';
 const SHELL = [
   './', './index.html', './manifest.webmanifest', './favicon.ico',
   './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png', './icons/apple-touch-icon.png', './icons/favicon-32.png', './icons/badge-96.png', './push-config.js',
+  './lib/brain-core.js', './lib/brain-model.bin', './lib/brain-lex.json',
 ];
 const CDN = /^https:\/\/(fonts\.googleapis\.com|fonts\.gstatic\.com|cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net)\//;
 

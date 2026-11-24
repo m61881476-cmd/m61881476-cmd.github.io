@@ -1767,6 +1767,22 @@ html.v21-hide .num:not(.keep){filter:blur(7px);transition:filter .2s}html.v21-hi
 .ws-comp{padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px))}
 
 /* V2CSS-END */
+/* V3CSS-BEGIN */
+.think{margin-top:6px;border-radius:14px;background:var(--fill4);font-size:var(--f-foot);color:var(--muted);max-width:min(560px,100%)}
+.think summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px;padding:8px 12px;font-weight:600;color:var(--accent);-webkit-tap-highlight-color:transparent;user-select:none}
+.think summary::-webkit-details-marker{display:none}.think summary svg{width:16px;height:16px}
+.think summary::after{content:'';margin-inline-start:auto;width:7px;height:7px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);transition:transform var(--t-fast,.18s) ease;opacity:.6}
+.think[open] summary::after{transform:rotate(-135deg)}
+.think ol{margin:0;padding:0 30px 10px 14px;display:flex;flex-direction:column;gap:5px;line-height:1.5;color:var(--fg)}
+.think[open] ol{animation:v3think .28s var(--ease-out,ease) both}
+@keyframes v3think{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.think li::marker{color:var(--accent);font-weight:700}
+.think summary small{font-weight:400;color:var(--muted);font-size:var(--f-cap1);margin-inline-start:4px}
+.think-h{display:block;padding:2px 14px 4px;color:var(--fg);font-size:var(--f-cap1)}
+.think.brain{background:color-mix(in srgb,var(--purple,#AF52DE) 10%,var(--fill4))}
+.msg.bot>.think{align-self:stretch;margin:0 0 6px}
+/* V3CSS-END */
+
 </style>
 
 </head>
@@ -1941,6 +1957,7 @@ html.v21-hide .num:not(.keep){filter:blur(7px);transition:filter .2s}html.v21-hi
 <div class="upd" id="updBar" hidden role="status"><span data-ic="restore"></span><span>يوجد تحديث جديد لدفتر</span><button type="button" class="btn sm primary" id="updBtn">تحديث الآن</button></div>
 
 <script src="push-config.js"></script>
+<script src="lib/brain-core.js"></script>
 <script>
 'use strict';
 (() => {
@@ -2666,7 +2683,7 @@ function scanAmounts(u) {
 function wordRe(w) { return new RegExp(`(?:^|[\\s،,.(:])(?:و|ب|ل|بال|وبال|ال|عال|ف|في ال)?(${reEsc(w)})(?=$|[\\s،,.)!?؟:])`, 'g'); }
 const M_WORDS = {
   bank: ['من البنك', 'في البنك', 'ف البنك', 'علي البنك', 'البنك', 'بنك', 'بنكي', 'تحويل', 'تحويل بنكي', 'حولت', 'حول', 'حوّل', 'حولته', 'حولتهم', 'حولي', 'حولنا', 'حوالة', 'حواله', 'انستاباي', 'انستا باي', 'انستا', 'instapay', 'فيزا', 'بالفيزا', 'visa', 'بطاقه', 'كارت', 'الكارت', 'محفظه', 'فودافون كاش', 'اورنج كاش', 'اتصالات كاش', 'وي باي', 'شيك', 'بشيك', 'ماكينه الفيزا', 'استرديت في البنك'],
-  credit: ['علي الحساب', 'ع الحساب', 'عالحساب', 'علي حسابه', 'الفلوس عليه', 'الفلوس عليها', 'الفلوس عليهم', 'اجل', 'الاجل', 'بالاجل', 'شكك', 'علي النوته', 'النوته', 'الدين', 'دين', 'بالدين', 'لسه مدفعتش', 'لسه ما دفعتش', 'لسه مادفعتش', 'متدفعش', 'ماتدفعش', 'مااتدفعش', 'ما اتدفعش', 'لسه مدفعش', 'لسه ما دفعش', 'لسه مادفعش', 'مدفعتوش', 'مدفعتهاش', 'لسه', 'تقسيط', 'بالتقسيط', 'اقساط', 'مستحق', 'مستحقه', 'هدفع', 'هدفعه', 'هدفعها', 'هدفعهم', 'هيدفع', 'هيدفعه', 'هيدفعها', 'هيدفعهم', 'هندفع', 'ما حاسبتوش', 'محاسبتوش', 'هيدفعوا', 'هيدفعو', 'دفعتين', 'علي دفعتين', 'هتدفع', 'هتدفعه', 'هتدفعها', 'هتدفعهم', 'دفعات', 'علي دفعات', 'عليا', 'علينا', 'بعد شهر', 'بعد اسبوع', 'اخر الشهر', 'الدفع بعدين', 'الدفع بعد', 'اخر الاسبوع', 'قسط', 'بالقسط', 'من حسابه', 'من حسابها', 'من حسابهم', 'من حساب المورد', 'من حساب العميل', 'اتخصمت من حسابه', 'اتخصمت من حساب المورد'],
+  credit: ['علي الحساب', 'ع الحساب', 'عالحساب', 'علي حسابه', 'الفلوس عليه', 'الفلوس عليها', 'الفلوس عليهم', 'اجل', 'الاجل', 'بالاجل', 'شكك', 'علي النوته', 'النوته', 'الدين', 'دين', 'بالدين', 'لسه مدفعتش', 'لسه ما دفعتش', 'لسه مادفعتش', 'ما دفعتش', 'مادفعتش', 'مدفعتش', 'ما دفعناش', 'مدفعناش', 'ما اتحاسبتش', 'متدفعش', 'ماتدفعش', 'مااتدفعش', 'ما اتدفعش', 'لسه مدفعش', 'لسه ما دفعش', 'لسه مادفعش', 'مدفعتوش', 'مدفعتهاش', 'لسه', 'تقسيط', 'بالتقسيط', 'اقساط', 'مستحق', 'مستحقه', 'هدفع', 'هدفعه', 'هدفعها', 'هدفعهم', 'هيدفع', 'هيدفعه', 'هيدفعها', 'هيدفعهم', 'هندفع', 'ما حاسبتوش', 'محاسبتوش', 'هيدفعوا', 'هيدفعو', 'دفعتين', 'علي دفعتين', 'هتدفع', 'هتدفعه', 'هتدفعها', 'هتدفعهم', 'دفعات', 'علي دفعات', 'عليا', 'علينا', 'بعد شهر', 'بعد اسبوع', 'اخر الشهر', 'الدفع بعدين', 'الدفع بعد', 'اخر الاسبوع', 'قسط', 'بالقسط', 'من حسابه', 'من حسابها', 'من حسابهم', 'من حساب المورد', 'من حساب العميل', 'اتخصمت من حسابه', 'اتخصمت من حساب المورد'],
   cash: ['كاش', 'نقدي', 'نقدا', 'نقد', 'نقديه', 'من الدرج', 'في الدرج', 'الدرج', 'الخزنه', 'الخزينه', 'من الخزنه', 'الصندوق', 'cash', 'ايد بايد', 'في ايدي', 'كاش في الخزنه', 'استرديت كاش', 'رجعتله كاش'],
 };
 const M_RES = Object.entries(M_WORDS).flatMap(([m, list]) => list.map(w => ({ m, re: wordRe(w) })));
@@ -2782,10 +2799,13 @@ function detectIntent(t) {
   if (has(new RegExp(`^(?:(?:النهارده|انهارده|امبارح|اول امبارح|الصبح|بالليل|والله|الحمد لله|سجل عندك|بص يا دفتر|يا [^\\s\\d]+)\\s+)*(?:ال)?(?:(?:ام|ابو|عم|طنط|خالتي)\\s+[^\\s\\d]+|عميل|زبون|زباين|شركه|مطعم|محل|مكتب|صيدليه|مؤسسه|موسسه|معرض|مصنع|حاج|حاجه|استاذ|معلم|مدام|دكتور|مهندس|${NAMES})(?:\\s+[^\\s\\d]+){0,2}\\s+(?:سدد|سددت|دفع|دفعت|دفعلي|دفعلنا|حول|حولت|حولي|اداني|ادانا|اديني|بعتلي|بعتلنا|سددلي|جابلي|جابلنا|جاب)(?:\\s|$)`)) && !has(/بضاعه|بضايع|اشتري|رجع/)) return 'collect';
   if (has(/استلمت|استلمنا|قبضت|قبضنا|حصلت|حصلنا|تحصيل|استلام|اداني|ادانا|اديني|جابلي|جابلنا|(?:^|\s)خدت|اخدت|جالي|جالنا|دفعلي|دفعلنا|دفعتلي|سددلي|سددلنا|حولي|حول لي|حولنا|بعتلي|بعتلنا|وصلني|وصلنا|دخلي/) && !has(/بعت |بعنا|اشتريت|بضاعه من|طلبيه|شحنه|بضايع|خدمه|شغلانه|عملت|خلصت/) && !(has(/صيانه|تصليح|تركيب|تصميم|استشاره|اتعاب/) && !has(/اللي عليه|اللي عليها|من حسابه/)) && has(new RegExp(`عميل|زبون|زباين|مستحقات|اللي عليه|اللي عليها|اللي عليهم|حسابه|حسابها|من شركه|من مطعم|من محل|من مكتب|من صيدليه|من مصنع|من الحاج|من المعلم|من الاستاذ|من (?:ال)?(?:ام|ابو|عم|مدام|دكتور|طنط|حاجه|مهندس|استاذه)\\s|من مدرسه|من مستشفي|من فندق|من مؤسسه|من معرض|دفعه من|من (?:${NAMES})(?:\\s|$)|شيك من|شيك العميل`))) return 'collect';
   if (has(/استلمت|قبضت|جالي|جالنا|حصلت|(?:^|\s)دخل/) && has(/ايجار|عموله|فوائد|ايراد|تعويض|منحه|هديه|مكافاه|كاش باك|cashback/) && !has(/بعت|بعنا/)) return 'otherIncome';
+  if (has(/^(?:شغل|شغلانه|مصنعيه|اجره|أجره) (?:تصليح|صيانه|تركيب|تفصيل|برمجه|تصميم)/) && !has(/دفعت|دفعنا|صرفت|صرفنا|سددت|للصنايعي|للفني|للسباك|للكهربائي|للنقاش|للنجار/)) return 'service';
   if (has(/خدمه|خدمات|صيانه|تصليح|تركيب|استشاره|تصميم|شغلانه|مشروع ل|اتعاب|كشف/) && has(/(?:^|\s)و?(?:بعت|بعنا|قبضت|قبضنا|استلمت|خلصت|عملت|حصلت|فاتوره|ايراد|اخدت|خدت)(?:\s|$)/) && !has(/دفعت|اشتريت|دفعنا|صرفت|صرفنا|سددت|سددنا|سداد|اللي عليه|اللي عليها|من حسابه/)) return 'service';
   if (has(/(?:^|\s)(?:و)?(?:بعت|بعنا|بعتها|بعته|بعتهم|بعناها|بعتله|بعتلها|بعتلهم|بعناله|باع|اتباع|اتباعت|بيع|البيع|ببيع|بيعه|مبيعات|المبيعات|بايع)(?:\s|$)|فاتوره بيع|اتباع|(?:عميل|زبون|زباين)\s+(?:اخد|خد|سحب|شال)\s+(?:بضاعه|بضايع|حاجات)|^(?:(?:ال)?(?:حاج|حاجه|استاذ|استاذه|معلم|دكتور|مهندس|مدام|ام|ابو|عم|طنط)\s+)?[\u0600-\u06FF]+(?:\s+[\u0600-\u06FF]+)?\s+(?:اخد|خد|سحب|شال|اخدت|خدت)\s+(?:بضاعه|بضايع|حاجات)/)) return 'sale';
   if ((has(OUT_PAID) || has(/جبت|جبنا/)) && !has(/اشتريت|اشترينا|اشتري|شريت|شرينا|شراء|مشتريات|تمن (?:ال)?بضاعه/) && (MAINT_RE.test(t) || FARE_RE.test(t) || /(?:^|\s)(?:شحن|نقل|توصيل|تحميل|نولون)\s/.test(t))) return 'expense';
-  if (has(/(?:مورد|تاجر)\s+(?:جاب|جابلي|نزل|نزللي|ورد|وردلي)\s+(?:ال)?(?:بضاعه|بضايع|طلبيه)|اشتريت|اشترينا|اشتري|شريت|شرينا|شراء|مشتريات|جبت|جبنا|ركبت|ركبنا|(?:استلمت|اخدت|خدت|وصلت|وصلتني|وصلتنا|جاتلي|جاتلنا|نزلت|دخلت|دخلتلي|دخلنا) (?:بضاعه|بضايع|طلبيه|شحنه)|طلبيه|حجزت/)) return 'purchase';
+  if (has(/(?:^|\s)(?:سلمت|سلمنا|سلمتله|سلمتلها|سلمتلهم|وصلت|وصلنا|وديت|ودينا)\s+(?:ال)?(?:طلبيه|اوردر|الاوردر|بضاعه|بضايع)\s+(?:ل|لل|لـ)/) && !has(/(?:من|عند) (?:ال)?(?:مورد|تاجر)/)) return 'sale';
+  if (has(/^(?:(?:ال)?(?:حاج|حاجه|استاذ|استاذه|معلم|دكتور|مهندس|مدام|ام|ابو|عم|طنط|الزبون|زبون|العميل|عميل|الزبونه|زبونه))\s+(?:[\u0600-\u06FF]+\s+)?(?:اخد|خد|اخدت|خدت|سحب|سحبت|شال|شالت|اشتري|اشترت)\s+[\d\u0600-\u06FF]/) && !has(/(?:^|\s)(?:مني|منا)\s+(?:فلوس|سلفه)/)) return 'sale';
+  if (has(/(?:مورد|تاجر)\s+(?:جاب|جابلي|نزل|نزللي|ورد|وردلي)\s+(?:ال)?(?:بضاعه|بضايع|طلبيه)|(?:^|\s)(?:وردولي|وردلي|وردوا لي|وردولنا|وردلنا)(?:\s|$)|اشتريت|اشترينا|اشتري|شريت|شرينا|شراء|مشتريات|جبت|جبنا|ركبت|ركبنا|(?:استلمت|اخدت|خدت|وصلت|وصلتني|وصلتنا|جاتلي|جاتلنا|نزلت|دخلت|دخلتلي|دخلنا) (?:بضاعه|بضايع|طلبيه|شحنه)|طلبيه|حجزت/)) return 'purchase';
   if (expHit(t)) return 'expense';
   if (has(OUT_PAID)) return 'expenseUnknown';
   if (has(IN_PAID)) return 'inflowUnknown';
@@ -4192,7 +4212,7 @@ async function boot() {
 /* =========================================================
    v1.1 — native feel: motion, sheets, navigation, settings, lock
    ========================================================= */
-const APP_VERSION = '2.2.0';
+const APP_VERSION = '3.0.0';
 const T0 = performance.now();
 Object.assign(P, {
   chev: '<path d="M14.5 5.5 8 12l6.5 6.5"/>',
@@ -4814,7 +4834,7 @@ function resetDialog() {
     onMount: d => { const i = $('#rsIn', d), b = $('#rsOk', d); setTimeout(() => i.focus(), 120); i.addEventListener('input', () => { b.disabled = fold(i.value.trim()) !== fold('مسح'); }); b.onclick = () => { d.close(); S = defaults(); S.settings = { ...S.settings, ...DEF_SETTINGS }; setStack = ['root']; invalidate(); save(true); applyPrefs(); applyTheme(); renderChat(); refreshAll(); showOnboarding(); }; } });
 }
 function changelogSheet() {
-  openDialog({ title: 'الجديد في الإصدار', body: `<div class="changelog"><div><h3>الإصدار 2.2.0</h3><ul><li><b>فهم أقوى للأرقام بالكلام:</b> «خمسة وعشرين ألف»، «واحد وتلاتين ألف وخمسمية»، «ستة وتلاتين ألف وميتين وخمسين» بقت تتقري صح.</li><li><b>اختبار المليون:</b> منطق دفتر اتجرّب على مليون و200 ألف جملة متولّدة بصيغ وأرقام وأسماء مختلفة ونجح فيها كلها، غير 1670 جملة مكتوبة باليد.</li><li>بيفرّق بين «مية» الميّه و«مية» الرقم، وبيفهم «19 ألف مرتبات و6 آلاف إيجار» كعمليتين.</li><li>جمل جديدة: «سلّفت العامل»، «رديت للزبون»، «المورد نزّل بضاعة»، «جددت الرخصة»، «البنك اتخصم منه»، «على دفعتين»، و«ج.م».</li></ul></div><div><h3>الإصدار 2.1.0</h3><ul><li><b>أنعم وأسرع:</b> حركة واحدة بنعومة الآيفون في كل البرنامج، الزراير بتستجيب للضغطة، رجوع بالسحب من طرف الشاشة، وإشعارات صغيرة ما بتغطّيش العناوين.</li><li><b>الأوامر السريعة «/»:</b> اكتب «/» في المحادثة وتطلعلك كل الأوامر: /فاتورة، /تذكير، /قفلة، /خزنة، /جرد، /بحث، /ورشة…</li><li><b>دليل الاستخدام:</b> في الإعدادات، بصور من جوه البرنامج وخطوات وأمثلة تجرّبها بدوسة.</li><li><b>قفلة اليوم:</b> بعت كام، كسبت كام، صرفت كام، وفي الدرج كام، وتبعتها على واتساب.</li><li><b>بحث شامل:</b> زباين، أصناف، قيود، مبالغ، وملفات من خانة واحدة.</li><li><b>إعدادات أكتر:</b> بحث جوه الإعدادات، حسابات دفع (فودافون كاش وغيرها)، قفل الفترات، ترقيم القيود، الحفظ التلقائي الذكي، الشاشة الرئيسية، إخفاء الأرقام، لون الفواتير والإيصال الحراري 80 مم.</li><li><b>فهم أذكى:</b> أكتر من صنف في جملة، «أم حسن» و«الحاج سيد»، «محمد مين؟» لما فيه اسمين شبه بعض، مواعيد زي «الخميس» و«أول الشهر»، وتنبيه لو العملية متكررة أو المبلغ غريب أو الدرج هيبقى بالسالب. اختبار ثابت على 1610 جملة كلهم صح.</li><li><b>الورشة:</b> إيصال حراري، كشف حساب مورد، وتعديل الملف قبل ما يطلع.</li><li>اختصارات من أيقونة البرنامج: قيد جديد، النوتة، الورشة، التحليلات.</li></ul></div><div><h3>الإصدار 2.0.0</h3><ul><li><b>النوتة الذكية:</b> حساب لكل زبون ومورد، «فلوسك برا» في رقم واحد، عمر الدين، وتذكير مؤدب على واتساب بدوسة.</li><li><b>وضع الزبون:</b> شاشة نضيفة فيها حساب الزبون بس، تفرّجه عليها أو تبعتها صورة.</li><li><b>المخزون:</b> أصناف بتكلفتها، «بعت 3 كراتين زيت» بتخصم الكمية وتطلّع التكلفة لوحدها (متوسط أو FIFO)، جرد للمخزون وجرد للخزنة بالفئات.</li><li><b>الورشة:</b> مساحة ملفات منفصلة، تطلب بالكلام «اعملي كشف حساب لمحمد PDF» أو من القوالب: فواتير، عروض أسعار، إيصالات، تقارير، خطابات، عقود، وتطلع PDF وWord وExcel وتتحفظ في مكتبة.</li><li><b>بوصلة السيولة:</b> رصيدك المتوقع يوم بيوم لحد شهر قدام، وتحذير لو هتتزنق.</li><li><b>الضرايب:</b> ضريبة النظام المبسط المتوقعة وإقرار القيمة المضافة الشهري.</li><li><b>شنطة المحاسب:</b> كل التقارير في Excel وPDF مرة واحدة.</li><li>منطق الفهم اتختبر على 1239 جملة ونجح فيهم كلهم، ولما يكون مش متأكد بيسأل.</li><li>إعدادات جديدة: بيانات المحل والفواتير وإنستاباي، النوتة، المخزون، الضرايب، السيولة.</li></ul></div><div><h3>الإصدار 1.4.0</h3><ul><li>منطق أقوى بكتير: اتختبر على 484 جملة حقيقية بالعامية والفصحى ونجح فيها كلها.</li><li>بيفهم الكمية في السعر («3 كراتين الكرتونة بـ 600» = 1,800)، وأكتر من مصروف في جملة واحدة («إيجار 4000 وكهربا 600 كله كاش»)، ونص كاش ونص آجل.</li><li>بيفرّق بين الصيانة والنقل والكهربا، وعمولات وفوايد البنك، والشريك اللي داخل أو ساحب، والعميل اللي سدّد («العميل سدد 2500»).</li><li>مبيسجّلش الأسئلة والكلام عن المستقبل («هدفع بكرة») أو التصحيح كعمليات.</li><li>لو فيه رقم في كلامك ما دخلش في القيد، دفتر بيحذّرك ومبيحفظش لوحده حتى لو الحفظ التلقائي شغال.</li></ul></div><div><h3>الإصدار 1.3.0</h3><ul><li>إشعارات على الموبايل: تحديثات وتذكيرات بتوصلك حتى والتطبيق مقفول، على أندرويد والآيفون (iOS 16.4 أو أحدث، من التطبيق المتثبّت على الشاشة الرئيسية).</li><li>تقدر تشغّلها أو تقفلها من الإعدادات ← التذكيرات.</li></ul></div><div><h3>الإصدار 1.2.0</h3><ul><li>شكل iOS الرسمي بالكامل: خط النظام (SF Arabic على الآيفون)، ألوان النظام في الوضع الفاتح والداكن، وأحجام النصوص زي الآيفون.</li><li>شريط تبويب وأشرطة تنقّل شفافة، وأيقونات بتتملي لما تختارها.</li><li>محادثة زي «الرسائل»، وبطاقة القيد بقت زي إيصال Apple Pay.</li><li>تنبيهات وقوايم إجراءات وقايمة سياق زي الآيفون بالظبط، وشاشة ترحيب زي «الجديد».</li><li>أيقونة تطبيق جديدة.</li></ul></div><div><h3>الإصدار 1.1.0</h3><ul>
+  openDialog({ title: 'الجديد في الإصدار', body: `<div class="changelog"><div><h3>الإصدار 3.0.0 · عقل دفتر 🧠</h3><ul><li><b>شبكة عصبية على موبايلك:</b> اتدرّبت على 25 مليون جملة بصيغ وأخطاء إملائية وكلام مختلف، وشغّالة من غير نت. لما تكتب جملة جديدة على دفتر بيفهمها، ولما مايبقاش متأكد بيسألك «قصدك إيه؟» باختيارات.</li><li><b>رأي تاني:</b> لو القواعد فهمت حاجة والشبكة شايفة حاجة تانية خالص، دفتر بينبّهك قبل الحفظ.</li><li><b>بيصحّح الإملاء والفرانكو:</b> «الايجاار»، «كااش»، «b3t bda3a b 1500 cash» بقوا مفهومين، وبيقولك صحّح إيه.</li><li><b>فاكر المحادثة:</b> «خليها كاش»، «وكمان 700»، «كرّر»، «امسح آخر واحدة».</li><li><b>اسأله عن فلوسك:</b> «كسبت كام الشهر ده؟»، «مين عليه فلوس؟»، «الدرج فيه كام؟»، «مصاريفي فين؟»، «الشهر ده أحسن من اللي فات؟»، «محمد عليه كام؟».</li><li><b>«فكّرت كده»:</b> فوق كل قيد تقدر تفتح الخطوات اللي وصّلته للقيد.</li><li><b>بيفتكر عاداتك:</b> لما تنسى المبلغ، بيقترح المبالغ اللي بتدفعها عادة في نفس البند.</li><li>تقدر تقفل الشبكة أو «فكّرت كده» من الإعدادات ← القيود والفترات.</li></ul></div><div><h3>الإصدار 2.2.0</h3><ul><li><b>فهم أقوى للأرقام بالكلام:</b> «خمسة وعشرين ألف»، «واحد وتلاتين ألف وخمسمية»، «ستة وتلاتين ألف وميتين وخمسين» بقت تتقري صح.</li><li><b>اختبار المليون:</b> منطق دفتر اتجرّب على مليون و200 ألف جملة متولّدة بصيغ وأرقام وأسماء مختلفة ونجح فيها كلها، غير 1670 جملة مكتوبة باليد.</li><li>بيفرّق بين «مية» الميّه و«مية» الرقم، وبيفهم «19 ألف مرتبات و6 آلاف إيجار» كعمليتين.</li><li>جمل جديدة: «سلّفت العامل»، «رديت للزبون»، «المورد نزّل بضاعة»، «جددت الرخصة»، «البنك اتخصم منه»، «على دفعتين»، و«ج.م».</li></ul></div><div><h3>الإصدار 2.1.0</h3><ul><li><b>أنعم وأسرع:</b> حركة واحدة بنعومة الآيفون في كل البرنامج، الزراير بتستجيب للضغطة، رجوع بالسحب من طرف الشاشة، وإشعارات صغيرة ما بتغطّيش العناوين.</li><li><b>الأوامر السريعة «/»:</b> اكتب «/» في المحادثة وتطلعلك كل الأوامر: /فاتورة، /تذكير، /قفلة، /خزنة، /جرد، /بحث، /ورشة…</li><li><b>دليل الاستخدام:</b> في الإعدادات، بصور من جوه البرنامج وخطوات وأمثلة تجرّبها بدوسة.</li><li><b>قفلة اليوم:</b> بعت كام، كسبت كام، صرفت كام، وفي الدرج كام، وتبعتها على واتساب.</li><li><b>بحث شامل:</b> زباين، أصناف، قيود، مبالغ، وملفات من خانة واحدة.</li><li><b>إعدادات أكتر:</b> بحث جوه الإعدادات، حسابات دفع (فودافون كاش وغيرها)، قفل الفترات، ترقيم القيود، الحفظ التلقائي الذكي، الشاشة الرئيسية، إخفاء الأرقام، لون الفواتير والإيصال الحراري 80 مم.</li><li><b>فهم أذكى:</b> أكتر من صنف في جملة، «أم حسن» و«الحاج سيد»، «محمد مين؟» لما فيه اسمين شبه بعض، مواعيد زي «الخميس» و«أول الشهر»، وتنبيه لو العملية متكررة أو المبلغ غريب أو الدرج هيبقى بالسالب. اختبار ثابت على 1610 جملة كلهم صح.</li><li><b>الورشة:</b> إيصال حراري، كشف حساب مورد، وتعديل الملف قبل ما يطلع.</li><li>اختصارات من أيقونة البرنامج: قيد جديد، النوتة، الورشة، التحليلات.</li></ul></div><div><h3>الإصدار 2.0.0</h3><ul><li><b>النوتة الذكية:</b> حساب لكل زبون ومورد، «فلوسك برا» في رقم واحد، عمر الدين، وتذكير مؤدب على واتساب بدوسة.</li><li><b>وضع الزبون:</b> شاشة نضيفة فيها حساب الزبون بس، تفرّجه عليها أو تبعتها صورة.</li><li><b>المخزون:</b> أصناف بتكلفتها، «بعت 3 كراتين زيت» بتخصم الكمية وتطلّع التكلفة لوحدها (متوسط أو FIFO)، جرد للمخزون وجرد للخزنة بالفئات.</li><li><b>الورشة:</b> مساحة ملفات منفصلة، تطلب بالكلام «اعملي كشف حساب لمحمد PDF» أو من القوالب: فواتير، عروض أسعار، إيصالات، تقارير، خطابات، عقود، وتطلع PDF وWord وExcel وتتحفظ في مكتبة.</li><li><b>بوصلة السيولة:</b> رصيدك المتوقع يوم بيوم لحد شهر قدام، وتحذير لو هتتزنق.</li><li><b>الضرايب:</b> ضريبة النظام المبسط المتوقعة وإقرار القيمة المضافة الشهري.</li><li><b>شنطة المحاسب:</b> كل التقارير في Excel وPDF مرة واحدة.</li><li>منطق الفهم اتختبر على 1239 جملة ونجح فيهم كلهم، ولما يكون مش متأكد بيسأل.</li><li>إعدادات جديدة: بيانات المحل والفواتير وإنستاباي، النوتة، المخزون، الضرايب، السيولة.</li></ul></div><div><h3>الإصدار 1.4.0</h3><ul><li>منطق أقوى بكتير: اتختبر على 484 جملة حقيقية بالعامية والفصحى ونجح فيها كلها.</li><li>بيفهم الكمية في السعر («3 كراتين الكرتونة بـ 600» = 1,800)، وأكتر من مصروف في جملة واحدة («إيجار 4000 وكهربا 600 كله كاش»)، ونص كاش ونص آجل.</li><li>بيفرّق بين الصيانة والنقل والكهربا، وعمولات وفوايد البنك، والشريك اللي داخل أو ساحب، والعميل اللي سدّد («العميل سدد 2500»).</li><li>مبيسجّلش الأسئلة والكلام عن المستقبل («هدفع بكرة») أو التصحيح كعمليات.</li><li>لو فيه رقم في كلامك ما دخلش في القيد، دفتر بيحذّرك ومبيحفظش لوحده حتى لو الحفظ التلقائي شغال.</li></ul></div><div><h3>الإصدار 1.3.0</h3><ul><li>إشعارات على الموبايل: تحديثات وتذكيرات بتوصلك حتى والتطبيق مقفول، على أندرويد والآيفون (iOS 16.4 أو أحدث، من التطبيق المتثبّت على الشاشة الرئيسية).</li><li>تقدر تشغّلها أو تقفلها من الإعدادات ← التذكيرات.</li></ul></div><div><h3>الإصدار 1.2.0</h3><ul><li>شكل iOS الرسمي بالكامل: خط النظام (SF Arabic على الآيفون)، ألوان النظام في الوضع الفاتح والداكن، وأحجام النصوص زي الآيفون.</li><li>شريط تبويب وأشرطة تنقّل شفافة، وأيقونات بتتملي لما تختارها.</li><li>محادثة زي «الرسائل»، وبطاقة القيد بقت زي إيصال Apple Pay.</li><li>تنبيهات وقوايم إجراءات وقايمة سياق زي الآيفون بالظبط، وشاشة ترحيب زي «الجديد».</li><li>أيقونة تطبيق جديدة.</li></ul></div><div><h3>الإصدار 1.1.0</h3><ul>
     <li>شكل جديد كأنه تطبيق رسمي: حركات ناعمة، عناوين كبيرة بتصغر مع التمرير، وشريط تبويب زجاجي.</li>
     <li>شاشة ترحيب متحركة وشاشة بداية سريعة.</li>
     <li>إعدادات مرتبة زي الآيفون: المظهر، الأرقام والتاريخ (أرقام عربية وهجري)، الحسابات، الإدخال، الأمان، التذكيرات.</li>
@@ -6738,6 +6758,7 @@ Object.assign(PAGES, {
   journalset() {
     const st = S.settings;
     return `${group('الحفظ', pickRow('confirmSave', 'true', 'مراجعة كل قيد قبل الحفظ', String(st.confirmSave !== false), 'إنت اللي بتدوس «حفظ» دايماً') + pickRow('confirmSave', 'false', 'حفظ تلقائي ذكي', String(st.confirmSave !== false), 'القيود الأكيدة تتحفظ لوحدها، واللي فيها شك تستنى مراجعتك'), '', 'noicons')}
+    ${group('عقل دفتر 🧠', swRow('brainOn', 'purple', 'cpu', 'الشبكة العصبية', S.settings.brainOn !== false, 'بتفهم الكلام الجديد، وبتصحّح الإملاء، وبتديك رأي تاني') + swRow('showThink', 'indigo', 'journal', '«فكّرت كده» فوق كل قيد', S.settings.showThink !== false, 'الخطوات اللي وصّلتني للقيد'), 'كله شغّال على موبايلك من غير نت. اتدرّب على 25 مليون جملة.')}
     ${group('ترقيم القيود', `<div class="set-row"><span class="lbl">القيد الجاي<small>JE-${pad((S.seq || 0) + 1, 4)}</small></span><input class="row-inp num" id="seqNext" inputmode="numeric" style="max-width:100px" value="${(S.seq || 0) + 1}"></div>`, 'تقدر تبدأ من رقم معيّن لو كنت ماشي بدفتر ورقي قبل كده. مينفعش ترجع لرقم مستخدم.', 'noicons')}
     ${group('قفل الفترة', `<label class="set-row" for="lockB"><span class="lbl">اقفل كل القيود لحد يوم<small>${st.lockBefore ? 'مقفول: محدش يقدر يضيف أو يعدّل أو يمسح قبل التاريخ ده' : 'مفتوح'}</small></span><input type="date" class="row-inp" id="lockB" value="${esc(st.lockBefore || '')}"></label>${st.lockBefore ? '<button type="button" class="set-row center" id="lockClear">افتح الفترة</button>' : ''}`, 'بعد ما تقفل الشهر وتبعت الأرقام للمحاسب، اقفله عشان الأرقام ما تتغيّرش بالغلط.', 'noicons')}`;
   },
@@ -7082,7 +7103,363 @@ setRoot.addEventListener('click', e => {
 window.__v2 = { buildDoc, docPDF, docDOCX, docXLSX, dayModel, globalSearch, makeBag, compassModel, partyBook: () => [...partyBook().values()], stockState: () => [...stockState()], get S() { return S; } };
 
 /* V2-END */
-window.__daftar = { splitSegments, numify, prep, expHit, parseLocal, normalize, readInvoice, invoiceSentence, deriveKeyword, get S() { return S; }, today, addDays, send: t => send(t) };
+/* V3-BEGIN — عقل دفتر 3.0: شبكة عصبية على الجهاز + مصحّح إملائي + ذاكرة محادثة + أسئلة عن بياناتك + «فكّرت كده» */
+const BRAIN = { model: null, speller: null, loading: null, notes: new Map() };
+const BR_NAME = { sale: 'بيع', buy: 'شراء بضاعة', collect: 'تحصيل من عميل', paysupp: 'سداد لمورد', service: 'إيراد خدمة', income: 'إيراد تاني', ret: 'مرتجع من زبون', capital: 'رأس مال', draw: 'مسحوبات شخصية', move: 'تحويل بين الدرج والبنك', loan: 'قرض', asset: 'شراء أصل', deprec: 'إهلاك', advance: 'سلفة لعامل', prepaid: 'مصروف مقدم', multi: 'أكتر من عملية', none: 'مش عملية' };
+const brName = l => l.startsWith('exp:') ? l.slice(4).replace(/^مصروفات? /, 'مصروف ') : (BR_NAME[l] || l);
+/* كلام بيتحط قدّام الجملة عشان القواعد تفهم النوع اللي الشبكة شافته (القيد نفسه بيطلع من القواعد) */
+const BR_HINT = { sale: 'بعت بضاعة', buy: 'اشتريت بضاعة', collect: 'حصلت من عميل', paysupp: 'دفعت للمورد', service: 'إيراد خدمة', income: 'إيرادات أخرى', ret: 'مرتجع مبيعات', capital: 'رأس مال', draw: 'مسحوبات شخصية', loan: 'قرض من البنك', asset: 'اشتريت أصل ثابت', deprec: 'إهلاك', advance: 'سلفة للعامل', prepaid: 'مدفوع مقدم' };
+const BR_EXPKW = { 'مصروف إيجار': 'إيجار', 'مصروف رواتب': 'مرتبات', 'مصروف كهرباء ومياه': 'كهربا', 'مصروف إنترنت واتصالات': 'فاتورة النت', 'مصروف نقل': 'مصروف نقل', 'مصروف تسويق': 'إعلانات', 'مصروف صيانة': 'صيانة', 'مصروف ضرائب ورسوم': 'رسوم', 'مصروف أدوات ومستلزمات': 'مستلزمات', 'مصروفات بنكية': 'مصاريف بنكية', 'مصروف فوائد': 'فوائد', 'مصروفات متنوعة': 'مصروفات نثرية' };
+const brHint = l => l.startsWith('exp:') ? 'دفعت ' + (BR_EXPKW[l.slice(4)] || l.slice(4)) : BR_HINT[l];
+function brainLoad() {
+  if (BRAIN.model) return Promise.resolve(BRAIN);
+  if (BRAIN.loading) return BRAIN.loading;
+  if (!window.DaftarBrain || typeof fetch !== 'function') return Promise.resolve(null);
+  BRAIN.loading = Promise.all([fetch('./lib/brain-model.bin').then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }), fetch('./lib/brain-lex.json').then(r => r.json())]).then(([buf, lex]) => {
+    const hl = new DataView(buf).getUint32(0, true), h = JSON.parse(new TextDecoder().decode(new Uint8Array(buf, 4, hl)));
+    BRAIN.model = { labels: h.labels, C: h.labels.length, W: new Int8Array(buf, 4 + hl), scale: Float32Array.from(h.scale), bias: Float32Array.from(h.bias) };
+    BRAIN.lex = lex; BRAIN.speller = DaftarBrain.makeSpeller(lex);
+    return BRAIN;
+  }).catch(e => { console.warn('brain', e); BRAIN.loading = null; return null; });
+  return BRAIN.loading;
+}
+function brainPredict(t, n = 3) { return BRAIN.model ? DaftarBrain.predict(BRAIN.model, t, n) : []; }
+/* أسامي الناس والأصناف اللي عندك ما تتصحّحش */
+function brainKnown() {
+  const k = new Set();
+  try { for (const p of Object.values(S.parties || {})) for (const w of DaftarBrain.norm(p && p.name || '').split(' ')) k.add(w); for (const it of S.items || []) for (const w of DaftarBrain.norm([it.name, ...(it.alias || [])].join(' ')).split(' ')) k.add(w); for (const r of S.rules || []) for (const w of DaftarBrain.norm(r.kw || '').split(' ')) k.add(w); } catch (e) { }
+  return k;
+}
+function brainSpell(text) {
+  if (!BRAIN.speller) return null;
+  const known = brainKnown(), fixes = [];
+  const out = String(text).split(/(\s+)/).map(w => {
+    if (/^\s+$/.test(w) || !w) return w;
+    const m = /^([؀-ۿ]+)([^؀-ۿ]*)$/.exec(w); if (!m) return w;
+    const n = DaftarBrain.norm(m[1]); if (known.has(n)) return w;
+    const f = BRAIN.speller.fix(n); if (!f) return w;
+    fixes.push([m[1], f.w]); return f.w + m[2];
+  }).join('');
+  return fixes.length ? { text: out, fixes } : null;
+}
+/* نوع القيد من حساباته (نفس تصنيف التدريب) */
+function entryLabel(e) {
+  const d = {}; for (const l of e.lines) d[l.account] = r2((d[l.account] || 0) + l.debit - l.credit);
+  const ks = Object.keys(d).filter(k => Math.abs(d[k]) > 0.005), has = k => ks.includes(k);
+  if (has('قروض بنكية')) return 'loan'; if (has('مردودات المبيعات')) return 'ret'; if (has('إيرادات المبيعات')) return 'sale'; if (has('إيرادات خدمات')) return 'service'; if (has('إيرادات أخرى')) return 'income';
+  if (has('مجمع الإهلاك')) return 'deprec'; if (has('أصول ثابتة')) return 'asset'; if (has(INV)) return 'buy'; if (has('رأس المال')) return 'capital'; if (has('المسحوبات الشخصية')) return 'draw';
+  if (has('سلف العاملين')) return 'advance'; if (has('مصروفات مدفوعة مقدماً')) return 'prepaid';
+  const ex = ks.find(k => /^مصروف|^مصروفات/.test(k) && !isCOGS(k)); if (ex) return BRAIN.model && BRAIN.model.labels.includes('exp:' + ex) ? 'exp:' + ex : 'exp:*';
+  if (has(AR)) return 'collect'; if (has(AP)) return 'paysupp'; if (has(BANK) && has(CASH) && ks.length === 2) return 'move';
+  return null;
+}
+/* فرانكو وإنجليزي → عربي */
+const FRANCO = [[/\b(?:sold|sell|b3t|bi3t|be3t|ba3t)\b/gi, 'بعت'], [/\b(?:bought|buy|purchased?|eshtret|eshtaret|ishtarit|gebt|gibt)\b/gi, 'اشتريت'], [/\b(?:paid|pay|dafa3t|dfa3t|dafaat)\b/gi, 'دفعت'], [/\b(?:received|collected|2abadt|abadt|2bdt)\b/gi, 'قبضت'],
+  [/\b(?:goods|bda3a|bda3t|bada3a|stuff|items?)\b/gi, 'بضاعة'], [/\b(?:cash|kash|ca4|ka4)\b/gi, 'كاش'], [/\b(?:credit|agel|a2gel|on account)\b/gi, 'آجل'], [/\bfrom (?:the )?bank\b|\b(?:bank|transfer|instapay)\b/gi, 'من البنك'], [/\bvisa\b/gi, 'فيزا'],
+  [/\brent\b|\b2igar|egar\b/gi, 'إيجار'], [/\b(?:salar(?:y|ies)|wages|mortabat)\b/gi, 'مرتبات'], [/\b(?:electricity|kahraba)\b/gi, 'كهربا'], [/\binternet\b/gi, 'النت'], [/\b(?:for|b|be|bi)\b(?=\s*\d)/gi, 'بـ'], [/\b(?:shirts?|t-?shirts?)\b/gi, 'قمصان'], [/\b(?:from|to)\b/gi, '']];
+function brainFranco(text) { if (!/[a-z]{2,}/i.test(text)) return null; let t = text; for (const [re, w] of FRANCO) t = t.replace(re, w); t = t.replace(/\s+/g, ' ').trim(); return t !== text ? t : null; }
+function brainAssist(text, ctx, r) {
+  /* إجابة على سؤال «قصدك إيه؟» اللي العقل سأله */
+  if (ctx && ctx.brainQ) {
+    const lab = ctx.brainQ.find(l => text.endsWith(' ' + brName(l)));
+    if (lab) {
+      const base = text.slice(0, text.length - brName(lab).length - 1).trim();
+      const r2_ = _pl3(brHint(lab) + ' ' + (brainFranco(base) || base), ctx);
+      if (r2_.entries.length || r2_.questions.length) { r2_.unknown = []; for (const e of r2_.entries) { e.explanation += ` 🧠 سجّلتها «${brName(lab)}» زي ما قلتلي.`; BRAIN.notes.set(e._src = base, { how: 'answer', label: lab }); } for (const q of r2_.questions) q.text = brHint(lab) + ' ' + base; return r2_; }
+    }
+  }
+  const p0 = brainPredict(text, 4), top0 = p0[0];
+  const pOf = (p, l) => (p.find(a => a.label === l) || { p: 0 }).p;
+  /* 1) القواعد فهمتها: الشبكة رأي تاني. لو مختلفين جامد، نبّه قبل الحفظ */
+  if (r.entries.length && !r.unknown.length) {
+    if (r.entries.length === 1 && top0 && top0.p >= 0.9) {
+      const e = r.entries[0], el = entryLabel(e);
+      if (el && el !== 'exp:*' && top0.label !== el && top0.label !== 'multi' && top0.label !== 'none' && pOf(p0, el) < 0.02) {
+        e._warn = e._assumed = true;
+        e.explanation += ` 🧠 رأي تاني: الشبكة العصبية شايفاها «${brName(top0.label)}» (${Math.round(top0.p * 100)}٪) مش «${brName(el)}». اتأكد قبل الحفظ.`;
+        BRAIN.notes.set(e._src, { how: 'disagree', label: top0.label, p: top0.p, rule: el });
+      }
+    }
+  }
+  if (r.entries.length && !r.questions.length && !r.unknown.length) return r;
+  if (NOT_TXN.test(fold(r.unknown.join(' ') || text))) return r;
+  /* 2) فرانكو / غلطة إملائية: لو التصحيح حلّ اللخبطة والشبكة موافقة عليه */
+  const fr = brainFranco(text), sp = brainSpell(fr || text);
+  let fixed = sp ? sp.text : fr, fixedOK = true;
+  if (fixed) {
+    const r2_ = _pl3(fixed, ctx), solved = r2_.entries.length && !r2_.unknown.length && r2_.questions.length < r.questions.length + (r.unknown.length ? 1 : 0);
+    const agree = r2_.entries.every(e => { const el = entryLabel(e); return !top0 || !el || el === 'exp:*' || top0.label === 'multi' || pOf(p0, el) >= 0.2 || (top0.p < 0.6 && r.unknown.length > 0); });
+    if (!((solved || (r2_.entries.length > r.entries.length && !r2_.unknown.length)) && agree)) fixedOK = false;
+    else {
+      const fx = [fr ? `الفرانكو ← «${fr}»` : '', ...(sp ? sp.fixes.map(([a, b]) => `«${a}» ← «${b}»`) : [])].filter(Boolean).join('، ');
+      for (const e of r2_.entries) { e._src = text; e._warn = e._assumed = true; e.explanation += ` ✏️ صحّحت الكتابة: ${fx}. اتأكد إن ده قصدك.`; BRAIN.notes.set(text, { how: 'spell', fixes: sp ? sp.fixes : [[text, fr]] }); }
+      for (const q of r2_.questions) { q.question = `(فهمت ${fx}) ` + q.question; }
+      return r2_;
+    }
+    if (!fixedOK) fixed = fr && fr !== fixed ? fr : null;
+  }
+  /* 3) القواعد سألت «في إيه؟» والشبكة متأكدة: جاوب بدالك (وانت تراجع) */
+  if (!r.entries.length && r.questions.length && !r.unknown.length && top0 && top0.p >= 0.9 && top0.label.startsWith('exp:') && brHint(top0.label)) {
+    const q = r.questions[0];
+    if (['category', 'account'].includes(q.qkind) || /في ايه|في إيه/.test(q.question)) {
+      const x = _pl3(brHint(top0.label) + ' ' + (fixed || text), ctx);
+      if ((x.entries.length || x.questions.length) && !x.unknown.length && x.entries.every(e => entryLabel(e) === top0.label) && !x.questions.some(q2 => /في ايه|في إيه/.test(q2.question))) {
+        for (const e of x.entries) { e._src = text; e._warn = e._assumed = true; e.explanation += ` 🧠 فهمت إنها «${brName(top0.label)}» (${Math.round(top0.p * 100)}٪). لو غلط غيّر الحساب.`; BRAIN.notes.set(text, { how: 'brain', label: top0.label, p: top0.p, alt: p0.slice(1, 3).map(a => [a.label, a.p]) }); }
+        for (const q2 of x.questions) { q2.question = `فهمتها «${brName(top0.label)}» 🧠 ` + q2.question; q2.text = brHint(top0.label) + ' ' + (fixed || text); }
+        return x;
+      }
+    }
+    for (const q2 of r.questions) if (q2.chips && q2.chips.length && top0.label.startsWith('exp:')) { const want = brName(top0.label).replace(/^مصروف /, ''); const i = q2.chips.findIndex(c => fold(want).includes(fold(c).split(' ')[0])); if (i > 0) q2.chips.unshift(...q2.chips.splice(i, 1)); }
+  }
+  if (r.entries.length || r.questions.length) { for (const q of r.questions) if (q.qkind === 'amount' && !(q.chips || []).length) { const ch = habitAmounts(q.text); if (ch.length) q.chips = ch; } return r; }
+  /* 4) القواعد ما فهمتش خالص: الشبكة العصبية */
+  const base = fixed || text, p = fixed ? brainPredict(base, 4) : p0;
+  if (!p.length || !top0 || top0.label === 'none' || (top0.p >= 0.5 && p[0].label !== top0.label)) return r;
+  const [top, sec] = p;
+  if (top.label === 'none' || top.label === 'multi' || top.p < 0.4) return r;
+  const tryLab = l => { const h = brHint(l); if (!h) return null; const x = _pl3(h + ' ' + base, ctx); return (x.entries.length || x.questions.length) && !x.unknown.length && x.entries.every(e => entryLabel(e) === l || entryLabel(e) === 'exp:*') ? x : null; };
+  if (top.p >= 0.85 && (!sec || top.p - sec.p > 0.6)) {
+    const x = tryLab(top.label);
+    if (x) {
+      for (const e of x.entries) { e._src = text; e._warn = e._assumed = true; e.explanation += ` 🧠 الجملة دي جديدة عليّا، بس فهمتها «${brName(top.label)}» بثقة ${Math.round(top.p * 100)}٪. راجعها قبل الحفظ.`; BRAIN.notes.set(text, { how: 'brain', label: top.label, p: top.p, alt: p.slice(1, 3).map(a => [a.label, a.p]) }); }
+      for (const q of x.questions) { q.question = `فهمتها «${brName(top.label)}» 🧠 ` + q.question; q.text = brHint(top.label) + ' ' + base; }
+      return x;
+    }
+  }
+  /* مش متأكد كفاية: اسأل باختيارات */
+  const opts = p.filter(a => a.p >= 0.08 && brHint(a.label)).slice(0, 3);
+  if (!opts.length) return r;
+  const q = { question: `مش متأكد إني فهمتها 🤔 أقرب حاجة شايفها «${brName(opts[0].label)}» (${Math.round(opts[0].p * 100)}٪). هي إيه بالظبط؟`, chips: opts.map(a => brName(a.label)).concat(['حاجة تانية']), qkind: 'brain', text: base };
+  return { entries: [], questions: [q], unknown: [], brainQ: opts.map(a => a.label) };
+}
+/* المبالغ اللي بتدفعها عادة في نفس البند (من عاداتك) */
+function habitAmounts(t) {
+  const p = brainPredict(t, 1)[0]; if (!p || p.p < 0.5) return [];
+  const acc = p.label.startsWith('exp:') ? p.label.slice(4) : { sale: 'إيرادات المبيعات', buy: INV, draw: 'المسحوبات الشخصية', capital: 'رأس المال', advance: 'سلف العاملين' }[p.label];
+  if (!acc) return [];
+  const seen = [];
+  for (const e of [...S.entries].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))) {
+    const l = e.lines.find(x => x.account === acc); if (!l) continue;
+    const v = r2(l.debit || l.credit); if (v > 0 && !seen.includes(v)) seen.push(v);
+    if (seen.length >= 3) break;
+  }
+  return seen.map(v => String(v));
+}
+const _pl3 = parseLocal;
+parseLocal = function (text, ctx = {}) {
+  const r = _pl3(text, ctx);
+  if (!BRAIN.model || (ctx && ctx.noBrain) || S.settings.brainOn === false) return r;
+  try { return brainAssist(String(text || '').replace(/\s+/g, ' ').trim(), ctx, r); } catch (e) { console.warn(e); return r; }
+};
+
+/* ---------- أسئلة عن بياناتك ---------- */
+const PER_RE = [
+  [/النهارده|النهاردة|اليوم|انهارده/, () => [today(), today(), 'النهارده']],
+  [/امبارح|إمبارح|أمس|امس/, () => { const d = addDays(today(), -1); return [d, d, 'امبارح']; }],
+  [/(?:الاسبوع|الأسبوع|الاسبوع) (?:ده|دا|الحالي)|الاسبوع$|الأسبوع$/, () => [addDays(today(), -6), today(), 'آخر 7 أيام']],
+  [/الشهر (?:اللي فات|الماضي|السابق)/, () => { const t = parseYmd(today()); const a = new Date(t.getFullYear(), t.getMonth() - 1, 1), b = new Date(t.getFullYear(), t.getMonth(), 0); return [ymd(a), ymd(b), 'الشهر اللي فات']; }],
+  [/السنه|السنة|السنادي|العام/, () => [today().slice(0, 4) + '-01-01', today(), 'السنة دي']],
+  [/الشهر|الشهرده|ده الشهر/, () => [today().slice(0, 8) + '01', today(), 'الشهر ده']],
+];
+function qPeriod(t) { for (const [re, f] of PER_RE) if (re.test(t)) return f(); return [today().slice(0, 8) + '01', today(), 'الشهر ده']; }
+const mny = v => money(v, { dec: false }) + ' ' + cur();
+const vary = a => a[Math.floor(Math.random() * a.length)];
+function balOf(acc) { const r = agg(() => true).get(acc); return r ? signedBal(r) : 0; }
+function answerQ(text) {
+  const t = fold(text), isQ = /[؟?]|(?:^|\s)(?:كام|قد ايه|اد ايه|ايه|مين|هل|فين|ازاي)(?:\s|$)|^(?:رصيد|حساب|ورين|وريني|فرجني|عايز اعرف|عاوز اعرف)/.test(t);
+  if (/^(?:صباح|مساء) (?:الخير|النور|الفل)|^(?:السلام عليكم|اهلا|أهلا|هاي|هلو|ازيك|إزيك|عامل ايه|ازيكم)/.test(t)) {
+    const [f, to] = [today(), today()], n = S.entries.filter(inP(f, to)).length;
+    return vary([`${/صباح/.test(t) ? 'صباح الفل' : /مساء/.test(t) ? 'مساء النور' : 'أهلاً بيك'} 👋 `, 'أهلاً يا معلم 👋 ', 'منوّر 👋 ']) + (n ? `سجّلنا النهارده ${n} عملية. قولي اللي حصل وأنا أسجّله.` : 'لسه ما سجّلناش حاجة النهارده. قولي أول عملية.');
+  }
+  if (/^(?:شكرا|شكراً|متشكر|تسلم|ميرسي|thanks)/.test(t)) return vary(['العفو 🙏 أنا هنا لو احتجت حاجة.', 'تحت أمرك 🙏', 'ولا يهمك، ده شغلي 😄']);
+  if (/^(?:لا |لأ )?(?:خلاص|تمام|ماشي|اوك|اوكي|ok|حلو|جميل|عاش|تسلم ايدك)$/.test(t)) return vary(['تمام 👍', 'ماشي 👌', 'حلو 👍 قولي لو في حاجة تانية.']);
+  if (/مين (?:انت|إنت|انتا)|انت (?:مين|ايه)|بتعمل ايه/.test(t)) return 'أنا دفتر، محاسب المحل 🧠 بتكتبلي اللي حصل بكلامك العادي وأنا أعمله قيد صح، وتسألني عن أرباحك ومصاريفك والدرج ومين عليه فلوس. كل ده على موبايلك من غير نت.';
+  if (!isQ || !S.entries.length) return isQ && /كسب|ربح|مبيعات|مصاريف|مصروف|الدرج|البنك|عليه|عليا/.test(t) ? 'لسه ما فيش عمليات متسجّلة عشان أحسبلك 🙂 سجّل أول عملية وبعدها اسألني.' : null;
+  const [from, to, pn] = qPeriod(t);
+  const P = inP(from, to);
+  /* مقارنة بالشهر اللي فات */
+  if (/(?:احسن|أحسن|اوحش|أوحش|اسوا|أسوأ|مقارنه|قارن|زاد|قل)/.test(t) && /(?:اللي فات|الماضي|السابق)/.test(t)) {
+    const tt = parseYmd(today()), a0 = ymd(new Date(tt.getFullYear(), tt.getMonth() - 1, 1)), a1 = ymd(new Date(tt.getFullYear(), tt.getMonth(), 0)), b0 = today().slice(0, 8) + '01';
+    const day = tt.getDate(), a1p = ymd(new Date(tt.getFullYear(), tt.getMonth() - 1, Math.min(day, new Date(tt.getFullYear(), tt.getMonth(), 0).getDate())));
+    const now = netIncome(inP(b0, today())), prev = netIncome(inP(a0, a1p)), prevFull = netIncome(inP(a0, a1));
+    const d = r2(now - prev);
+    return `قارنت أول ${day} يوم من الشهر ده بنفس الفترة من الشهر اللي فات (عشان المقارنة تبقى عادلة):\n• الشهر ده: ${mny(now)}\n• نفس الفترة اللي فاتت: ${mny(prev)}\n${d >= 0 ? `📈 أحسن بـ ${mny(d)}` : `📉 أقل بـ ${mny(-d)}`}${prevFull !== prev ? `\n(الشهر اللي فات كله قفل على ${mny(prevFull)})` : ''}`;
+  }
+  /* الربح */
+  if (/كسب|ربح|مكسب|الارباح|خسر|خسران|كسبان|صافي/.test(t)) {
+    const st = incomeStmtNums(P), n = st.net;
+    const lead = n > 0 ? vary([`كسبت ${pn} ${mny(n)} 💚`, `صافي ربحك ${pn}: ${mny(n)} 💚`]) : n < 0 ? `${pn} في خسارة ${mny(-n)} 🔻` : `${pn} لسه على الزيرو`;
+    return `${lead}\n• الإيرادات: ${mny(st.rev)}${st.cogs ? `\n• تكلفة البضاعة المباعة: ${mny(st.cogs)}` : ''}\n• المصاريف: ${mny(st.opex)}${st.top ? `\nأكبر مصروف: ${st.top[0]} (${mny(st.top[1])})` : ''}${!st.cogs && st.rev ? '\n💡 لو عايز الربح يبقى أدق، عرّف أصنافك وتكلفتها في «المخزون» عشان أخصم تكلفة البضاعة اللي اتباعت.' : ''}`;
+  }
+  /* المبيعات */
+  if (/مبيعات|بعت كام|بيعت كام|بعنا كام|الايراد|الإيراد|دخل كام|الدخل|الغله|الغلة/.test(t)) {
+    const st = incomeStmtNums(P), n = S.entries.filter(e => P(e) && e.lines.some(l => l.account === 'إيرادات المبيعات' && l.credit > 0)).length;
+    return `مبيعاتك ${pn}: ${mny(st.sales)}${n ? ` في ${n} عملية بيع (متوسط ${mny(st.sales / n)})` : ''}${st.rev - st.sales > 0.5 ? `\nوإيرادات تانية: ${mny(st.rev - st.sales)}` : ''}`;
+  }
+  /* المصاريف */
+  if (/مصاريف|مصروفات|مصروف|صرفت كام|صرفنا|بيروح فين|الفلوس بتروح/.test(t)) {
+    const st = incomeStmtNums(P);
+    if (!st.opex) return `ما فيش مصاريف متسجّلة ${pn} 👌`;
+    return `مصاريفك ${pn}: ${mny(st.opex)}\n` + st.list.slice(0, 5).map(([a, v]) => `• ${a}: ${mny(v)} (${Math.round(v / st.opex * 100)}٪)`).join('\n');
+  }
+  /* الدرج والبنك */
+  if (/الدرج|الخزنه|الخزنة|الكاش|النقديه|النقدية|معايا كام|في ايدي/.test(t) && !/البنك/.test(t)) return `في الدرج دلوقتي ${mny(balOf(CASH))} حسب الدفتر.${balOf(CASH) < 0 ? ' ⚠️ الرصيد بالسالب، غالباً في عملية قبض ما اتسجّلتش أو مصروف اتسجّل كاش وهو من البنك.' : ''} لو عايز تتأكد، اعمل «عدّ الدرج» من شاشة المخزون.`;
+  if (/البنك|الحساب البنكي|رصيدي/.test(t)) return `رصيد البنك حسب الدفتر: ${mny(balOf(BANK))}\nوالدرج: ${mny(balOf(CASH))}\nإجمالي الفلوس اللي معاك: ${mny(balOf(BANK) + balOf(CASH))}`;
+  /* ديون */
+  const book = [...partyBook().values()];
+  const nameHit = book.find(p => p.name && p.name !== NONAME && p.name.length > 2 && t.includes(fold(p.name)));
+  if (nameHit && /عليه|ليه|حساب|رصيد|كام/.test(t)) {
+    const parts = []; if (Math.abs(nameHit.cust) > 0.005) parts.push(nameHit.cust > 0 ? `${nameHit.name} عليه ليك ${mny(nameHit.cust)}` : `إنت عليك لـ${nameHit.name} ${mny(-nameHit.cust)} (دفع زيادة)`);
+    if (Math.abs(nameHit.supp) > 0.005) parts.push(nameHit.supp > 0 ? `إنت عليك لـ${nameHit.name} ${mny(nameHit.supp)}` : `${nameHit.name} عليه ليك ${mny(-nameHit.supp)}`);
+    return (parts.join('\n') || `${nameHit.name} حسابه خالص 👌`) + (nameHit.last ? `\nآخر حركة: ${fmtDate(nameHit.last)}` : '') + (nameHit.aging && nameHit.aging.overdue > 0 ? `\n⏰ منهم ${mny(nameHit.aging.overdue)} فات ميعادهم.` : '');
+  }
+  if (/مين عليه|عليهم|الديون اللي بره|فلوسي بره|ليا بره|ليا كام|الشكك|الاجل|الآجل|مديونين|العملاء/.test(t) && !/عليا|مديون لمين/.test(t)) {
+    const l = book.filter(p => p.cust > 0.005).sort((a, b) => b.cust - a.cust);
+    if (!l.length) return 'ولا حد عليه فلوس 👌 كل الزباين خالصين.';
+    return `ليك بره ${mny(sum(l, p => p.cust))} عند ${l.length} ${l.length > 10 ? 'زبون' : 'زباين'}:\n` + l.slice(0, 5).map(p => `• ${p.name}: ${mny(p.cust)}${p.aging && p.aging.overdue > 0 ? ' ⏰' : ''}`).join('\n') + (l.length > 5 ? `\n… والباقي في «النوتة»` : '');
+  }
+  if (/عليا|مديون لمين|ديوني|للموردين|الموردين/.test(t)) {
+    const l = book.filter(p => p.supp > 0.005).sort((a, b) => b.supp - a.supp);
+    if (!l.length) return 'مش عليك ولا مليم للموردين 👌';
+    return `عليك للموردين ${mny(sum(l, p => p.supp))}:\n` + l.slice(0, 5).map(p => `• ${p.name}: ${mny(p.supp)}`).join('\n');
+  }
+  /* أكتر صنف */
+  if (/اكتر|أكتر|اكثر|أكثر/.test(t) && /صنف|بيع|منتج|بيتباع/.test(t)) {
+    const c = {}; for (const e of S.entries.filter(P)) for (const it of e.items || []) if (it.q < 0 || /sale/.test(e.kind || '')) c[it.name] = (c[it.name] || 0) + Math.abs(it.q);
+    const top = Object.entries(c).sort((a, b) => b[1] - a[1]).slice(0, 3);
+    if (top.length) return `أكتر حاجة بتتباع ${pn}:\n` + top.map(([n, q], i) => `${i + 1}. ${n}: ${q}`).join('\n');
+  }
+  return null;
+}
+function incomeStmtNums(P) {
+  const m = agg(P); let rev = 0, sales = 0, cogs = 0, opex = 0; const list = [];
+  for (const r of m.values()) {
+    if (r.type === 'revenue') { const v = r2(r.cr - r.dr); rev += v; if (r.account === 'إيرادات المبيعات') sales += v; if (r.account === 'مردودات المبيعات') sales += v; }
+    else if (r.type === 'expense') { const v = r2(r.dr - r.cr); if (isCOGS(r.account)) cogs += v; else { opex += v; list.push([r.account, v]); } }
+  }
+  list.sort((a, b) => b[1] - a[1]);
+  return { rev: r2(rev), sales: r2(sales), cogs: r2(cogs), opex: r2(opex), net: r2(rev - cogs - opex), list, top: list[0] };
+}
+
+/* ---------- ذاكرة المحادثة ---------- */
+function lastProposal(pred) { for (let i = S.messages.length - 1; i >= 0; i--) { const m = S.messages[i]; if (m.role !== 'bot' || !m.proposals) continue; for (let j = m.proposals.length - 1; j >= 0; j--) { const p = m.proposals[j]; if (p.src && (!pred || pred(p))) return { m, p, j }; } } return null; }
+const METH_W = /\s*(?:(?:و)?(?:كاش|نقدي|نقدا|نقدى|كش|من الدرج|من الخزنه|في الدرج|آجل|اجل|بالآجل|بالاجل|على الحساب|علي الحساب|ع الحساب|شكك|على النوته|تحويل(?: بنكي)?|من البنك|بالبنك|على البنك|في البنك|فيزا|بالفيزا|انستاباي|انستا باي|فودافون كاش|محفظه|بشيك|شيك))(?=\s|$)/g;
+function followUp(text) {
+  const t = fold(text).replace(/[.!؟?]+$/, '').trim();
+  /* خليها كاش / آجل / تحويل */
+  let m = /^(?:لا\s+)?(?:خليها|خليه|خليهم|اعملها|اعمله|خليها تبقي|غيرها|غيرها ل|حولها|حولها ل|خلي الدفع|الدفع)\s*(?:ل|لـ)?\s*(كاش|نقدي|اجل|آجل|على الحساب|علي الحساب|شكك|تحويل|بنك|من البنك|فيزا|انستاباي|فودافون كاش)$/.exec(t);
+  if (m) {
+    const lp = lastProposal(p => p.status === 'pending'); if (!lp) return null;
+    const meth = /بنك|تحويل|فيزا|انستاباي/.test(m[1]) ? 'من البنك' : /اجل|حساب|شكك/.test(m[1]) ? 'على الحساب' : /فودافون/.test(m[1]) ? 'فودافون كاش' : 'كاش';
+    const base = lp.p.src.replace(METH_W, ' ').replace(/\s+/g, ' ').trim();
+    lp.p.status = 'dismissed'; rerenderSlip(lp.m, lp.j);
+    return { say: vary(['تمام، غيّرتها 👌', 'حاضر 👌', 'ماشي، عدّلتها:']), redo: base + ' ' + meth };
+  }
+  /* وكمان 500 / ونفس الحاجة بـ 300 */
+  m = /^(?:و\s*)?(?:كمان|كمانه|زيها|زيه|نفسها|نفس الحاجه|نفس الحاجة|ومثلها|وواحده كمان|وواحد كمان|واحده تانيه|واحد تاني)\s*(?:ب|بـ|بمبلغ)?\s*([\d٠-٩][\d٠-٩.,]*)?\s*(?:جنيه|ج)?$/.exec(t);
+  if (m) {
+    const lp = lastProposal(); if (!lp) return null;
+    const src = lp.p.src; let redo = src;
+    if (m[1]) { const nums = src.match(/[\d٠-٩][\d٠-٩.,]*/g) || []; if (nums.length !== 1) return { say: 'تمام، بس اكتبهالي كاملة عشان العملية اللي فاتت فيها أكتر من رقم وماعرفش أغيّر أنهي واحد.' }; redo = src.replace(nums[0], m[1]); }
+    return { say: m[1] ? `تمام، زي اللي فاتت بالظبط بس بـ ${m[1]}:` : 'تمام، نفس العملية تاني:', redo };
+  }
+  /* كرّر / نفس اللي فات */
+  if (/^(?:كرر|كررها|كرره|نفس اللي فات|نفس العمليه|نفس العملية|زي اللي فات|زي امبارح|نفس امبارح)$/.test(t)) { const lp = lastProposal(p => p.status === 'saved'); if (!lp) return null; return { say: 'تمام، كرّرتها:', redo: lp.p.src }; }
+  /* امسح آخر واحدة */
+  if (/^(?:امسح|امسحها|امسحه|الغي|الغيها|الغيه|إلغي|شيل|شيلها|احذف|احذفها|مسح)(?:\s+(?:اخر|آخر)\s*(?:واحده|واحدة|عمليه|عملية|قيد|حاجه|حاجة)?|\s+(?:دي|ده|دا))?$/.test(t)) {
+    const lp = lastProposal(p => p.status === 'pending');
+    if (lp) { lp.p.status = 'dismissed'; rerenderSlip(lp.m, lp.j); return { say: 'شلتها، ما اتسجّلتش 👍' }; }
+    const last = [...S.entries].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))[0];
+    if (!last) return { say: 'ما فيش حاجة متسجّلة أمسحها.' };
+    S.v3del = last.id;
+    return { say: `آخر قيد متسجّل هو ${last.id} · ${last.description} (${mny(sum(last.lines, l => l.debit))}). أمسحه؟`, chips: ['أيوه امسحه', 'لا خلاص'], q: true };
+  }
+  if (S.v3del && /^(?:ايوه|أيوه|اه|آه|ايوا|نعم|امسح|امسحه|ايوه امسحه|أيوه امسحه|اكيد)$/.test(t)) { const id = S.v3del; S.v3del = null; deleteEntry(id); return { say: 'اتمسح ✔️ (لو غلطت دوس «تراجع» في الإشعار)' }; }
+  if (S.v3del && /^(?:لا|لأ|لا خلاص|خلاص|سيبه)$/.test(t)) { S.v3del = null; return { say: 'تمام، سبته زي ما هو 👍' }; }
+  return null;
+}
+function botSay(text, chips) {
+  const m = pushBot({ kind: chips && chips.length ? 'clarify' : 'info', text, chips: chips || [], qOpen: !!(chips && chips.length) });
+  save(); msgsEl.insertAdjacentHTML('beforeend', msgHTML(m)); fillIcons(msgsEl); msgsEl.querySelector(`.msg[data-id="${m.id}"]`)?.classList.add('enter'); sound('recv'); scrollChat();
+  return m;
+}
+const _resp3 = respond;
+respond = function (text, extraCtx) {
+  if (!extraCtx) {
+    try {
+      const pq = S.pendingQ;
+      if (!pq) {
+        const f = followUp(text);
+        if (f) { botSay(f.say, f.chips); if (f.redo) _resp3(f.redo, { source: 'local' }); return; }
+        if (!parseLocal(text).entries.length) { const a = answerQ(text); if (a) { botSay(a); return; } }
+      } else if (!/[\d٠-٩]/.test(text) && /[؟?]|^(?:مين|كسبت|ربحت|كام|صباح|مساء|السلام|شكرا|ازيك)/.test(fold(text)) && answerQ(text)) {
+        closeQuestion(); botSay(answerQ(text)); return;
+      } else if (pq.qkind === 'brain' && /^حاجه تانيه|^حاجة تانية$/.test(fold(text))) {
+        closeQuestion(); botSay('تمام 🙏 اكتبها بشكل تاني فيه الفعل (بعت، اشتريت، دفعت، قبضت) والمبلغ وطريقة الدفع، وأنا هتعلّم منها.'); return;
+      }
+    } catch (e) { console.warn(e); }
+  }
+  BRAIN.lastQ = null;
+  const out = _resp3(text, extraCtx);
+  const pq = S.pendingQ;
+  if (pq && pq.qkind === 'brain' && BRAIN.lastQ) pq.ctx = { ...(pq.ctx || {}), brainQ: BRAIN.lastQ.opts };
+  return out;
+};
+/* سؤال «قصدك إيه؟»: لازم نفتكر الاختيارات عشان الرد يتفهم */
+const _pb3 = pushBot;
+pushBot = function (o) {
+  if (o && o.proposals) for (const p of o.proposals) { const n = p.src && BRAIN.notes.get(p.src); if (n) p.brain = n; }
+  const m = _pb3(o);
+  return m;
+};
+{ const _pl3b = parseLocal; parseLocal = function (text, ctx) { const r = _pl3b(text, ctx); if (r.brainQ) BRAIN.lastQ = { question: r.questions[0].question, opts: r.brainQ }; return r; }; }
+
+/* ---------- «فكّرت كده»: خطوات التفكير تحت كل قيد ---------- */
+const KIND_AR = { sale: 'بيع', purchase: 'شراء بضاعة', expense: 'مصروف', collect: 'تحصيل من عميل', paySupplier: 'سداد لمورد', capital: 'رأس مال', draw: 'مسحوبات', bankToCash: 'سحب من البنك للدرج', cashToBank: 'إيداع في البنك', loanIn: 'قرض', loanOut: 'سداد قرض', advance: 'سلفة', salesReturn: 'مرتجع مبيعات', purchaseReturn: 'مرتجع مشتريات', service: 'إيراد خدمة', deprec: 'إهلاك', asset: 'أصل ثابت' };
+function thinkSteps(p) {
+  const d = p.draft || {}, L = (d.lines || []).filter(l => l.account && (toNum(l.debit) || toNum(l.credit))), st = [];
+  if (!L.length) return st;
+  const tot = r2(sum(L, l => toNum(l.debit)));
+  st.push(`قريت: «${clean(p.src || '').slice(0, 120)}»`);
+  if (p.brain && p.brain.how === 'spell') st.push(`لقيت كلمة مكتوبة غلط وصحّحتها: ${p.brain.fixes.map(([a, b]) => `«${a}» ← «${b}»`).join('، ')}`);
+  if (p.brain && p.brain.how === 'brain') st.push(`الجملة مش من الصيغ اللي أعرفها، فسألت الشبكة العصبية: قالت «${brName(p.brain.label)}» بثقة ${Math.round(p.brain.p * 100)}٪${(p.brain.alt || []).length ? ` (وبعدها ${p.brain.alt.filter(a => a[1] > .01).map(a => `«${brName(a[0])}» ${Math.round(a[1] * 100)}٪`).join('، ') || 'ولا حاجة قريبة'})` : ''}`);
+  if (p.brain && p.brain.how === 'answer') st.push(`سألتك وقلتلي إنها «${brName(p.brain.label)}»`);
+  const k = p.meta && p.meta.kind; const main = L.find(l => !isCashAcc(l.account, l.type) && ![AR, AP].includes(l.account)) || L.find(l => !isCashAcc(l.account, l.type)) || L[0];
+  const el = entryLabel({ lines: L.map(l => ({ account: l.account, debit: toNum(l.debit), credit: toNum(l.credit) })) });
+  st.push(`نوع العملية: ${KIND_AR[k] || (el && el !== 'exp:*' ? brName(el) : main.account)}`);
+  st.push(`المبلغ: ${mny(tot)}`);
+  const cashIn = L.filter(l => isCashAcc(l.account, l.type) && toNum(l.debit)), cashOut = L.filter(l => isCashAcc(l.account, l.type) && toNum(l.credit));
+  const cr = L.find(l => [AR, AP].includes(l.account));
+  if (cashIn.length) st.push(`الفلوس دخلت: ${cashIn.map(l => `${l.account} ${mny(toNum(l.debit))}`).join(' + ')}`);
+  if (cashOut.length) st.push(`الفلوس طلعت من: ${cashOut.map(l => `${l.account} ${mny(toNum(l.credit))}`).join(' + ')}`);
+  if (cr) st.push(cr.account === AR ? (toNum(cr.debit) ? `فاضل على الزبون ${mny(toNum(cr.debit))} آجل` : `الزبون سدّد ${mny(toNum(cr.credit))} من اللي عليه`) : (toNum(cr.credit) ? `فاضل عليك للمورد ${mny(toNum(cr.credit))}` : `سدّدت للمورد ${mny(toNum(cr.debit))}`));
+  if (p.meta && p.meta.party) st.push(`الطرف: ${p.meta.party}`);
+  if (p.meta && p.meta.due) st.push(`ميعاد الدفع: ${fmtDate(p.meta.due)}`);
+  if (p.meta && p.meta.items && p.meta.items.length) st.push(`الأصناف: ${p.meta.items.map(i => `${Math.abs(i.q)} ${i.name}`).join('، ')}`);
+  st.push(`اتأكدت إن المدين = الدائن (${mny(tot)}) ✔️`);
+  st.push(p.warn ? 'في حاجة افترضتها أو مش متأكد منها، عشان كده محتاج مراجعتك قبل الحفظ ⚠️' : 'كل حاجة واضحة في كلامك، فالقيد جاهز ✔️');
+  return st;
+}
+const _mh3 = msgHTML;
+msgHTML = function (m) {
+  let h = _mh3(m);
+  if (m && m.role === 'bot' && m.proposals && m.proposals.length && S.settings.showThink !== false) {
+    try {
+      const parts = m.proposals.map((p, i) => [i, thinkSteps(p)]).filter(x => x[1].length), n = sum(parts, x => x[1].length);
+      if (parts.length) {
+        const body = parts.map(([i, st]) => (parts.length > 1 ? `<b class="think-h">العملية ${i + 1}</b>` : '') + `<ol>${st.map(x => `<li>${esc(x)}</li>`).join('')}</ol>`).join('');
+        const anyBrain = m.proposals.some(p => p.brain);
+        h = h.replace(/^(<div class="msg bot" data-id="[^"]*">)/, `$1<details class="think${anyBrain ? ' brain' : ''}"><summary>${ic('cpu')}فكّرت كده<small>${n} خطوة${anyBrain ? ' · 🧠 الشبكة العصبية' : ''}</small></summary>${body}</details>`);
+      }
+    } catch (e) { console.warn(e); }
+  }
+  return h;
+};
+/* حمّل العقل بعد ما التطبيق يفتح (من غير ما يأخّره) */
+setTimeout(() => { brainLoad(); }, 1200);
+/* V3-END */
+
+window.__daftar = { splitSegments, numify, prep, expHit, parseLocal, parseRules: (t, c) => _pl3(t, c), brainLoad, brainPredict, brainSpell, answerQ, followUp, get BRAIN() { return BRAIN; }, normalize, readInvoice, invoiceSentence, deriveKeyword, get S() { return S; }, today, addDays, send: t => send(t) };
 boot();
 })();
 </script>
