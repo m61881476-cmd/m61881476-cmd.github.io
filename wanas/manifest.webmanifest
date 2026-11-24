@@ -1,0 +1,21 @@
+{
+  "name": "سند و ونس 💜",
+  "short_name": "سند و ونس",
+  "description": "لعبة تزلّج بزرار واحد… عن سند وونس.",
+  "id": "/wanas/",
+  "start_url": "/wanas/",
+  "scope": "/wanas/",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "landscape",
+  "dir": "rtl",
+  "lang": "ar",
+  "theme_color": "#3a2070",
+  "background_color": "#1d1238",
+  "categories": ["games"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

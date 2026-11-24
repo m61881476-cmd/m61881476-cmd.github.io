@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>سند و ونس 💜</title>
+<meta name="description" content="لعبة تزلّج بزرار واحد… عن سند وونس.">
+<meta name="theme-color" content="#3a2070">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon-64.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="سند و ونس">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Lalezar&display=swap" rel="stylesheet">
+<style>
+:root{--v:#8b5cf6;--v2:#c9a6ff;--v3:#efe6ff;--ink:#2b2240;--card:rgba(255,255,255,.92);--safeT:env(safe-area-inset-top,0px);--safeB:env(safe-area-inset-bottom,0px);--safeL:env(safe-area-inset-left,0px);--safeR:env(safe-area-inset-right,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+html,body{margin:0;height:100%;overflow:hidden;background:#1d1238;font-family:Cairo,Tajawal,system-ui,sans-serif;color:var(--ink);overscroll-behavior:none;touch-action:none}
+canvas#c{position:fixed;inset:0;display:block;touch-action:none}
+.hidden{display:none!important}
+button{font-family:inherit;border:0;cursor:pointer;color:inherit}
+.scr{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:calc(12px + var(--safeT)) calc(14px + var(--safeR)) calc(12px + var(--safeB)) calc(14px + var(--safeL));z-index:10;touch-action:pan-y}
+.scr.dim{background:linear-gradient(180deg,rgba(29,18,56,.35),rgba(29,18,56,.6));backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.panel{background:var(--card);border-radius:24px;box-shadow:0 12px 40px rgba(30,10,60,.35);padding:16px 18px;max-width:min(720px,100%);max-height:100%;overflow:auto;width:100%;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+h1.logo{font-family:Lalezar,Cairo;font-weight:400;font-size:clamp(44px,9vmin,84px);margin:0;line-height:1;color:#fff;text-shadow:0 4px 0 #6b3fc4,0 8px 24px rgba(60,20,120,.5);letter-spacing:1px}
+h1.logo span{color:#e6d4ff}
+.sub{color:#f3eaff;font-weight:700;margin:6px 0 0;text-shadow:0 2px 8px rgba(40,10,80,.6)}
+.btn{background:#fff;border-radius:16px;padding:10px 16px;font-weight:900;font-size:16px;box-shadow:0 4px 0 #b59ae6,0 6px 16px rgba(40,10,80,.2);transition:transform .08s;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #b59ae6}
+.btn.pri{background:linear-gradient(180deg,#a678ff,#7c4ddb);color:#fff;box-shadow:0 4px 0 #4f2a9b,0 8px 20px rgba(80,30,160,.4)}
+.btn.pri:active{box-shadow:0 1px 0 #4f2a9b}
+.btn.sm{min-height:36px;padding:6px 12px;font-size:14px;border-radius:12px}
+.btn[disabled]{opacity:.45;pointer-events:none}
+#menu{flex-direction:column;gap:10px;text-align:center}
+#menu .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:min(620px,100%);margin-top:6px}
+#menu .grid .btn{flex-direction:column;gap:0;min-height:68px;font-size:15px}
+#menu .grid .btn b{font-size:22px;line-height:1.1}
+.note{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:999px;padding:6px 16px;font-weight:700;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);max-width:100%}
+.coins{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.9);border-radius:999px;padding:4px 12px;font-weight:900;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.topbar{position:fixed;top:calc(8px + var(--safeT));right:calc(10px + var(--safeR));left:calc(10px + var(--safeL));display:flex;justify-content:space-between;align-items:center;z-index:11;pointer-events:none}
+.topbar>*{pointer-events:auto}
+@media (max-height:430px){#menu .grid .btn{min-height:54px}#menu .grid .btn b{font-size:18px}h1.logo{font-size:44px}.sub{font-size:13px;margin:2px 0}}
+
+/* HUD */
+#hud{position:fixed;inset:0;pointer-events:none;z-index:5}
+#hud .tl{position:absolute;top:calc(8px + var(--safeT));right:calc(12px + var(--safeR));color:#fff;text-shadow:0 2px 6px rgba(30,10,60,.6);text-align:right}
+#hud .score{font-family:Lalezar,Cairo;font-size:30px;line-height:1}
+#hud .meta{font-weight:700;font-size:14px;opacity:.95}
+#hud .pause{position:absolute;top:calc(8px + var(--safeT));left:calc(10px + var(--safeL));pointer-events:auto;width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.85);font-size:20px;font-weight:900;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+#goal{position:absolute;top:calc(10px + var(--safeT));left:50%;transform:translateX(-50%);display:flex;gap:6px}
+#goal .chip{background:rgba(255,255,255,.88);border-radius:999px;padding:3px 10px;font-weight:900;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+#goal .chip.ok{background:#b98cff;color:#fff}
+#sumWrap{position:absolute;bottom:calc(14px + var(--safeB));left:calc(14px + var(--safeL));pointer-events:auto;display:flex;flex-direction:column;align-items:center;gap:4px}
+#sum{width:78px;height:78px;border-radius:50%;position:relative;background:conic-gradient(#b98cff var(--p,0%),rgba(255,255,255,.35) 0);padding:6px;box-shadow:0 4px 18px rgba(60,20,120,.45)}
+#sum .in{width:100%;height:100%;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;font-size:12px;line-height:1.1}
+#sum .in img{width:34px;height:34px;image-rendering:pixelated;object-fit:contain}
+#sum.ready{animation:pulse 1s infinite}
+#sum.ready .in{background:linear-gradient(180deg,#fff,#efe3ff)}
+#sum.off{filter:grayscale(.7);opacity:.75}
+#sum .badge{position:absolute;top:-4px;right:-4px;background:#7c4ddb;color:#fff;border-radius:999px;min-width:24px;height:24px;font-size:13px;display:flex;align-items:center;justify-content:center;border:2px solid #fff;padding:0 5px}
+#pbar{width:78px;height:6px;border-radius:9px;background:rgba(255,255,255,.4);overflow:hidden}
+#pbar i{display:block;height:100%;background:#fff;width:0}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+#pups{position:absolute;bottom:calc(16px + var(--safeB));right:calc(14px + var(--safeR));display:flex;gap:6px}
+#pups span{background:rgba(255,255,255,.88);border-radius:12px;padding:4px 8px;font-weight:900;font-size:14px}
+#tip{position:absolute;width:max-content;top:calc(52px + var(--safeT));left:50%;transform:translateX(-50%);background:rgba(255,255,255,.95);border-radius:16px;padding:8px 14px;font-weight:700;display:flex;gap:8px;align-items:center;box-shadow:0 6px 20px rgba(40,10,80,.25);max-width:90vw;transition:opacity .3s}
+#tip img{width:30px;height:30px;image-rendering:pixelated;object-fit:contain}
+#hint{position:absolute;bottom:calc(22px + var(--safeB));left:50%;transform:translateX(-50%);color:#fff;font-weight:900;text-shadow:0 2px 8px rgba(30,10,60,.7);font-size:16px;animation:fade 2s infinite}
+@keyframes fade{50%{opacity:.45}}
+
+/* Dialog */
+#dlg{align-items:flex-end;padding-bottom:calc(14px + var(--safeB))}
+#dlg .box{width:min(780px,100%);z-index:2;background:var(--card);border-radius:22px;padding:14px 18px 12px;position:relative;box-shadow:0 12px 40px rgba(30,10,60,.4);min-height:110px}
+#dlg .name{position:absolute;top:-16px;right:24px;background:#7c4ddb;color:#fff;border-radius:999px;padding:2px 14px;font-weight:900}
+#dlg .name.s{background:#4f5a37;right:auto;left:24px}
+#dlg .txt{font-size:clamp(16px,4.2vmin,21px);font-weight:700;line-height:1.7;min-height:2.6em;margin-top:6px}
+#dlg .next{position:absolute;bottom:8px;left:14px;font-size:13px;opacity:.6;font-weight:700}
+#dlg .por{position:fixed;bottom:calc(var(--safeB) + 0px);height:min(68vh,420px);image-rendering:pixelated;transition:transform .35s,opacity .35s,filter .35s;pointer-events:none;filter:drop-shadow(0 8px 20px rgba(30,10,60,.4))}
+#dlg .por.w{right:calc(4vw + var(--safeR))}
+#dlg .por.s{left:calc(4vw + var(--safeL));height:min(58vh,360px)}
+@media (orientation:landscape){#dlg .box{width:min(560px,58vw)}}
+#dlg .por.dim{filter:brightness(.55) saturate(.6);transform:translateY(12px) scale(.96)}
+#dlg .skip{position:fixed;top:calc(10px + var(--safeT));left:calc(10px + var(--safeL))}
+#dlg .ttl{position:fixed;top:calc(12px + var(--safeT));right:50%;transform:translateX(50%);color:#fff;font-family:Lalezar,Cairo;font-size:28px;text-shadow:0 3px 10px rgba(40,10,80,.6);white-space:nowrap}
+
+/* lists */
+.head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.head h2{margin:0;font-family:Lalezar,Cairo;font-weight:400;font-size:28px;color:#5b34b0}
+.chs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.ch{border-radius:18px;padding:10px;color:#fff;text-align:right;min-height:96px;position:relative;overflow:hidden;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.ch b{display:block;font-size:18px;font-family:Lalezar,Cairo;font-weight:400}
+.ch small{font-weight:700;opacity:.95;display:block;font-size:12px;line-height:1.4}
+.ch .n{position:absolute;left:10px;top:6px;font-family:Lalezar;font-size:34px;opacity:.35}
+.ch.lock{filter:grayscale(.8) brightness(.8)}
+.ch .st{position:absolute;left:10px;bottom:6px;font-size:18px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tabs button{background:#efe6ff;border-radius:999px;padding:6px 14px;font-weight:900}
+.tabs button.on{background:#7c4ddb;color:#fff}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.it{background:#f6f0ff;border-radius:16px;padding:8px;text-align:center;border:2px solid transparent}
+.it.eq{border-color:#8b5cf6;background:#ece0ff}
+.it canvas{width:72px;height:78px;image-rendering:pixelated}
+.it .nm{font-weight:900;font-size:14px;margin:2px 0 6px}
+.it .lv{font-size:12px;font-weight:700;opacity:.75;margin-bottom:6px;min-height:2.6em}
+.row{display:flex;justify-content:space-between;align-items:center;padding:10px 4px;border-bottom:1px solid #eee4ff;font-weight:700;gap:10px}
+.tog{width:54px;height:30px;border-radius:999px;background:#ddd;position:relative;flex:none}
+.tog::after{content:'';position:absolute;top:3px;right:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.tog.on{background:#8b5cf6}
+.tog.on::after{right:27px}
+.ach{display:flex;gap:10px;align-items:center;padding:8px;border-radius:14px;background:#f6f0ff;margin-bottom:6px}
+.ach .i{font-size:26px}
+.ach.no{opacity:.5;filter:grayscale(1)}
+.ach small{display:block;opacity:.75;font-weight:700}
+.pick{display:flex;gap:10px;justify-content:center;margin:6px 0 10px}
+.pick button{background:#f6f0ff;border-radius:18px;padding:8px 14px;border:3px solid transparent;display:flex;flex-direction:column;align-items:center;font-weight:900}
+.pick button img{height:70px;image-rendering:pixelated}
+.pick button.on{border-color:#8b5cf6;background:#ece0ff}
+.bios{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:12px}
+.bios button{border-radius:999px;padding:6px 12px;font-weight:900;color:#fff;border:3px solid transparent;font-size:13px}
+.bios button.on{border-color:#fff;box-shadow:0 0 0 2px #7c4ddb}
+.res{text-align:center}
+.res h2{font-family:Lalezar,Cairo;font-weight:400;font-size:36px;margin:0;color:#5b34b0}
+.res .big{font-family:Lalezar;font-size:46px;line-height:1;color:#2b2240}
+.res .kv{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin:8px 0;font-weight:900}
+.res .kv div{background:#f6f0ff;border-radius:14px;padding:6px 12px}
+.res .line{font-weight:700;color:#6b4bb8;margin:6px 0 12px}
+.acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+#toast{position:fixed;top:calc(10px + var(--safeT));left:50%;transform:translate(-50%,-160%);opacity:0;background:#fff;border-radius:16px;padding:8px 16px;font-weight:900;z-index:50;box-shadow:0 8px 30px rgba(40,10,80,.3);transition:transform .35s;display:flex;gap:8px;align-items:center;max-width:92vw}
+#toast.on{transform:translate(-50%,0);opacity:1}
+#rot{position:fixed;width:max-content;max-width:94vw;bottom:calc(10px + var(--safeB));left:50%;transform:translateX(-50%);z-index:60;background:rgba(255,255,255,.95);border-radius:14px;padding:6px 12px;font-weight:900;font-size:14px;display:flex;gap:8px;align-items:center;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+/* letter */
+#letter{background:radial-gradient(ellipse at 50% 30%,#5a35a8,#1d1238 70%);flex-direction:column}
+#letter .paper{background:#fffaf2;border-radius:18px;padding:22px 24px;max-width:600px;width:100%;max-height:82vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.5);position:relative;background-image:repeating-linear-gradient(transparent 0 33px,#efe3ff 33px 34px)}
+#letter .to{font-family:Lalezar,Cairo;font-size:30px;color:#6b3fc4}
+#letter p{font-size:clamp(16px,4.3vmin,20px);font-weight:700;line-height:34px;margin:0}
+#letter .sign{font-family:Lalezar,Cairo;font-size:26px;color:#6b3fc4;text-align:left;margin-top:10px}
+#letter .st{position:absolute;color:#fff;pointer-events:none;z-index:0}
+#letter .paper,#letter .acts{z-index:1}
+#load{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:#fff;z-index:100;background:#1d1238;font-weight:900}
+#load .hrt{font-size:44px;animation:pulse 1s infinite}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="load"><div class="hrt">💜</div><div>سند و ونس…</div></div>
+
+<!-- HUD -->
+<div id="hud" class="hidden">
+  <div class="tl"><div class="score" id="hScore">0</div><div class="meta"><span id="hDist">0</span>م · ⭐ <span id="hCoins">0</span></div></div>
+  <button class="pause" id="bPause" aria-label="إيقاف">II</button>
+  <div id="goal"></div>
+  <div id="sumWrap">
+    <button id="sum" aria-label="استدعاء"><div class="in"><img id="sumImg" src="img/sanad.png" alt=""><span id="sumTxt">0/12</span></div><div class="badge" id="sumBadge">1</div></button>
+    <div id="pbar"><i></i></div>
+  </div>
+  <div id="pups"></div>
+  <div id="tip" class="hidden"><img src="img/sanad.png" alt=""><span></span></div>
+  <div id="hint" class="hidden">دوسي عشان تنطّي 👆</div>
+</div>
+
+<!-- Menu -->
+<div id="menu" class="scr">
+  <div class="topbar"><span class="coins">⭐ <span class="cTotal">0</span></span><button class="btn sm hidden" id="bInstall">📲 ثبّتي اللعبة</button></div>
+  <h1 class="logo">سند <span>و</span> ونس</h1>
+  <p class="sub">لعبة تزلّج بزرار واحد… عنّا 💜</p>
+  <div class="note" id="note"></div>
+  <div class="grid">
+    <button class="btn pri" data-go="story"><b>📖</b>طور القصة</button>
+    <button class="btn" data-go="free"><b>🏂</b>تزلّج حر</button>
+    <button class="btn" data-go="zen"><b>🌙</b>وضع الهدوء</button>
+    <button class="btn" data-go="shop"><b>🛍️</b>المتجر</button>
+    <button class="btn" data-go="ach"><b>🏆</b>الإنجازات</button>
+    <button class="btn" data-go="set"><b>⚙️</b>الإعدادات</button>
+  </div>
+</div>
+
+<!-- Story chapters -->
+<div id="story" class="scr dim hidden"><div class="panel">
+  <div class="head"><h2>📖 طور القصة</h2><button class="btn sm" data-back>رجوع</button></div>
+  <div class="chs" id="chs"></div>
+</div></div>
+
+<!-- Free / Zen setup -->
+<div id="setup" class="scr dim hidden"><div class="panel" style="text-align:center">
+  <div class="head"><h2 id="setupT">🏂 تزلّج حر</h2><button class="btn sm" data-back>رجوع</button></div>
+  <div style="font-weight:900">مين يتزحلق قدّام؟ (والتاني جنبه على طول 💜)</div>
+  <div class="pick" id="pickMain">
+    <button data-m="w" class="on"><img src="img/wanas.png" alt="">ونس</button>
+    <button data-m="s"><img src="img/sanad.png" alt="">سند</button>
+  </div>
+  <div style="font-weight:900;margin-bottom:6px">تبدأوا منين؟</div>
+  <div class="bios" id="bios"></div>
+  <button class="btn pri" id="bGo">يلا بينا 🏂</button>
+</div></div>
+
+<!-- Shop -->
+<div id="shop" class="scr dim hidden"><div class="panel">
+  <div class="head"><h2>🛍️ المتجر</h2><span class="coins">⭐ <span class="cTotal">0</span></span><button class="btn sm" data-back>رجوع</button></div>
+  <div class="tabs" id="tabs"></div>
+  <div class="items" id="items"></div>
+</div></div>
+
+<!-- Achievements -->
+<div id="ach" class="scr dim hidden"><div class="panel">
+  <div class="head"><h2>🏆 الإنجازات</h2><span id="achN" style="font-weight:900"></span><button class="btn sm" data-back>رجوع</button></div>
+  <div id="achList"></div>
+</div></div>
+
+<!-- Settings -->
+<div id="set" class="scr dim hidden"><div class="panel">
+  <div class="head"><h2>⚙️ الإعدادات</h2><button class="btn sm" data-back>رجوع</button></div>
+  <div id="setList"></div>
+  <div class="acts" style="margin-top:12px">
+    <button class="btn sm" id="bReplay">📖 اقري الجواب تاني</button>
+    <button class="btn sm" id="bReset">🗑️ امسحي التقدّم</button>
+  </div>
+  <p style="text-align:center;font-size:12px;opacity:.6;font-weight:700;margin:10px 0 0">اتعملت بحب لفاطمة 💜 — اللعب: دوسة = نطّة · دوسة طويلة في الهوا = شقلبة · دوستين في الهوا = لفّة الطرحة</p>
+</div></div>
+
+<!-- Pause -->
+<div id="pause" class="scr dim hidden"><div class="panel res" style="max-width:420px">
+  <h2>استراحة 💜</h2>
+  <p class="line" id="pauseNote"></p>
+  <div class="acts" style="flex-direction:column">
+    <button class="btn pri" id="bResume">كمّلي ▶</button>
+    <button class="btn" id="bPhoto">📸 لقطة للذكرى</button>
+    <button class="btn" id="bRestart">↻ من الأول</button>
+    <button class="btn" id="bQuit">🏠 القايمة</button>
+  </div>
+</div></div>
+
+<!-- Results -->
+<div id="results" class="scr dim hidden"><div class="panel res" style="max-width:520px">
+  <h2 id="rT">وقعتي!</h2>
+  <div class="big" id="rScore">0</div>
+  <div class="kv" id="rKv"></div>
+  <p class="line" id="rLine"></p>
+  <div class="acts"><button class="btn pri" id="rAgain">↻ تاني</button><button class="btn" id="rPhoto">📸</button><button class="btn" id="rMenu">🏠 القايمة</button></div>
+</div></div>
+
+<!-- Dialog -->
+<div id="dlg" class="scr hidden">
+  <img class="por w" src="img/wanas-portrait.png" alt="">
+  <img class="por s" src="img/sanad-portrait.png" alt="">
+  <div class="ttl" id="dT"></div>
+  <button class="btn sm skip" id="dSkip">تخطّي ⏭</button>
+  <div class="box"><div class="name" id="dN"></div><div class="txt" id="dX"></div><div class="next">دوسي للي بعده ◀</div></div>
+</div>
+
+<!-- Letter -->
+<div id="letter" class="scr hidden">
+  <div class="paper"><div class="to" id="lTo"></div><div id="lBody"></div><div class="sign" id="lSign"></div></div>
+  <div class="acts" style="margin-top:14px"><button class="btn pri hidden" id="lDone">🤍</button></div>
+</div>
+
+<div id="toast"></div>
+<div id="rot" class="hidden">🔄 لفّي الموبايل بالعرض عشان تجربة أحلى <button class="btn sm" id="rotX" style="min-height:28px;padding:2px 8px">✕</button></div>
+
+<script src="js/data.js?v=1"></script>
+<script src="js/audio.js?v=1"></script>
+<script src="js/art.js?v=1"></script>
+<script src="js/game.js?v=1"></script>
+<script src="js/ui.js?v=1"></script>
+</body>
+</html>
