@@ -217,7 +217,7 @@ const Game = (() => {
   }
 
   function ensureTerrain() {
-    const need = cam.x + viewW * 1.8 + 600;
+    const need = cam.x + Math.max(viewW * 1.8 + 600, view3d ? 2900 : 0);
     while (lastX() < need) genFeature();
     // نشيل اللي عدّى
     const cut = cam.x - 600;
@@ -465,6 +465,7 @@ const Game = (() => {
     consumeSummon();
     P.power = 8 + (save.up.power || 0) * 2.5;
     run.stats.summons++;
+    if (run.solo && helper.vis < 0.5) arrive();
     Sound.play('summon'); vibrate(30);
     const g = gapAt(P.x + 220) || gapAt(P.x);
     const rockAhead = rocks.some(r => !r.broken && r.x > P.x && r.x < P.x + 450);
@@ -477,7 +478,13 @@ const Game = (() => {
     for (let i = 0; i < 18; i++) parts.push({ x: P.x - 30, y: P.y - 25, vx: rnd(-160, 160), vy: rnd(-200, 40), life: 1, max: 1, size: rnd(3, 6), col: pick(['#c9a6ff', '#ffffff', '#ffd6f2']), type: i % 3 ? 'star' : 'heart' });
     return true;
   }
+  function arrive() {
+    // سند/ونس جاي طاير من ورا لما يتستدعى في وضع "لوحدي"
+    helper.x = P.x - 260; helper.y = P.y - 230; helper.arrive = 1; run.hoff = 140; helper.vis = 1;
+    for (let i = 0; i < 14; i++) parts.push({ x: helper.x, y: helper.y, vx: rnd(-80, 80), vy: rnd(-80, 80), life: 0.9, max: 0.9, size: rnd(3, 6), col: pick(['#c9a6ff', '#ffffff']), type: 'star' });
+  }
   function startRescue(free) {
+    if (run.solo && helper.vis < 0.5) { helper.x = P.x - 260; helper.y = P.y - 230; helper.vis = 1; }
     rescue = { t: 0, from: { x: helper.x, y: helper.y }, free, done: false };
     state = 'rescue';
     run.stats.rescues++; save.stats.rescues = (save.stats.rescues || 0) + 1;
@@ -518,7 +525,23 @@ const Game = (() => {
   const helperWho = () => run.main === 'w' ? 's' : 'w';
 
   function placeHelper(dt) {
-    if (state === 'rescue') return;
+    if (state === 'rescue') { helper.vis = 1; return; }
+    if (run.solo) {
+      const want = P.power > 0 ? 1 : 0;
+      helper.vis = lerp(helper.vis, want, Math.min(1, dt * (want ? 6 : 1.6)));
+      if (!want) { // بيمشي ويطير لفوق
+        helper.leave = (helper.leave || 0) + dt;
+        if (helper.vis < 0.03) return;
+        helper.y -= 90 * dt * helper.leave * 4; helper.x -= 40 * dt; return;
+      }
+      helper.leave = 0;
+    } else helper.vis = 1;
+    if (helper.arrive > 0) {
+      helper.arrive = Math.max(0, helper.arrive - dt * 1.6);
+      const tx0 = P.x - 30;
+      helper.x = lerp(helper.x, tx0, Math.min(1, dt * 5)); helper.y = lerp(helper.y, P.y, Math.min(1, dt * 5)); helper.rot = -0.4 * helper.arrive;
+      return;
+    }
     const off = P.power > 0 ? 30 : 78;
     run.hoff = run.hoff == null ? off : lerp(run.hoff, off, Math.min(1, dt * 3));
     const tx = P.x - run.hoff;
@@ -630,6 +653,10 @@ const Game = (() => {
   /* ---------- كلام وفقاعات ---------- */
   function say(who, kind, prob) {
     if (Math.random() > prob || bubbleCd > 0) return;
+    if (run.solo && who === helperWho() && helper.vis < 0.5 && kind !== 'rescue' && kind !== 'summon') {
+      if (run.main !== 'w') return;
+      who = 'w'; if (kind === 'full') { bubbles.push({ who, text: 'العداد اتملا… أستدعيه؟ 🤍', t: 0 }); bubbleCd = 2.5; return; }
+    }
     const L = LINES[who] && LINES[who][kind]; if (!L) return;
     bubbles.push({ who, text: pick(L), t: 0 });
     if (bubbles.length > 1) bubbles.shift();
@@ -769,8 +796,25 @@ const Game = (() => {
   const sx = x => (x - cam.x) * scale / cam.z;
   const sy = y => (y - cam.y) * scale / cam.z;
 
+  let view3d = false;
+  function world() {
+    return { pts, baseX, DX, rocks, ropes, flowers, items, decor, gaps, P, helper, cam, parts, time, run, save, hAt, angAt, isGap, ropeY, biomeAt, palette, charOpts, helperWho, shake, state, viewW, viewH, Wc, Hc, dpr };
+  }
   function draw(dt) {
     if (!run) return;
+    if (view3d && window.R3 && R3.ok) {
+      palCur = palette(P ? P.x : cam.x);
+      R3.render(world(), dt);
+      const c = ctx, W = Wc, H = Hc;
+      c.setTransform(dpr, 0, 0, dpr, 0, 0);
+      c.clearRect(0, 0, W, H);
+      drawWeather(c, palCur, W, H, dt);
+      drawBubbles(c);
+      drawPopups(c, W, H);
+      if (P && P.vstarT > 0) { c.fillStyle = 'rgba(150,90,255,.12)'; c.fillRect(0, 0, W, H); }
+      if (P && P.power > 0 && P.power < 2 && Math.sin(time * 20) > 0) { c.fillStyle = 'rgba(201,166,255,.08)'; c.fillRect(0, 0, W, H); }
+      return;
+    }
     const pal = palCur = palette(cam.x + viewW * 0.5);
     const c = ctx, W = Wc, H = Hc, k = scale / cam.z;
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -971,16 +1015,16 @@ const Game = (() => {
       c.restore();
     }
     // المساعد
-    const helperAlpha = state === 'rescue' ? 1 : (P.power > 0 ? 1 : 0.95);
+    const helperAlpha = (state === 'rescue' ? 1 : (P.power > 0 ? 1 : 0.95)) * (helper.vis == null ? 1 : helper.vis);
     if (state === 'rescue' && !rescue.done) {
       for (let i = 0; i < 3; i++) parts.push({ x: helper.x, y: helper.y - 20, vx: rnd(-40, 40), vy: rnd(-40, 40), life: 0.5, max: 0.5, size: 3, col: '#e8dcff', type: 'star' });
     }
-    if (P.duoT > 0 && !P.grounded) {
+    if (P.duoT > 0 && !P.grounded && helperAlpha > 0.5) {
       c.strokeStyle = '#ffd6f2'; c.lineWidth = 2.5;
       c.beginPath(); c.moveTo(helper.x + 8, helper.y - 24); c.quadraticCurveTo((helper.x + P.x) / 2, (helper.y + P.y) / 2 - 18, P.x - 8, P.y - 24); c.stroke();
       Art.heart(c, (helper.x + P.x) / 2, (helper.y + P.y) / 2 - 34 + Math.sin(time * 8) * 2, 5, '#ff9cc9');
     }
-    Art.rider(c, helper.x, helper.y, charOpts(hw, { rot: helper.rot, alpha: helperAlpha, glide: helper.glide && hw === 'w', twirl: helper.tw, squash: 0, speed: P.speed }));
+    if (helperAlpha > 0.02) Art.rider(c, helper.x, helper.y, charOpts(hw, { rot: helper.rot, alpha: helperAlpha, glide: helper.glide && hw === 'w', twirl: helper.tw, squash: 0, speed: P.speed }));
     // اللاعب
     const blink = P.invuln > 0 && Math.sin(time * 30) > 0;
     const sq = P.land * 0.12 - (P.grounded ? 0 : 0.0);
@@ -1084,8 +1128,10 @@ const Game = (() => {
   function drawBubbles(c) {
     for (const b of bubbles) {
       const ch = b.who === run.main ? P : helper;
+      if (ch === helper && helper.vis < 0.4) continue;
       const a = Math.min(1, b.t * 5, (2.4 - b.t) * 3);
-      bubble(c, sx(ch.x), sy(ch.y) - 62 * scale / cam.z, b.text, b.who, a);
+      if (view3d && window.R3 && R3.ok) { const s = R3.project(ch.x, ch.y - 58, ch === helper ? R3.helperZ : 0); bubble(c, s.x, s.y, b.text, b.who, a); }
+      else bubble(c, sx(ch.x), sy(ch.y) - 62 * scale / cam.z, b.text, b.who, a);
     }
   }
   function drawPopups(c, W, H) {
@@ -1129,6 +1175,7 @@ const Game = (() => {
     if (Hc > Wc) scale = Wc / 400; else scale = Hc / 330;
     viewW = Wc / scale; viewH = Hc / scale;
     ctx.imageSmoothingEnabled = false;
+    if (window.R3 && R3.ok) R3.resize(Wc, Hc, dpr, quality);
   }
 
   /* ---------- API ---------- */
@@ -1137,7 +1184,7 @@ const Game = (() => {
     resize();
     const ch = cfg.mode === 'story' ? STORY[cfg.chapter] : null;
     run = {
-      mode: cfg.mode, chapter: cfg.chapter || 0, main: cfg.main || 'w', biome: ch ? ch.biome : (cfg.biome || 0), curBiome: -1,
+      mode: cfg.mode, chapter: cfg.chapter || 0, main: cfg.main || 'w', solo: !!cfg.solo, biome: ch ? ch.biome : (cfg.biome || 0), curBiome: -1,
       tol: ch ? ch.tol : 0.88, assist: ch && cfg.chapter < 2 ? 7 : 5, goal: ch ? ch.goal : null, startX: 0,
       score: 0, dist: 0, coins: 0, meter: 0, charges: 1 + (save.up.summon || 0), pagesSpawned: 0, hoff: null,
       stats: { flips: 0, grinds: 0, hearts: 0, pages: 0, summons: 0, glides: 0, duos: 0, rescues: 0 },
@@ -1152,7 +1199,7 @@ const Game = (() => {
     cam.init = false; cam.z = 1; cam.x = -200; cam.y = -200;
     ensureTerrain();
     P.y = hAt(0); P.rot = angAt(0);
-    helper.x = -78; helper.y = hAt(-78); helper.rot = angAt(-78);
+    helper.x = -78; helper.y = hAt(-78); helper.rot = angAt(-78); helper.arrive = 0; helper.leave = 0; helper.vis = run.solo ? 0 : 1;
     for (let x = -120; x <= 0; x += 6) hist.push({ x, y: hAt(x), rot: angAt(x), g: true });
     combo.n = 0; combo.t = 0; slow = 1; slowT = 0; shake = 0; rescue = null; acc = 0; down = false; time = 0; downAt = 0; lastAirTap = -9; bubbleCd = 0; apHold = 0;
     Sound.setMood(run.biome); if (run.mode !== 'story') { run.curBiome = run.biome; visit(run.biome); } else visit(run.biome);
@@ -1187,7 +1234,19 @@ const Game = (() => {
     get state() { return state; },
     get run() { return run; },
     autopilot(dt) {},
-    snapshot() { return cv.toDataURL('image/png'); },
+    snapshot() {
+      if (!(view3d && window.R3 && R3.ok)) return cv.toDataURL('image/png');
+      const o = document.createElement('canvas'); o.width = cv.width; o.height = cv.height;
+      const x = o.getContext('2d'); x.drawImage(R3.canvas, 0, 0, o.width, o.height); x.drawImage(cv, 0, 0);
+      return o.toDataURL('image/png');
+    },
+    setView3D(on) {
+      view3d = !!on && !!(window.R3 && R3.ok);
+      if (window.R3 && R3.canvas) R3.canvas.style.display = view3d ? 'block' : 'none';
+      if (view3d) R3.resize(Wc, Hc, dpr, quality);
+      return view3d;
+    },
+    get view3d() { return view3d; },
     setQuality(q) { quality = q; if (save) resize(); },
     _debug: () => ({ P, run, cam, pts: pts.length, rocks, gaps, ropes, flowers, items, hAt, isGap, gapAt, down: (v) => v ? onDown() : onUp() }),
   };

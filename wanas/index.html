@@ -116,6 +116,9 @@ h1.logo span{color:#e6d4ff}
 .ach .i{font-size:26px}
 .ach.no{opacity:.5;filter:grayscale(1)}
 .ach small{display:block;opacity:.75;font-weight:700}
+.seg{display:inline-flex;background:#f0e8ff;border-radius:999px;padding:4px;gap:4px;margin:0 4px 10px}
+.seg button{border-radius:999px;padding:6px 14px;font-weight:900;background:transparent}
+.seg button.on{background:#7c4ddb;color:#fff}
 .pick{display:flex;gap:10px;justify-content:center;margin:6px 0 10px}
 .pick button{background:#f6f0ff;border-radius:18px;padding:8px 14px;border:3px solid transparent;display:flex;flex-direction:column;align-items:center;font-weight:900}
 .pick button img{height:70px;image-rendering:pixelated}
@@ -146,6 +149,7 @@ h1.logo span{color:#e6d4ff}
 </style>
 </head>
 <body>
+<canvas id="c3" style="position:fixed;inset:0;display:none;touch-action:none"></canvas>
 <canvas id="c"></canvas>
 <div id="load"><div class="hrt">💜</div><div>سند و ونس…</div></div>
 
@@ -165,7 +169,7 @@ h1.logo span{color:#e6d4ff}
 
 <!-- Menu -->
 <div id="menu" class="scr">
-  <div class="topbar"><span class="coins">⭐ <span class="cTotal">0</span></span><button class="btn sm hidden" id="bInstall">📲 ثبّتي اللعبة</button></div>
+  <div class="topbar"><span class="coins">⭐ <span class="cTotal">0</span></span><span style="display:flex;gap:6px"><button class="btn sm hidden" id="bInstall">📲 ثبّتي اللعبة</button><button class="btn sm" id="bView">🧊 3D</button></span></div>
   <h1 class="logo">سند <span>و</span> ونس</h1>
   <p class="sub">لعبة تزلّج بزرار واحد… عنّا 💜</p>
   <div class="note" id="note"></div>
@@ -188,11 +192,13 @@ h1.logo span{color:#e6d4ff}
 <!-- Free / Zen setup -->
 <div id="setup" class="scr dim hidden"><div class="panel" style="text-align:center">
   <div class="head"><h2 id="setupT">🏂 تزلّج حر</h2><button class="btn sm" data-back>رجوع</button></div>
-  <div style="font-weight:900">مين يتزحلق قدّام؟ (والتاني جنبه على طول 💜)</div>
+  <div style="font-weight:900">مين يتزحلق؟</div>
   <div class="pick" id="pickMain">
     <button data-m="w" class="on"><img src="img/wanas.png" alt="">ونس</button>
     <button data-m="s"><img src="img/sanad.png" alt="">سند</button>
   </div>
+  <div class="seg" id="pickSolo"><button data-v="0" class="on">💜 الاتنين سوا</button><button data-v="1">🏂 لوحده + استدعاء</button></div>
+  <div class="seg" id="pickView"><button data-v="0" class="on">🖼️ 2D</button><button data-v="1">🧊 3D</button></div>
   <div style="font-weight:900;margin-bottom:6px">تبدأوا منين؟</div>
   <div class="bios" id="bios"></div>
   <button class="btn pri" id="bGo">يلا بينا 🏂</button>
@@ -261,10 +267,10 @@ h1.logo span{color:#e6d4ff}
 <div id="toast"></div>
 <div id="rot" class="hidden">🔄 لفّي الموبايل بالعرض عشان تجربة أحلى <button class="btn sm" id="rotX" style="min-height:28px;padding:2px 8px">✕</button></div>
 
-<script src="js/data.js?v=1"></script>
-<script src="js/audio.js?v=1"></script>
-<script src="js/art.js?v=1"></script>
-<script src="js/game.js?v=1"></script>
-<script src="js/ui.js?v=1"></script>
+<script src="js/data.js?v=2"></script>
+<script src="js/audio.js?v=2"></script>
+<script src="js/art.js?v=2"></script>
+<script src="js/game.js?v=2"></script>
+<script src="js/ui.js?v=2"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@
   const DEF = () => ({
     v: 1, coins: 0, best: { free: 0, freeDist: 0, zenDist: 0 }, story: { unlocked: 0, done: [] },
     owned: ['w0', 's0', 'b0', 't0'], equip: { w: 'w0', s: 's0', board: 'b0', trail: 't0' }, up: {},
-    settings: { music: true, sfx: true, vibe: true, autoRescue: true, quality: 1 }, stats: {}, ach: [], letterSeen: false,
+    settings: { music: true, sfx: true, vibe: true, autoRescue: true, quality: 1, view3d: false, solo: false }, stats: {}, ach: [], letterSeen: false,
   });
   let save;
   try { save = Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { save = DEF(); }
@@ -26,6 +26,33 @@
     current = id;
     $$('.cTotal').forEach(e => e.textContent = save.coins);
   }
+  /* ---------- وضع 3D: بيتحمّل بس لما يتطلب ---------- */
+  let r3Promise = null;
+  function loadScript(src) { return new Promise((ok, fail) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = fail; document.head.appendChild(s); }); }
+  function ensure3D() {
+    if (window.R3 && R3.ok) return Promise.resolve(true);
+    if (!r3Promise) r3Promise = loadScript('js/three.min.js?v=2').then(() => loadScript('js/render3d.js?v=2')).then(() => {
+      try { R3.init($('#c3')); return R3.ok; } catch (e) { console.error(e); return false; }
+    }).catch(e => { console.error(e); r3Promise = null; return false; });
+    return r3Promise;
+  }
+  async function applyView() {
+    let on = !!save.settings.view3d;
+    if (on) {
+      $('#bView').textContent = '⏳ 3D';
+      on = await ensure3D();
+      if (!on) { save.settings.view3d = false; persist(); toast('الموبايل ده مش بيدعم 3D 😢'); }
+    }
+    Game.setView3D(on);
+    $('#bView').textContent = on ? '🖼️ 2D' : '🧊 3D';
+    $$('#pickView button').forEach(b => b.classList.toggle('on', (b.dataset.v === '1') === on));
+    $$('#pickSolo button').forEach(b => b.classList.toggle('on', (b.dataset.v === '1') === !!save.settings.solo));
+    return on;
+  }
+  $('#bView').addEventListener('click', async () => { click(); save.settings.view3d = !save.settings.view3d; persist(); await applyView(); toast(save.settings.view3d ? '🧊 وضع 3D اشتغل' : '🖼️ رجعنا 2D'); });
+  $$('#pickView button').forEach(b => b.addEventListener('click', async () => { click(); save.settings.view3d = b.dataset.v === '1'; persist(); await applyView(); }));
+  $$('#pickSolo button').forEach(b => b.addEventListener('click', () => { click(); save.settings.solo = b.dataset.v === '1'; persist(); applyView(); }));
+
   function toMenu() {
     Game.attract(save, menuBiome);
     $('#note').textContent = '💌 ' + NOTES[Math.floor(Date.now() / 864e5) % NOTES.length];
@@ -148,6 +175,7 @@
   /* ---------- اللعب ---------- */
   let tipTimer = null;
   function startRun(cfg) {
+    cfg.solo = !!save.settings.solo;
     lastCfg = cfg;
     Sound.init();
     tryFullscreen();
@@ -377,14 +405,17 @@
     const S = save.settings;
     const rows = [
       ['music', '🎵 الموسيقى'], ['sfx', '🔊 المؤثرات'], ['vibe', '📳 الاهتزاز'],
-      ['autoRescue', '🤍 سند ينقذك لوحده لما تقعي'], ['quality', '✨ جودة عالية (اقفليها لو الموبايل تقيل)'],
+      ['autoRescue', '🤍 سند ينقذك لوحده لما تقعي'], ['solo', '🏂 شخصية لوحدها (التاني ييجي بس لما تستدعيه)'], ['view3d', '🧊 وضع 3D'], ['quality', '✨ جودة عالية (اقفليها لو الموبايل تقيل)'],
     ];
-    $('#setList').innerHTML = rows.map(([k, n]) => `<div class="row"><span>${n}</span><button class="tog ${S[k] !== false && S[k] !== 0 ? 'on' : ''}" data-k="${k}"></button></div>`).join('')
+    $('#setList').innerHTML = rows.map(([k, n]) => `<div class="row"><span>${n}</span><button class="tog ${(k === 'view3d' || k === 'solo') ? (S[k] ? 'on' : '') : (S[k] !== false && S[k] !== 0 ? 'on' : '')}" data-k="${k}"></button></div>`).join('')
       + `<div class="row"><span>🏅 أحسن سكور: ${save.best.free.toLocaleString('ar-EG')} · أبعد مسافة: ${save.best.freeDist}م</span></div>`;
     $$('#setList .tog').forEach(t => t.onclick = () => {
       click();
       const k = t.dataset.k;
-      if (k === 'quality') S.quality = S.quality === 0 ? 1 : 0; else S[k] = S[k] === false ? true : false;
+      if (k === 'quality') S.quality = S.quality === 0 ? 1 : 0;
+      else if (k === 'view3d' || k === 'solo') S[k] = !S[k];
+      else S[k] = S[k] === false ? true : false;
+      if (k === 'view3d' || k === 'solo') applyView();
       applySettings(); persist(); renderSet();
     });
   }
@@ -434,8 +465,9 @@
 
   /* ---------- البداية ---------- */
   Game.init($('#c'), hooks);
-  Art.init().then(() => {
+  Art.init().then(async () => {
     applySettings();
+    await applyView();
     menuBiome = STORY[Math.min(save.story.unlocked, 7)].biome;
     toMenu();
     $('#load').remove();
