@@ -798,7 +798,7 @@ const Game = (() => {
 
   let view3d = false;
   function world() {
-    return { pts, baseX, DX, rocks, ropes, flowers, items, decor, gaps, P, helper, cam, parts, time, run, save, hAt, angAt, isGap, ropeY, biomeAt, palette, charOpts, helperWho, shake, state, viewW, viewH, Wc, Hc, dpr };
+    return { pts, baseX, DX, rocks, ropes, flowers, items, decor, gaps, P, helper, cam, parts, time, run, save, hAt, angAt, isGap, ropeY, biomeAt, palette, charOpts, helperWho, shake, state, viewW, viewH, Wc, Hc, dpr, slow };
   }
   function draw(dt) {
     if (!run) return;
@@ -809,6 +809,14 @@ const Game = (() => {
       c.setTransform(dpr, 0, 0, dpr, 0, 0);
       c.clearRect(0, 0, W, H);
       drawWeather(c, palCur, W, H, dt);
+      if (P && (P.boostT > 0 || P.speed > 500)) { // خطوط سرعة
+        const a = P.boostT > 0 ? 0.35 : 0.15;
+        c.strokeStyle = 'rgba(255,255,255,' + a + ')'; c.lineWidth = 1.5;
+        for (let i = 0; i < 14; i++) {
+          const ang = hash(i * 3 + Math.floor(time * 12)) * TAU, r0 = Math.min(W, H) * (0.42 + hash(i + Math.floor(time * 12)) * 0.2), len = 40 + hash(i * 7) * 60;
+          c.beginPath(); c.moveTo(W / 2 + Math.cos(ang) * r0, H / 2 + Math.sin(ang) * r0 * 0.7); c.lineTo(W / 2 + Math.cos(ang) * (r0 + len), H / 2 + Math.sin(ang) * (r0 + len) * 0.7); c.stroke();
+        }
+      }
       drawBubbles(c);
       drawPopups(c, W, H);
       if (P && P.vstarT > 0) { c.fillStyle = 'rgba(150,90,255,.12)'; c.fillRect(0, 0, W, H); }
