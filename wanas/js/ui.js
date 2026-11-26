@@ -8,11 +8,12 @@
   const DEF = () => ({
     v: 1, coins: 0, best: { free: 0, freeDist: 0, zenDist: 0 }, story: { unlocked: 0, done: [] },
     owned: ['w0', 's0', 'b0', 't0'], equip: { w: 'w0', s: 's0', board: 'b0', trail: 't0' }, up: {},
-    settings: { music: true, sfx: true, vibe: true, autoRescue: true, quality: 1, view3d: false, solo: false, cam3d: 'side' }, stats: {}, ach: [], letterSeen: false,
+    settings: { music: true, sfx: true, vibe: true, autoRescue: true, quality: 1, view3d: false, solo: false, cam3d: 'behind', camV2: true }, stats: {}, ach: [], letterSeen: false,
   });
   let save;
   try { save = Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { save = DEF(); }
   for (const k of ['best', 'story', 'equip', 'settings']) save[k] = Object.assign(DEF()[k], save[k] || {});
+  if (!save.settings.camV2) { save.settings.cam3d = 'behind'; save.settings.camV2 = true; }
   const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(save)); } catch (e) {} };
 
   let current = null, lastCfg = null, menuBiome = 0;
@@ -31,7 +32,7 @@
   function loadScript(src) { return new Promise((ok, fail) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = fail; document.head.appendChild(s); }); }
   function ensure3D() {
     if (window.R3 && R3.ok) return Promise.resolve(true);
-    if (!r3Promise) r3Promise = loadScript('js/three.min.js?v=2').then(() => loadScript('js/render3d.js?v=3')).then(() => {
+    if (!r3Promise) r3Promise = loadScript('js/three.min.js?v=2').then(() => loadScript('js/render3d.js?v=4')).then(() => {
       try { R3.init($('#c3')); return R3.ok; } catch (e) { console.error(e); return false; }
     }).catch(e => { console.error(e); r3Promise = null; return false; });
     return r3Promise;
@@ -48,7 +49,7 @@
     $$('#pickView button').forEach(b => b.classList.toggle('on', (b.dataset.v === '1') === on));
     $$('#pickSolo button').forEach(b => b.classList.toggle('on', (b.dataset.v === '1') === !!save.settings.solo));
     $('#pickCam').classList.toggle('hidden', !on);
-    $$('#pickCam button').forEach(b => b.classList.toggle('on', b.dataset.v === (save.settings.cam3d || 'side')));
+    $$('#pickCam button').forEach(b => b.classList.toggle('on', b.dataset.v === (save.settings.cam3d || 'behind')));
     return on;
   }
   $('#bView').addEventListener('click', async () => { click(); save.settings.view3d = !save.settings.view3d; persist(); await applyView(); toast(save.settings.view3d ? '🧊 وضع 3D اشتغل' : '🖼️ رجعنا 2D'); });
@@ -408,16 +409,16 @@
     const S = save.settings;
     const rows = [
       ['music', '🎵 الموسيقى'], ['sfx', '🔊 المؤثرات'], ['vibe', '📳 الاهتزاز'],
-      ['autoRescue', '🤍 سند ينقذك لوحده لما تقعي'], ['solo', '🏂 شخصية لوحدها (التاني ييجي بس لما تستدعيه)'], ['view3d', '🧊 وضع 3D'], ['cam3d', '🎬 كاميرا 3D من ورا (بدل الجنب)'], ['quality', '✨ جودة عالية (اقفليها لو الموبايل تقيل)'],
+      ['autoRescue', '🤍 سند ينقذك لوحده لما تقعي'], ['solo', '🏂 شخصية لوحدها (التاني ييجي بس لما تستدعيه)'], ['view3d', '🧊 وضع 3D'], ['cam3d', '🎬 كاميرا 3D: ' + ({ behind: 'ورا', chase: 'مايلة', side: 'جنب' }[S.cam3d || 'behind']) + ' (دوسي تغيّريها)'], ['quality', '✨ جودة عالية (اقفليها لو الموبايل تقيل)'],
     ];
-    $('#setList').innerHTML = rows.map(([k, n]) => `<div class="row"><span>${n}</span><button class="tog ${k === 'cam3d' ? (S.cam3d === 'chase' ? 'on' : '') : (k === 'view3d' || k === 'solo') ? (S[k] ? 'on' : '') : (S[k] !== false && S[k] !== 0 ? 'on' : '')}" data-k="${k}"></button></div>`).join('')
+    $('#setList').innerHTML = rows.map(([k, n]) => `<div class="row"><span>${n}</span><button class="tog ${k === 'cam3d' ? 'on' : (k === 'view3d' || k === 'solo') ? (S[k] ? 'on' : '') : (S[k] !== false && S[k] !== 0 ? 'on' : '')}" data-k="${k}"></button></div>`).join('')
       + `<div class="row"><span>🏅 أحسن سكور: ${save.best.free.toLocaleString('ar-EG')} · أبعد مسافة: ${save.best.freeDist}م</span></div>`;
     $$('#setList .tog').forEach(t => t.onclick = () => {
       click();
       const k = t.dataset.k;
       if (k === 'quality') S.quality = S.quality === 0 ? 1 : 0;
       else if (k === 'view3d' || k === 'solo') S[k] = !S[k];
-      else if (k === 'cam3d') S.cam3d = S.cam3d === 'chase' ? 'side' : 'chase';
+      else if (k === 'cam3d') S.cam3d = { behind: 'chase', chase: 'side', side: 'behind' }[S.cam3d || 'behind'];
       else S[k] = S[k] === false ? true : false;
       if (k === 'view3d' || k === 'solo' || k === 'cam3d') applyView();
       applySettings(); persist(); renderSet();

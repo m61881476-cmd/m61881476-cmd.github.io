@@ -20,7 +20,8 @@ const R3 = (() => {
   const camPos = new T.Vector3(), camLook = new T.Vector3(), lookT = new T.Vector3(), shk = new T.Vector3();
   let camInit = false, lastRunId = null, fov = 50, orbit = 0;
   const tmpC = new T.Color(), tmpC2 = new T.Color(), tmpV = new T.Vector3();
-  const COLS = [-1100, -700, -440, -260, -150, -80, -40, -14, 0, 14, 40, 80, 150, 260, 420, 640];
+  const COLS = [-1100, -700, -440, -260, -150, -80, -64, -52, -40, -14, 0, 14, 40, 52, 64, 80, 150, 260, 420, 640];
+  const markers = new Map();
   const TRACK = 60, ROWS = COLS.length, MAXC = 270;
   const trail = [];
   let lastPal = null;
@@ -35,7 +36,8 @@ const R3 = (() => {
   }
 
   /* ---------- مواد ---------- */
-  const lam = (c, o = {}) => new T.MeshLambertMaterial(Object.assign({ color: c }, o));
+  const GRAD = (() => { const d = new Uint8Array([105, 105, 105, 255, 185, 185, 185, 255, 255, 255, 255, 255]); const t = new T.DataTexture(d, 3, 1, T.RGBAFormat); t.minFilter = t.magFilter = T.NearestFilter; t.needsUpdate = true; return t; })();
+  const lam = (c, o = {}) => o.flatShading ? new T.MeshLambertMaterial(Object.assign({ color: c }, o)) : new T.MeshToonMaterial(Object.assign({ color: c, gradientMap: GRAD }, o));
   const M = {
     decor: lam(0x3d4f6d), trunk: lam(0x6b4a32), white: lam(0xffffff), rock: lam(0x5b6680, { flatShading: true }),
     snowcap: lam(0xffffff, { flatShading: true }),
@@ -46,7 +48,7 @@ const R3 = (() => {
     window: new T.MeshBasicMaterial({ color: 0xffd88a }),
     star: lam(0xffd45e, { emissive: 0x8a6000 }),
     heart: lam(0xb98cff, { emissive: 0x4a2490 }),
-    pole: lam(0x3a2c3e), rope: new T.LineBasicMaterial({ color: 0x4a3a2e }),
+    pole: lam(0x3a2c3e), mark: lam(0x8b5cf6), mark2: lam(0xff8fc7), rope: new T.LineBasicMaterial({ color: 0x4a3a2e }),
     blob: new T.MeshBasicMaterial({ color: 0x1a1030, transparent: true, opacity: 0.22, depthWrite: false }),
     shield: new T.MeshBasicMaterial({ color: 0xc9a6ff, transparent: true, opacity: 0.16, depthWrite: false }),
     trail: new T.MeshBasicMaterial({ color: 0x9fb0d8, transparent: true, opacity: 0.35, depthWrite: false }),
@@ -154,7 +156,7 @@ const R3 = (() => {
     terrGeo.setAttribute('position', new T.BufferAttribute(terrPos, 3));
     terrGeo.setAttribute('color', new T.BufferAttribute(terrCol, 3));
     terrGeo.setIndex(new T.BufferAttribute(new Uint32Array((MAXC - 1) * (ROWS - 1) * 6), 1));
-    terr = new T.Mesh(terrGeo, lam(0xffffff, { vertexColors: true, side: T.DoubleSide }));
+    terr = new T.Mesh(terrGeo, new T.MeshLambertMaterial({ vertexColors: true, side: T.DoubleSide }));
     terr.frustumCulled = false; terr.receiveShadow = true; scene.add(terr);
     // أثر الزحليقة
     trailGeo = new T.BufferGeometry();
@@ -191,28 +193,49 @@ const R3 = (() => {
     const d = img.getContext('2d').getImageData(0, 0, W, H).data;
     const headRow = Math.round(H * (who === 'w' ? 0.5 : 0.54)), legRow = Math.round(H * 0.86);
     const parts = { head: [], torso: [], legs: [] };
+    const op = (x2, y2) => x2 >= 0 && y2 >= 0 && x2 < W && y2 < H && d[(y2 * W + x2) * 4 + 3] >= 100;
     for (let yy = 0; yy < H; yy++) for (let xx = 0; xx < W; xx++) {
       const i = (yy * W + xx) * 4; if (d[i + 3] < 100) continue;
-      (yy < headRow ? parts.head : yy < legRow ? parts.torso : parts.legs).push([xx, yy, d[i], d[i + 1], d[i + 2]]);
+      const edge = !op(xx - 1, yy) || !op(xx + 1, yy) || !op(xx, yy - 1) || !op(xx, yy + 1);
+      (yy < headRow ? parts.head : yy < legRow ? parts.torso : parts.legs).push([xx, yy, d[i], d[i + 1], d[i + 2], edge]);
     }
     const geo = new T.BoxGeometry(SPR, SPR, SPR);
     const mat = lam(0xffffff);
     const m4 = new T.Matrix4(), c = new T.Color();
     const hipY = (H - legRow) * SPR + 3, neckY = (H - headRow) * SPR + 3;
-    const make = (list, pivotY) => {
-      const inst = new T.InstancedMesh(geo, mat, Math.max(1, list.length));
-      list.forEach(([xx, yy, r, g, b], i) => {
-        const e = Math.abs(xx - W / 2 + 0.5) / (W / 2), dz = 2.2 + (1 - e * e) * 2.6;
-        m4.makeScale(1, 1, dz); m4.setPosition((xx - W / 2 + 0.5) * SPR, (H - yy - 0.5) * SPR + 3 - pivotY, 0);
-        inst.setMatrixAt(i, m4); c.setRGB(r / 255, g / 255, b / 255); inst.setColorAt(i, c);
+    const backHead = who === 'w' ? new T.Color((item && item.hijab) || '#e9dcc8') : new T.Color(0x1c1919);
+    const outM = new T.MeshBasicMaterial({ color: 0x1a1030, side: T.BackSide });
+    const geoO = new T.BoxGeometry(SPR + 1.1, SPR + 1.1, SPR);
+    const bc = new T.Color();
+    const make = (list, pivotY, part) => {
+      const grpP = new T.Group(), n = list.length;
+      const inst = new T.InstancedMesh(geo, mat, Math.max(1, n * 2));
+      const out = new T.InstancedMesh(geoO, outM, Math.max(1, n));
+      let no = 0;
+      list.forEach(([xx, yy, r, g, b, edge], i) => {
+        const e = Math.abs(xx - W / 2 + 0.5) / (W / 2), dz = 2.4 + (1 - e * e) * 2.8;
+        const px = (xx - W / 2 + 0.5) * SPR, py = (H - yy - 0.5) * SPR + 3 - pivotY;
+        c.setRGB(r / 255, g / 255, b / 255);
+        // النص اللي قدّام: الرسمة نفسها
+        m4.makeScale(1, 1, dz / 2); m4.setPosition(px, py, dz * SPR / 4);
+        inst.setMatrixAt(i * 2, m4); inst.setColorAt(i * 2, c);
+        // النص اللي ورا: ضهر الشخصية (شعر سند / طرحة ونس) بدل الوش
+        const skin = r > 140 && r - g > 30 && r - b > 50;
+        if (part === 'head' && !(who === 's' && skin && yy > headRow * 0.82)) bc.copy(backHead).multiplyScalar(0.9 + (1 - yy / headRow) * 0.1);
+        else if (r + g + b > 600 && !skin) bc.copy(c).multiplyScalar(0.8);
+        else bc.copy(c).multiplyScalar(0.94);
+        m4.setPosition(px, py, -dz * SPR / 4);
+        inst.setMatrixAt(i * 2 + 1, m4); inst.setColorAt(i * 2 + 1, bc);
+        if (edge) { m4.makeScale(1, 1, dz + 0.35); m4.setPosition(px, py, 0); out.setMatrixAt(no++, m4); }
       });
-      inst.castShadow = true; inst.count = list.length;
-      return inst;
+      inst.castShadow = true; inst.count = n * 2; out.count = no;
+      grpP.add(inst, out);
+      return grpP;
     };
     const grp = new T.Group(), body = new T.Group(), legs = new T.Group(), torso = new T.Group(), head = new T.Group();
-    legs.add(make(parts.legs, 0));
-    torso.position.y = hipY; torso.add(make(parts.torso, hipY));
-    head.position.y = neckY - hipY; head.add(make(parts.head, neckY));
+    legs.add(make(parts.legs, 0, 'legs'));
+    torso.position.y = hipY; torso.add(make(parts.torso, hipY, 'torso'));
+    head.position.y = neckY - hipY; head.add(make(parts.head, neckY, 'head'));
     torso.add(head); body.add(legs, torso); grp.add(body);
     // الزحليقة
     const bm = lam(board.col, { emissive: board.glow ? new T.Color(board.glow).multiplyScalar(0.3) : 0x000000 });
@@ -250,7 +273,8 @@ const R3 = (() => {
     g.rotation.set(0, 0, -(o.rot || 0));
     const sp = Math.min(1, (o.speed || 300) / 520);
     const air = !!st.air, sq = o.squash || 0;
-    ch.body.rotation.y = o.twirl ? o.twirl * Math.PI * 4 : 0;
+    const yaw = st.yaw || 0;
+    ch.body.rotation.y = yaw + (o.twirl ? o.twirl * Math.PI * 4 : 0);
     ch.body.scale.set(1 + sq * 0.5, 1 - sq * 0.9, 1 + sq * 0.5);
     ch.legs.scale.y = air ? 0.86 : 1;
     ch.torso.rotation.z = st.crashed ? 0.9 : air ? (st.flipping ? -0.25 : 0.04) : -(0.1 + sp * 0.14) + Math.sin(t * 2.2) * 0.02;
@@ -262,7 +286,9 @@ const R3 = (() => {
       const hx = -ch.W * SPR * 0.32, hy = -ch.headH * 0.15;
       ch.scarf.forEach((b, i) => {
         const k = i + 1, wave = Math.sin(t * 13 - i * 0.9);
-        b.position.set(hx - k * (3.4 + sp * 3.2), hy - k * 1.1 + wave * k * 0.55 * (0.4 + sp), Math.sin(t * 7 - i) * k * 0.5 - 2);
+        const L = k * (3.4 + sp * 3.2), side2 = Math.sin(t * 7 - i) * k * 0.5;
+        const dx = -Math.cos(yaw), dzz = -Math.sin(yaw);
+        b.position.set((yaw ? 0 : hx) + dx * L - dzz * side2, hy - k * 1.1 + wave * k * 0.55 * (0.4 + sp), (yaw ? -ch.W * SPR * 0.12 : -2) + dzz * L + dx * side2);
         b.rotation.z = wave * 0.3;
         b.visible = !st.glide;
       });
@@ -369,10 +395,11 @@ const R3 = (() => {
     if (!P || !pts.length) return;
     if (lastRunId !== run) {
       lastRunId = run; camInit = false; trail.length = 0;
+      for (const [, m] of markers) scene.remove(m); markers.clear();
       for (const k in pools) { for (const [, v] of pools[k]) scene.remove(v); pools[k].clear(); }
     }
     const pal = Wd.palette(P.x), bi = Wd.biomeAt(P.x), bid = BIOMES[pal.main].id;
-    const mode = (Wd.save.settings && Wd.save.settings.cam3d) || 'side';
+    const mode = (Wd.save.settings && Wd.save.settings.cam3d) || 'behind';
 
     // ألوان
     if (lastPal !== pal.sky0 + pal.ground + pal.decorCol + pal.sun) {
@@ -386,7 +413,7 @@ const R3 = (() => {
       sunSprite.material.color.set(pal.sun); sunHalo.material.color.set(pal.sun);
     }
     const night = pal.night;
-    hemi.intensity = 0.66 - night * 0.22; dir.intensity = 0.62 - night * 0.3;
+    hemi.intensity = 0.7 - night * 0.22; dir.intensity = 0.6 - night * 0.28;
     stars.material.opacity = Math.max(0, night - 0.1);
     M.window.color.set(night > 0.5 ? 0xffd88a : 0xc9d6e8);
     nightLight.intensity = night > 0.5 ? 0.9 : 0;
@@ -398,7 +425,12 @@ const R3 = (() => {
     const inAir = !P.grounded && !P.grind;
     orbit += ((inAir && P.air > 0.5 ? 1 : 0) - orbit) * Math.min(1, dt * 1.5);
     const slowZoom = Wd.slow < 0.9 ? 0.82 : 1;
-    if (mode === 'chase') {
+    if (mode === 'behind') {
+      const d = (port ? 1.3 : 1) * zf * slowZoom;
+      const ax = P.x + 320, aheadY = Wd.isGap(ax) ? P.y + 110 : hAt(ax);
+      lookT.set(ax, -(midY * 0.45 + aheadY * 0.55) + 14, -14);
+      tmpV.set(P.x - 132 * d, -midY + (64 + orbit * 26) * d, -18 + orbit * 50 * d);
+    } else if (mode === 'chase') {
       const d = (port ? 1.5 : 1) * zf * slowZoom;
       lookT.set(P.x + 230 + P.speed * 0.15, -midY - 40, -10);
       tmpV.set(P.x - 210 * d, -midY + (110 + orbit * 40) * d, (150 + orbit * 70) * d);
@@ -408,12 +440,12 @@ const R3 = (() => {
       tmpV.set(P.x - (150 - orbit * 40) * d, -midY + (95 + orbit * 30) * d + (port ? 60 : 0), (270 + orbit * 60) * d);
     }
     if (!camInit) { camPos.copy(tmpV); camLook.copy(lookT); camInit = true; }
-    const k = Math.min(1, dt * (mode === 'chase' ? 5 : 4.5));
+    const k = Math.min(1, dt * (mode === 'side' ? 4.5 : 5.5));
     camPos.lerp(tmpV, k); camLook.lerp(lookT, k);
     camera.position.copy(camPos);
     if (Wd.shake) camera.position.add(shk.set((Math.random() - 0.5) * Wd.shake * 1.6, (Math.random() - 0.5) * Wd.shake * 1.6, 0));
     camera.lookAt(camLook);
-    const fovT = 50 + Math.max(0, (P.speed - 380) / 260) * 7 + (P.boostT > 0 ? 6 : 0) - (Wd.slow < 0.9 ? 4 : 0);
+    const fovT = (mode === 'behind' ? 58 : 50) + Math.max(0, (P.speed - 380) / 260) * 7 + (P.boostT > 0 ? 6 : 0) - (Wd.slow < 0.9 ? 4 : 0);
     fov += (fovT - fov) * Math.min(1, dt * 3);
     if (Math.abs(camera.fov - fov) > 0.05) { camera.fov = fov; camera.updateProjectionMatrix(); }
 
@@ -428,7 +460,7 @@ const R3 = (() => {
     // ---------- الأرض ----------
     const i0 = Math.max(0, Math.floor((camLook.x - 1000 - baseX) / DX)), i1 = Math.min(pts.length - 1, i0 + MAXC - 1);
     const n = i1 - i0 + 1;
-    const cG = new T.Color(pal.ground), cE = new T.Color(pal.edge), cS = new T.Color(pal.shade);
+    const cG = new T.Color(pal.ground), cE = new T.Color(pal.edge), cS = new T.Color(pal.shade), cB = new T.Color(pal.shade).lerp(tmpC.set(0x8b5cf6), 0.3).multiplyScalar(0.95);
     const idx = terrGeo.index.array; let ii = 0;
     for (let c = 0; c < n; c++) {
       const p = pts[i0 + c], x = baseX + (i0 + c) * DX;
@@ -437,7 +469,7 @@ const R3 = (() => {
         const yy = -p.y + side(x, zz);
         terrPos[o] = x; terrPos[o + 1] = p.gap && az <= 300 ? yy - 1400 : yy; terrPos[o + 2] = zz;
         const t = az <= TRACK ? 0 : Math.min(1, (az - TRACK) / 700);
-        tmpC2.copy(az <= 20 ? cE : cG).lerp(cS, t * 0.75);
+        if (az <= 46) tmpC2.copy(cE).lerp(cG, 0.15); else if (az <= 64) tmpC2.copy(cB); else tmpC2.copy(cG).lerp(cS, t * 0.75);
         const v = 0.93 + sn(x / 120 + zz / 60) * 0.1;
         terrCol[o] = tmpC2.r * v; terrCol[o + 1] = tmpC2.g * v; terrCol[o + 2] = tmpC2.b * v;
       }
@@ -573,6 +605,23 @@ const R3 = (() => {
       g.position.set(it.x, -it.y + Math.sin(time * 3 + it.x * 0.05) * 3, 0);
       if (g.children[0].isMesh) g.children[0].rotation.y = time * 2.6 + it.x * 0.01;
     }, x0, x1);
+    { const step = 170, a = Math.floor(x0 / step), b = Math.floor(x1 / step);
+      for (const [kk, m] of markers) if (kk < a || kk > b) { scene.remove(m); markers.delete(kk); }
+      for (let kk = a; kk <= b; kk++) {
+        const x = kk * step; let m = markers.get(kk);
+        if (!m) {
+          m = new T.Group();
+          [-72, 72].forEach((zz, j) => {
+            m.add(mesh(G.cyl, M.white, 1.5, 16, 1.5, 0, 8, zz));
+            m.add(mesh(G.cyl, M.mark, 1.6, 12, 1.6, 0, 22, zz));
+            m.add(mesh(G.box, (kk + j) % 2 ? M.mark : M.mark2, 8, 6, 1, 4, 26, zz, false));
+          });
+          scene.add(m); markers.set(kk, m);
+        }
+        m.visible = !Wd.isGap(x) && !Wd.isGap(x + 10);
+        m.position.set(x, -hAt(x), 0);
+      }
+    }
     sync(pools.rope, Wd.ropes, r => {
       const g = new T.Group(), city = BIOMES[Wd.biomeAt(r.x1).i].id === 'city';
       [[r.x1, r.y1], [r.x2, r.y2]].forEach(([x, y]) => { const h = hAt(x) - y + 10; g.add(mesh(G.cyl, M.pole, 2.2, h, 2.2, x, -y - h / 2 + 6, 0)); });
@@ -596,12 +645,17 @@ const R3 = (() => {
     const blink = P.invuln > 0 && Math.sin(time * 30) > 0;
     const duo = P.duoT > 0 && inAir && hv > 0.5;
     placeChar(Wd.charOpts(main, { rot: P.rot, squash: P.land * 0.14, twirl: P.twirl, speed: P.speed }), P.x, P.y, 6, blink ? 0.45 : 1, time,
-      { air: inAir, flipping: Math.abs(P.rotV) > 1, glide: P.gliding > 0 && main === 'w', crashed: P.dead, lookAt: duo || P.power > 0 ? -0.45 : 0 });
-    placeChar(Wd.charOpts(hw, { rot: helper.rot, twirl: helper.tw, speed: P.speed }), helper.x, helper.y, hz, hv, time + 1.3,
-      { air: !helper.g, glide: helper.glide && hw === 'w', lookAt: duo || P.power > 0 ? 0.45 : 0 });
+      { yaw: mode === 'behind' ? Math.PI / 2 : 0, air: inAir, flipping: Math.abs(P.rotV) > 1, glide: P.gliding > 0 && main === 'w', crashed: P.dead, lookAt: duo || P.power > 0 ? -0.45 : 0 });
+    let hx = helper.x, hy = helper.y, hzz = hz;
+    if (mode === 'behind' && Wd.state !== 'rescue' && !(helper.arrive > 0) && !Wd.isGap(P.x - 16) && !Wd.isGap(helper.x)) {
+      hx = P.x - 16; hy = helper.y + (hAt(hx) - hAt(helper.x)); hzz = P.power > 0 ? -30 : -44;
+    }
+    R.helperZ = hzz; R.helperDX = hx - helper.x;
+    placeChar(Wd.charOpts(hw, { rot: helper.rot, twirl: helper.tw, speed: P.speed }), hx, hy, hzz, hv, time + 1.3,
+      { yaw: mode === 'behind' ? Math.PI / 2 : 0, air: !helper.g, glide: helper.glide && hw === 'w', lookAt: duo || P.power > 0 ? 0.45 : 0 });
     for (const kk in chars) if (!chars[kk].used && chars[kk].in) { scene.remove(chars[kk].grp); chars[kk].in = false; }
     const blobs = quality === 0;
-    [[blobP, P, 6, 1], [blobH, helper, hz, hv]].forEach(([m, ch, zz, vis]) => {
+    [[blobP, P, 6, 1], [blobH, { x: hx, y: hy }, hzz, hv]].forEach(([m, ch, zz, vis]) => {
       const gx = ch.x, g2 = Wd.isGap(gx) ? null : hAt(gx);
       m.visible = blobs && g2 != null && vis > 0.3 && !P.dead;
       if (!m.visible) return;
@@ -610,11 +664,11 @@ const R3 = (() => {
     });
     shield.visible = P.power > 0 && hv > 0.3;
     if (shield.visible) {
-      shield.position.set((P.x + helper.x) / 2, -(P.y + helper.y) / 2 + 26, (6 + hz) / 2);
+      shield.position.set((P.x + hx) / 2, -(P.y + hy) / 2 + 26, (6 + hzz) / 2);
       shield.scale.set(66, 52, 52); M.shield.opacity = 0.13 + Math.sin(time * 6) * 0.04;
     }
     duoHeart.visible = duo;
-    if (duo) { duoHeart.position.set((P.x + helper.x) / 2, -(P.y + helper.y) / 2 + 52 + Math.sin(time * 8) * 2, (6 + hz) / 2); duoHeart.rotation.y = time * 3; }
+    if (duo) { duoHeart.position.set((P.x + hx) / 2, -(P.y + hy) / 2 + 52 + Math.sin(time * 8) * 2, (6 + hzz) / 2); duoHeart.rotation.y = time * 3; }
 
     // ---------- جزيئات ----------
     const fill = (geo, add) => {
@@ -642,7 +696,7 @@ const R3 = (() => {
   function resize(w, h, dpr, q) {
     if (!renderer) return;
     quality = q;
-    renderer.setPixelRatio(Math.min(dpr || 1, q === 0 ? 1 : 1.75));
+    renderer.setPixelRatio(Math.min(dpr || 1, q === 0 ? 1 : 2));
     renderer.setSize(w, h, true);
     camera.aspect = w / h; camera.updateProjectionMatrix();
   }

@@ -1138,7 +1138,7 @@ const Game = (() => {
       const ch = b.who === run.main ? P : helper;
       if (ch === helper && helper.vis < 0.4) continue;
       const a = Math.min(1, b.t * 5, (2.4 - b.t) * 3);
-      if (view3d && window.R3 && R3.ok) { const s = R3.project(ch.x, ch.y - 58, ch === helper ? R3.helperZ : 0); bubble(c, s.x, s.y, b.text, b.who, a); }
+      if (view3d && window.R3 && R3.ok) { const s = R3.project(ch.x + (ch === helper ? R3.helperDX || 0 : 0), ch.y - 58, ch === helper ? R3.helperZ : 0); bubble(c, s.x, s.y, b.text, b.who, a); }
       else bubble(c, sx(ch.x), sy(ch.y) - 62 * scale / cam.z, b.text, b.who, a);
     }
   }
