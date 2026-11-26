@@ -44,7 +44,7 @@ h1.logo span{color:#e6d4ff}
 .coins{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.9);border-radius:999px;padding:4px 12px;font-weight:900;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .topbar{position:fixed;top:calc(8px + var(--safeT));right:calc(10px + var(--safeR));left:calc(10px + var(--safeL));display:flex;justify-content:space-between;align-items:center;z-index:11;pointer-events:none}
 .topbar>*{pointer-events:auto}
-@media (max-height:430px){#menu .grid .btn{min-height:54px}#menu .grid .btn b{font-size:18px}h1.logo{font-size:44px}.sub{font-size:13px;margin:2px 0}}
+@media (max-height:430px){#menu{gap:6px}.mini button{padding:3px 2px;font-size:16px}.mini button span{font-size:10px}#menu .note{font-size:13px;padding:3px 12px}#menu .grid{gap:7px}#menu .grid .btn{min-height:50px}#menu .grid .btn b{font-size:18px}h1.logo{font-size:44px}.sub{font-size:13px;margin:2px 0}}
 
 /* HUD */
 #hud{position:fixed;inset:0;pointer-events:none;z-index:5}
@@ -133,6 +133,36 @@ h1.logo span{color:#e6d4ff}
 .res .kv div{background:#f6f0ff;border-radius:14px;padding:6px 12px}
 .res .line{font-weight:700;color:#6b4bb8;margin:6px 0 12px}
 .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.mini{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;width:min(620px,100%)}
+.mini button{background:rgba(255,255,255,.85);border-radius:14px;padding:6px 2px;font-size:20px;display:flex;flex-direction:column;align-items:center;position:relative;box-shadow:0 3px 0 #b59ae6}
+.mini button span{font-size:11px;font-weight:900}
+.mini button i{position:absolute;top:4px;left:6px;width:9px;height:9px;border-radius:50%;background:#ff4d8d}
+.lvl{font-size:13px;gap:6px}
+.lvl i{display:inline-block;width:46px;height:6px;border-radius:9px;background:#e6dcff;overflow:hidden;vertical-align:middle}
+.lvl i b{display:block;height:100%;background:#8b5cf6}
+.mc{position:fixed;bottom:calc(8px + var(--safeB));height:clamp(54px,15vh,96px);image-rendering:pixelated;cursor:pointer;filter:drop-shadow(0 6px 10px rgba(30,10,60,.35));z-index:12;animation:bob 2.6s ease-in-out infinite}
+#mcS{left:calc(8px + var(--safeL))}#mcW{right:calc(8px + var(--safeR));animation-delay:.6s}
+.mc.hop{animation:hop .5s}
+@keyframes bob{50%{transform:translateY(-5px)}}
+@keyframes hop{30%{transform:translateY(-22px) scale(1.08)}}
+.fh{position:fixed;z-index:70;pointer-events:none;font-size:20px;animation:fh 1.4s ease-out forwards}
+@keyframes fh{to{transform:translateY(-110px) scale(1.4);opacity:0}}
+.mis{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#f6f0ff;border-radius:14px;padding:8px 12px;margin-bottom:8px;font-weight:700}
+.mis>div{flex:1}.mis i{display:block;height:7px;border-radius:9px;background:#e6dcff;overflow:hidden;margin-top:5px}.mis i b{display:block;height:100%;background:linear-gradient(90deg,#b98cff,#7c4ddb)}
+.mis.daily{background:#fff4d6}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:8px 0}
+.day{background:#f6f0ff;border-radius:12px;padding:6px 2px;text-align:center;font-weight:900;font-size:13px;display:flex;flex-direction:column}
+.day b{font-size:20px}.day.past{opacity:.5}.day.now{background:#8b5cf6;color:#fff;transform:scale(1.08)}
+.notes{display:grid;gap:8px}.nt{background:#fffaf2;border:1px solid #efe3ff;border-radius:14px;padding:10px 12px;font-weight:700;line-height:1.7}.nt.lock{opacity:.5;background:#f4f1f8}
+.alb{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}.alb img{width:100%;border-radius:12px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.15)}
+.wn{margin:0;padding-right:22px;line-height:1.9;font-weight:700}
+.ctl{display:grid;gap:8px;font-weight:700;line-height:1.7}.ctl b{color:#5b34b0;margin-left:6px}
+.row.col{flex-direction:column;align-items:stretch}
+textarea,input[type=date]{font-family:inherit;font-size:14px;border:2px solid #e6dcff;border-radius:12px;padding:8px;width:100%;direction:rtl;user-select:text;-webkit-user-select:text}
+input[type=date]{width:auto}
+input[type=range]{accent-color:#8b5cf6;width:46%}
+#cbar{position:absolute;top:calc(64px + var(--safeT));right:calc(12px + var(--safeR));width:90px;height:5px;border-radius:9px;background:rgba(255,255,255,.35);overflow:hidden;opacity:0;transition:opacity .2s}
+#cbar.on{opacity:1}#cbar i{display:block;height:100%;background:linear-gradient(90deg,#ffd45e,#ff8fc7)}
 #toast{position:fixed;top:calc(10px + var(--safeT));left:50%;transform:translate(-50%,-160%);opacity:0;background:#fff;border-radius:16px;padding:8px 16px;font-weight:900;z-index:50;box-shadow:0 8px 30px rgba(40,10,80,.3);transition:transform .35s;display:flex;gap:8px;align-items:center;max-width:92vw}
 #toast.on{transform:translate(-50%,0);opacity:1}
 #rot{position:fixed;width:max-content;max-width:94vw;bottom:calc(10px + var(--safeB));left:50%;transform:translateX(-50%);z-index:60;background:rgba(255,255,255,.95);border-radius:14px;padding:6px 12px;font-weight:900;font-size:14px;display:flex;gap:8px;align-items:center;box-shadow:0 4px 16px rgba(0,0,0,.2)}
@@ -145,6 +175,7 @@ h1.logo span{color:#e6d4ff}
 #letter .st{position:absolute;color:#fff;pointer-events:none;z-index:0}
 #letter .paper,#letter .acts{z-index:1}
 #load{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:#fff;z-index:100;background:#1d1238;font-weight:900}
+#load .btn{color:#2b2240}
 #load .hrt{font-size:44px;animation:pulse 1s infinite}
 </style>
 </head>
@@ -163,16 +194,18 @@ h1.logo span{color:#e6d4ff}
     <div id="pbar"><i></i></div>
   </div>
   <div id="pups"></div>
+  <div id="cbar"><i></i></div>
   <div id="tip" class="hidden"><img src="img/sanad.png" alt=""><span></span></div>
   <div id="hint" class="hidden">دوسي عشان تنطّي 👆</div>
 </div>
 
 <!-- Menu -->
 <div id="menu" class="scr">
-  <div class="topbar"><span class="coins">⭐ <span class="cTotal">0</span></span><span style="display:flex;gap:6px"><button class="btn sm hidden" id="bInstall">📲 ثبّتي اللعبة</button><button class="btn sm" id="bView">🧊 3D</button></span></div>
+  <div class="topbar"><span style="display:flex;gap:6px;align-items:center"><span class="coins">⭐ <span class="cTotal">0</span></span><span class="coins lvl" id="lvl"></span></span><span style="display:flex;gap:6px"><button class="btn sm hidden" id="bInstall">📲 ثبّتي اللعبة</button><button class="btn sm" id="bView">🧊 3D</button></span></div>
   <h1 class="logo">سند <span>و</span> ونس</h1>
   <p class="sub">لعبة تزلّج بزرار واحد… عنّا 💜</p>
   <div class="note" id="note"></div>
+  <div class="note hidden" id="anniv" style="background:rgba(139,92,246,.35)"></div>
   <div class="grid">
     <button class="btn pri" data-go="story"><b>📖</b>طور القصة</button>
     <button class="btn" data-go="free"><b>🏂</b>تزلّج حر</button>
@@ -181,6 +214,16 @@ h1.logo span{color:#e6d4ff}
     <button class="btn" data-go="ach"><b>🏆</b>الإنجازات</button>
     <button class="btn" data-go="set"><b>⚙️</b>الإعدادات</button>
   </div>
+  <div class="mini">
+    <button id="btnMissions">🎯<span>المهام</span></button>
+    <button id="btnWheel">🎡<span>العجلة</span><i id="dailyDot"></i></button>
+    <button id="btnNotes">💌<span>الرسايل</span></button>
+    <button id="btnAlbum">🖼️<span>الصور</span></button>
+    <button id="btnTop">🏆<span>أحسن 10</span></button>
+    <button id="btnStats">📊<span>إحصائيات</span></button>
+  </div>
+  <img class="mc" id="mcS" src="img/sanad.png" alt="سند">
+  <img class="mc" id="mcW" src="img/wanas.png" alt="ونس">
 </div>
 
 <!-- Story chapters -->
@@ -229,10 +272,24 @@ h1.logo span{color:#e6d4ff}
   <p style="text-align:center;font-size:12px;opacity:.6;font-weight:700;margin:10px 0 0">اتعملت بحب لفاطمة 💜 — اللعب: دوسة = نطّة · دوسة طويلة في الهوا = شقلبة · دوستين في الهوا = لفّة الطرحة</p>
 </div></div>
 
+<!-- Extra (شاشة عامة) -->
+<div id="extra" class="scr dim hidden"><div class="panel">
+  <div class="head"><h2 id="exT"></h2><button class="btn sm" id="exBack">رجوع</button></div>
+  <div id="exB"></div>
+</div></div>
+
+<!-- فرصة تانية -->
+<div id="revive" class="scr dim hidden"><div class="panel res" style="max-width:380px">
+  <h2>وقعتي! 💔</h2>
+  <p class="line">عايزة تكمّلي من مكانك؟ <b id="rvCount">6</b></p>
+  <div class="acts" style="flex-direction:column"><button class="btn pri" id="rvYes">💜 كمّلي</button><button class="btn" id="rvNo">لأ، خلّصي الجولة</button></div>
+</div></div>
+
 <!-- Pause -->
 <div id="pause" class="scr dim hidden"><div class="panel res" style="max-width:420px">
   <h2>استراحة 💜</h2>
   <p class="line" id="pauseNote"></p>
+  <div id="pauseMis" style="text-align:right;margin-bottom:10px"></div>
   <div class="acts" style="flex-direction:column">
     <button class="btn pri" id="bResume">كمّلي ▶</button>
     <button class="btn" id="bPhoto">📸 لقطة للذكرى</button>
@@ -247,7 +304,8 @@ h1.logo span{color:#e6d4ff}
   <div class="big" id="rScore">0</div>
   <div class="kv" id="rKv"></div>
   <p class="line" id="rLine"></p>
-  <div class="acts"><button class="btn pri" id="rAgain">↻ تاني</button><button class="btn" id="rPhoto">📸</button><button class="btn" id="rMenu">🏠 القايمة</button></div>
+  <div id="rExtra" class="line"></div>
+  <div class="acts"><button class="btn pri" id="rAgain">↻ تاني</button><button class="btn" id="rPhoto">📸</button><button class="btn" id="rShare">📤 شاركي</button><button class="btn" id="rMenu">🏠 القايمة</button></div>
 </div></div>
 
 <!-- Dialog -->
@@ -268,10 +326,11 @@ h1.logo span{color:#e6d4ff}
 <div id="toast"></div>
 <div id="rot" class="hidden">🔄 لفّي الموبايل بالعرض عشان تجربة أحلى <button class="btn sm" id="rotX" style="min-height:28px;padding:2px 8px">✕</button></div>
 
-<script src="js/data.js?v=4"></script>
-<script src="js/audio.js?v=4"></script>
-<script src="js/art.js?v=4"></script>
-<script src="js/game.js?v=4"></script>
-<script src="js/ui.js?v=4"></script>
+<script src="js/data.js?v=5"></script>
+<script src="js/audio.js?v=5"></script>
+<script src="js/art.js?v=5"></script>
+<script src="js/game.js?v=5"></script>
+<script src="js/ui.js?v=5"></script>
+<script src="js/extras.js?v=5"></script>
 </body>
 </html>

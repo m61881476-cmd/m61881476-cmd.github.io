@@ -1,7 +1,7 @@
 /* سند و ونس — service worker خاص باللعبة بس (scope: /wanas/)
    الصفحة والملفات: من النت الأول (عشان أي تحديث يوصل على طول) ولو مفيش نت من الكاش. */
-const VERSION = 'wanas-v4';
-const CORE = ['./', './index.html', './manifest.webmanifest', './js/data.js?v=4', './js/audio.js?v=4', './js/art.js?v=4', './js/game.js?v=4', './js/ui.js?v=4', './js/three.min.js?v=2', './js/render3d.js?v=4',
+const VERSION = 'wanas-v5';
+const CORE = ['./', './index.html', './manifest.webmanifest', './js/data.js?v=5', './js/audio.js?v=5', './js/art.js?v=5', './js/game.js?v=5', './js/ui.js?v=5', './js/extras.js?v=5', './js/three.min.js?v=2', './js/render3d.js?v=5',
   './img/wanas.png', './img/sanad.png', './img/wanas-portrait.png', './img/sanad-portrait.png', './icons/icon-192.png', './icons/icon-512.png', './icons/favicon-64.png'];
 const FONTS = /^https:\/\/(fonts\.googleapis\.com|fonts\.gstatic\.com)\//;
 

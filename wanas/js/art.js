@@ -290,5 +290,76 @@ const Art = (() => {
     ctx.fillStyle = '#eee'; ctx.fillRect(x - 9.5, y + 4, 5, 3); ctx.fillRect(x + 4.5, y + 4, 5, 3);
   }
 
-  return { init, outfit, rider, decor, rock, flower, coin, page, feather, magnet, heart, star, mix, hex, mixRgb, rgb, base, SPR };
+
+  /* ---------- حاجات جديدة ---------- */
+  function gift(ctx, x, y, t) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(Math.sin(t * 3) * 0.12);
+    ctx.fillStyle = '#b98cff'; ctx.fillRect(-10, -6, 20, 15);
+    ctx.fillStyle = '#9a6be6'; ctx.fillRect(-11, -10, 22, 6);
+    ctx.fillStyle = '#ffd6f2'; ctx.fillRect(-2, -10, 4, 19); ctx.fillRect(-11, -8, 22, 3);
+    ctx.fillStyle = '#ff8fc7'; ctx.beginPath(); ctx.ellipse(-5, -12, 5, 3, -0.5, 0, 7); ctx.ellipse(5, -12, 5, 3, 0.5, 0, 7); ctx.fill();
+    ctx.restore();
+  }
+  function badge(ctx, x, y, col, txt) {
+    ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, 11, 0, 7); ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = '#fff'; ctx.font = '900 11px Cairo, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(txt, x, y + 1);
+  }
+  function bubble(ctx, x, y, t) {
+    const g = ctx.createRadialGradient(x - 3, y - 4, 1, x, y, 12);
+    g.addColorStop(0, 'rgba(255,255,255,.95)'); g.addColorStop(0.4, 'rgba(190,230,255,.45)'); g.addColorStop(1, 'rgba(140,170,255,.75)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 11 + Math.sin(t * 4) * 0.8, 0, 7); ctx.fill();
+  }
+  function hourglass(ctx, x, y, t) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(Math.sin(t * 2) * 0.2);
+    ctx.fillStyle = '#8a5a2e'; ctx.fillRect(-8, -12, 16, 3); ctx.fillRect(-8, 9, 16, 3);
+    ctx.fillStyle = 'rgba(220,240,255,.85)'; ctx.beginPath(); ctx.moveTo(-6, -9); ctx.lineTo(6, -9); ctx.lineTo(0, 0); ctx.lineTo(6, 9); ctx.lineTo(-6, 9); ctx.lineTo(0, 0); ctx.fill();
+    ctx.fillStyle = '#ffd45e'; ctx.beginPath(); ctx.moveTo(-4, 9); ctx.lineTo(4, 9); ctx.lineTo(0, 4); ctx.fill(); ctx.fillRect(-0.6, -2, 1.2, 6);
+    ctx.restore();
+  }
+  function balloon(ctx, x, y, t) {
+    const b = Math.sin(t * 2.5) * 2;
+    ctx.strokeStyle = 'rgba(80,60,90,.7)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, y + 8 + b); ctx.quadraticCurveTo(x + 3, y + 14, x, y + 20); ctx.stroke();
+    ctx.fillStyle = '#ff8fc7'; ctx.beginPath(); ctx.ellipse(x, y + b, 9, 11, 0, 0, 7); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,.6)'; ctx.beginPath(); ctx.ellipse(x - 3, y - 4 + b, 2.5, 4, -0.4, 0, 7); ctx.fill();
+  }
+  function pigeon(ctx, x, y, t, s = 1) {
+    const f = Math.sin(t * 16);
+    ctx.save(); ctx.translate(x, y); ctx.scale(s, s);
+    ctx.fillStyle = '#e8e6f0'; ctx.beginPath(); ctx.ellipse(0, 0, 10, 6, 0, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.arc(9, -3, 4, 0, 7); ctx.fill();
+    ctx.fillStyle = '#ffb347'; ctx.beginPath(); ctx.moveTo(12.5, -3); ctx.lineTo(16, -2); ctx.lineTo(12.5, -1); ctx.fill();
+    ctx.fillStyle = '#222'; ctx.fillRect(9.5, -4.5, 1.4, 1.4);
+    ctx.fillStyle = '#c9c4dc'; ctx.beginPath(); ctx.moveTo(-2, -2); ctx.lineTo(-10, -2 - f * 11); ctx.lineTo(4, -3); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(-9, 0); ctx.lineTo(-16, -3); ctx.lineTo(-15, 3); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.fillRect(-4, 4, 9, 6); ctx.fillStyle = '#e57373'; heart(ctx, 0.5, 7.5, 2, '#e57373');
+    ctx.restore();
+  }
+  function sign(ctx, x, y, text, kind) {
+    ctx.save(); ctx.translate(x, y);
+    ctx.fillStyle = '#7b5a3c'; ctx.fillRect(-2, -46, 4, 46);
+    ctx.font = '900 12px Cairo, sans-serif'; ctx.direction = 'rtl';
+    const w = Math.max(44, ctx.measureText(text).width + 16);
+    ctx.fillStyle = kind === 'mile' ? '#8b5cf6' : '#f6e7cf'; ctx.strokeStyle = kind === 'mile' ? '#5b34b0' : '#7b5a3c'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.roundRect(-w / 2, -66, w, 24, 6); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = kind === 'mile' ? '#fff' : '#5b34b0'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, 0, -53);
+    ctx.restore();
+  }
+  function pad(ctx, x, y, a, t, used) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(a);
+    ctx.fillStyle = used ? 'rgba(139,92,246,.35)' : 'rgba(139,92,246,.85)'; ctx.fillRect(-22, -3, 44, 4);
+    for (let i = 0; i < 3; i++) { const k = ((t * 3 + i / 3) % 1); ctx.fillStyle = 'rgba(255,255,255,' + (used ? 0.2 : 0.9 * (1 - k)) + ')'; const px = -14 + i * 12; ctx.beginPath(); ctx.moveTo(px, -2.5); ctx.lineTo(px + 6, -1); ctx.lineTo(px, 0.5); ctx.fill(); }
+    ctx.restore();
+  }
+  function item(ctx, type, x, y, t) {
+    switch (type) {
+      case 'gift': gift(ctx, x, y, t); break;
+      case 'x2': badge(ctx, x, y, '#f0a020', '×2'); break;
+      case 'bubble': bubble(ctx, x, y, t); break;
+      case 'hourglass': hourglass(ctx, x, y, t); break;
+      case 'balloon': balloon(ctx, x, y, t); break;
+    }
+  }
+
+  return { gift, bubble, hourglass, balloon, pigeon, sign, pad, item, init, outfit, rider, decor, rock, flower, coin, page, feather, magnet, heart, star, mix, hex, mixRgb, rgb, base, SPR };
 })();

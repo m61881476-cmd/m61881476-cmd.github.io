@@ -18,7 +18,8 @@ const Game = (() => {
   let cv, ctx, Wc = 1, Hc = 1, dpr = 1, scale = 1, viewW = 1, viewH = 1;
   let state = 'idle', run = null, hooks = {}, save = null, quality = 1;
   let pts = [], baseX = 0, gen = null;
-  let rocks = [], ropes = [], flowers = [], items = [], decor = [], gaps = [];
+  let rocks = [], ropes = [], flowers = [], items = [], decor = [], gaps = [], pads = [], signs = [];
+  let pigeon = null, ofx = [], shooting = [], heartCloud = null, flash = 0, boltT = 6, constel = null;
   let P = null, hist = [], helper = { x: 0, y: 0, rot: 0 }, cam = { x: 0, y: 0, z: 1 };
   let parts = [], popups = [], bubbles = [], weather = [];
   let time = 0, slow = 1, slowT = 0, shake = 0, acc = 0, last = 0, raf = 0;
@@ -209,10 +210,23 @@ const Game = (() => {
     } else if (story && c === 4 && Math.random() < 0.35 && !P.glideT) {
       items.push({ x: mid, y: hAt(mid) - 70, type: 'feather' });
     } else if (!story || c > 3) {
-      const r = Math.random();
+      const r = Math.random(), zen = run.mode === 'zen';
       if (r < 0.05) items.push({ x: mid, y: hAt(mid) - 70, type: 'feather' });
       else if (r < 0.09) items.push({ x: mid, y: hAt(mid) - 60, type: 'magnet' });
-      else if (r < 0.115 && run.mode !== 'zen') items.push({ x: mid, y: hAt(mid) - 90, type: 'vstar' });
+      else if (r < 0.115 && !zen) items.push({ x: mid, y: hAt(mid) - 90, type: 'vstar' });
+      else if (r < 0.155) items.push({ x: mid, y: hAt(mid) - 40, type: 'gift' });
+      else if (r < 0.175 && !zen) items.push({ x: mid, y: hAt(mid) - 60, type: 'x2' });
+      else if (r < 0.195 && !zen) items.push({ x: mid, y: hAt(mid) - 60, type: 'bubble' });
+      else if (r < 0.21) items.push({ x: mid, y: hAt(mid) - 60, type: 'hourglass' });
+      else if (r < 0.23) items.push({ x: mid, y: hAt(mid) - 50, type: 'balloon' });
+    }
+    // دفعات سرعة
+    if (Math.random() < 0.14 && !isGap(mid + 50) && !isGap(mid - 50)) pads.push({ x: mid + rnd(-30, 30), used: 0 });
+    // يافطات حب وعلامة كل كيلو
+    if (!run.attract) {
+      if (lastX() - (run.lastSign || 0) > M * 650 && !isGap(mid)) { run.lastSign = lastX(); signs.push({ x: mid + 40, text: pick(LOVE_SIGNS), kind: 'love' }); }
+      const mx = run.startX + (run.nextMileSign || 1) * 1000 * M;
+      if (mx >= a && mx < b) { let xx = mx; while (isGap(xx) && xx < b) xx += 20; signs.push({ x: xx, text: (run.nextMileSign || 1) + ' كم 🏁', kind: 'mile' }); run.nextMileSign = (run.nextMileSign || 1) + 1; }
     }
   }
 
@@ -225,7 +239,7 @@ const Game = (() => {
     if (drop > 50) { pts.splice(0, drop); baseX += drop * DX; }
     const keep = o => (o.x2 || o.x) > cut;
     rocks = rocks.filter(keep); ropes = ropes.filter(keep); flowers = flowers.filter(keep);
-    items = items.filter(keep); decor = decor.filter(keep); gaps = gaps.filter(keep);
+    items = items.filter(keep); decor = decor.filter(keep); gaps = gaps.filter(keep); pads = pads.filter(keep); signs = signs.filter(keep);
   }
 
   /* ---------- البيئات والألوان ---------- */
@@ -242,7 +256,19 @@ const Game = (() => {
     for (const k of ['sky0', 'sky1', 'sun', 'far', 'mid', 'ground', 'edge', 'shade', 'decorCol', 'rock']) o[k] = Art.rgb(Art.mixRgb(A[k], B[k], t));
     o.sunY = lerp(A.sunY, B.sunY, t); o.night = lerp(A.night, B.night, t);
     o.main = t < 0.5 ? b.i : b.j; o.bi = b.i; o.bj = b.j; o.t = t;
+    const k = dayNight() * (1 - o.night);
+    if (k > 0.01) {
+      const mixK = (key, to, a) => { const v = Art.mixRgb(Art.mixRgb(A[key], B[key], t), to, a); o[key] = Art.rgb(v); };
+      mixK('sky0', [10, 16, 44], k); mixK('sky1', [44, 36, 86], k * 0.9); mixK('sun', [242, 240, 230], k);
+      ['far', 'mid', 'ground', 'edge', 'shade', 'decorCol', 'rock'].forEach(key => mixK(key, [40, 44, 90], k * (key === 'ground' || key === 'edge' ? 0.35 : 0.5)));
+      o.sunY = lerp(o.sunY, 0.25, k); o.night = Math.max(o.night, k);
+    }
     return o;
+  }
+
+  function dayNight() {
+    if (!run || run.mode === 'story' || run.attract) return 0;
+    return Math.max(0, (1 - Math.cos((run.clock || 0) * Math.PI * 2 / 160)) / 2 - 0.08) * 0.92;
   }
 
   /* ---------- اللاعب ---------- */
@@ -319,7 +345,8 @@ const Game = (() => {
     if (P.invuln > 0) P.invuln -= dt;
     P.land = Math.max(0, P.land - dt * 5);
     if (P.twirl) { P.twirl += dt * 1.6; if (P.twirl >= 1) P.twirl = 0; }
-    for (const k of ['glideT', 'magnetT', 'vstarT', 'boostT', 'duoT']) if (P[k] > 0) P[k] = Math.max(0, P[k] - dt);
+    for (const k of ['glideT', 'magnetT', 'vstarT', 'boostT', 'duoT', 'x2T', 'bubbleT', 'hgT', 'balloonT']) if (P[k] > 0) P[k] = Math.max(0, P[k] - dt);
+    run.clock = (run.clock || 0) + dt;
     if (P.power > 0) { P.power -= dt; if (P.power <= 0) { P.power = 0; hooks.toast && hooks.toast('سند رجع ورا 🤍'); } }
     if (P.dead) { stepDead(dt); return; }
 
@@ -348,6 +375,12 @@ const Game = (() => {
       comboTick(dt);
       hitRocks();
       hitFlowers();
+      for (const pd of pads) if (!pd.used && Math.abs(pd.x - P.x) < 22) {
+        pd.used = 1; P.boostT = Math.max(P.boostT, 2.4); P.speed = Math.min(maxSp() + 60, P.speed + 150);
+        Sound.play('boost'); vibrate(15); evt('pad'); burst(P.x, P.y, 10, ['#c9a6ff', '#ffffff'], 180, 'star');
+        save.stats.pads = (save.stats.pads || 0) + 1; if (save.stats.pads >= 20) ach('pads20');
+      }
+      if (P.balloonT > 0) { leaveGround(); P.vy = -260; }
     } else {
       stepAir(dt);
     }
@@ -356,6 +389,18 @@ const Game = (() => {
     const dist = (P.x - run.startX) / M;
     if (dist > run.dist) { run.score += (dist - run.dist) * (run.mode === 'zen' ? 0 : 1); run.dist = dist; }
     collect();
+    stepPigeon(dt);
+    if (!run.attract) {
+      const km = Math.floor(run.dist / 1000);
+      if (km >= (run.nextMile || 1)) {
+        run.nextMile = km + 1;
+        pop('🏁 ' + km + ' كيلو!', MILE_LINES[Math.min(km - 1, MILE_LINES.length - 1)]);
+        bubbles.push({ who: helper.vis > 0.5 ? helperWho() : run.main, text: MILE_LINES[Math.min(km - 1, MILE_LINES.length - 1)], t: 0 }); bubbleCd = 2.5;
+        Sound.play('ach'); if (km >= 5) ach('mile5');
+      }
+      if (run.mode === 'free' && !run.bestBeat && save.best.free > 500 && run.score > save.best.free) { run.bestBeat = true; fireworks(); pop('رقم قياسي جديد! 🎆', ''); }
+      if (dayNight() > 0.6) ach('night');
+    }
     hist.push({ x: P.x, y: P.y, rot: P.rot, g: P.grounded || !!P.grind, glide: P.gliding > 0, tw: P.twirl });
     if (hist.length > 240) hist.shift();
     // البيئة
@@ -368,6 +413,7 @@ const Game = (() => {
 
   function stepAir(dt) {
     P.air += dt;
+    if (P.balloonT > 0) P.vy = Math.max(P.vy - G * 1.6 * dt, -240);
     const glideOn = P.glideT > 0 && holding() && P.vy > -50;
     if (glideOn) {
       P.vy = Math.min(P.vy + G * 0.22 * dt, 95);
@@ -437,6 +483,12 @@ const Game = (() => {
     }
     if (P.invuln > 0 && reason !== 'fall') { P.rot = angAt(P.x); P.grounded = true; P.y = hAt(P.x); return; }
     endGrind();
+    if (P.bubbleT > 0) {
+      P.bubbleT = 0; Sound.play('pop'); ach('bubbleSave');
+      burst(P.x, P.y - 20, 18, ['#bfe3ff', '#ffffff'], 220, 'dot');
+      if (reason === 'fall') safePlace(); else { P.rot = angAt(P.x); P.grounded = true; P.y = hAt(P.x); P.flipAcc = 0; P.air = 0; }
+      P.invuln = 1.2; pop('الفقاعة حمتك 🫧', ''); return;
+    }
     if (P.power > 0) { startRescue(true); return; }
     if (canSummon() && save.settings.autoRescue !== false) { consumeSummon(); startRescue(false); return; }
     // وقعة
@@ -452,7 +504,10 @@ const Game = (() => {
       P.vy += G * dt; P.x += P.speed * 0.4 * dt; P.y += P.vy * dt; P.rot += P.rotV * dt; P.speed *= 0.98;
       if (!isGap(P.x) && P.y >= hAt(P.x)) { P.y = hAt(P.x); P.settled = true; P.rot = angAt(P.x) - 1.5; burst(P.x, P.y, 14, [cssEdge(), '#fff'], 140, 'dot'); }
     }
-    if (P.deadT > 1.6 && state === 'play') finish(false);
+    if (P.deadT > 1.6 && state === 'play') {
+      if (!run.revived && run.mode !== 'zen' && !run.attract && hooks.revive) { state = 'ask'; Sound.grind(false); hooks.revive(); }
+      else finish(false);
+    }
   }
 
   /* ---------- سند: الاستدعاء والإنقاذ ---------- */
@@ -466,7 +521,7 @@ const Game = (() => {
     P.power = 8 + (save.up.power || 0) * 2.5;
     run.stats.summons++;
     if (run.solo && helper.vis < 0.5) arrive();
-    Sound.play('summon'); vibrate(30);
+    Sound.play('summon'); vibrate([40, 90, 40, 260, 40, 90, 40]); evt('summon');
     const g = gapAt(P.x + 220) || gapAt(P.x);
     const rockAhead = rocks.some(r => !r.broken && r.x > P.x && r.x < P.x + 450);
     if (!P.grounded && !P.grind && g) {
@@ -489,7 +544,7 @@ const Game = (() => {
     state = 'rescue';
     run.stats.rescues++; save.stats.rescues = (save.stats.rescues || 0) + 1;
     if (save.stats.rescues >= 10) ach('rescue10');
-    Sound.play('rescue'); vibrate(40);
+    Sound.play('rescue'); vibrate(40); evt('rescue');
     say(helperWho(), 'rescue', 1);
   }
   function stepRescue(dt) {
@@ -558,13 +613,17 @@ const Game = (() => {
   /* ---------- حركات ونقط ---------- */
   const combo = {
     n: 0, t: 0,
-    add() { this.n++; this.t = 2.6; if (this.n >= 6) ach('combo6'); if (this.n === 3) { P.boostT = 2.5; pop('شرارة ⚡', 'سرعة'); } },
+    add() { this.n++; this.t = 2.6; evt('combo', this.n); run.stats.bestCombo = Math.max(run.stats.bestCombo || 0, this.n); if (this.n >= 6) ach('combo6'); if (this.n === 3) { P.boostT = 2.5; pop('شرارة ⚡', 'سرعة'); } },
     end(silent) { if (this.n >= 3 && !silent) { pop('كومبو ×' + this.n, ''); run.score += this.n * 100; } this.n = 0; this.t = 0; },
   };
   function comboTick(dt) { if (combo.n) { combo.t -= dt; if (combo.t <= 0) combo.end(); } }
   const mult = () => (1 + Math.max(0, combo.n - 1) * 0.5) * (P.vstarT > 0 ? 2 : 1) * (P.power > 0 ? 1.5 : 1);
 
+  function evt(name, v = 1) { if (run && !run.attract && hooks.evt) hooks.evt(name, v); }
   function trick(kind, n = 1) {
+    if (kind === 'flip') { evt('flip', n); if (n > 1) evt('multiflip'); }
+    else if (kind === 'perfect') { evt('perfect'); run.stats.perfects = (run.stats.perfects || 0) + 1; }
+    else if (kind !== 'air') evt(kind);
     if (run.mode === 'zen' && kind !== 'flip') return;
     let pts = 0, txt = '';
     switch (kind) {
@@ -603,15 +662,15 @@ const Game = (() => {
     for (const it of items) {
       if (it.got) continue;
       const dx = it.x - cx, dy = it.y - cy, d2 = dx * dx + dy * dy;
-      if (mr && d2 < mr * mr && it.type !== 'page' && it.type !== 'feather' && it.type !== 'magnet' && it.type !== 'vstar') {
+      if (mr && d2 < mr * mr && (it.type === 'coin' || it.type === 'heart')) {
         const d = Math.sqrt(d2) || 1; it.x -= dx / d * 520 / 60; it.y -= dy / d * 520 / 60;
       }
       if (d2 < 30 * 30) {
         it.got = true;
         switch (it.type) {
-          case 'coin': run.coins++; Sound.play('coin'); burst(it.x, it.y, 5, ['#ffd45e', '#fff1b8'], 80, 'star'); break;
+          case 'coin': run.coins += P.x2T > 0 ? 2 : 1; evt('coin', P.x2T > 0 ? 2 : 1); Sound.play('coin'); burst(it.x, it.y, 5, ['#ffd45e', '#fff1b8'], 80, 'star'); break;
           case 'heart': {
-            run.stats.hearts++; save.stats.hearts = (save.stats.hearts || 0) + 1;
+            run.stats.hearts++; save.stats.hearts = (save.stats.hearts || 0) + 1; evt('heart');
             const was = run.meter < heartCap();
             run.meter = Math.min(heartCap(), run.meter + 1);
             Sound.play('heart'); burst(it.x, it.y, 6, ['#c9a6ff', '#ffffff'], 90, 'heart');
@@ -620,13 +679,124 @@ const Game = (() => {
             break;
           }
           case 'page': run.stats.pages++; Sound.play('page'); pop('ورقة مذاكرة 📄', run.stats.pages + '/' + ((run.goal && run.goal.n) || '')); break;
-          case 'feather': P.glideT = 12 + (save.up.glide || 0) * 4; Sound.play('power'); pop('الطرحة الطايرة 🪶', 'دوسي وفضلي دايسة في الهوا'); break;
-          case 'magnet': P.magnetT = 10 + (save.up.magnet || 0) * 3; Sound.play('power'); pop('مغناطيس 🧲', ''); break;
-          case 'vstar': P.vstarT = 8; Sound.play('power'); pop('لحظة بنفسجي ✨', 'النقط ×2'); ach('violet'); break;
+          case 'feather': P.glideT = 12 + (save.up.glide || 0) * 4; Sound.play('power'); evt('power'); pop('الطرحة الطايرة 🪶', 'دوسي وفضلي دايسة في الهوا'); break;
+          case 'magnet': P.magnetT = 10 + (save.up.magnet || 0) * 3; Sound.play('power'); evt('power'); pop('مغناطيس 🧲', ''); break;
+          case 'vstar': P.vstarT = 8; Sound.play('power'); pop('لحظة بنفسجي ✨', 'النقط ×2'); ach('violet'); evt('power'); break;
+          case 'x2': P.x2T = 12; Sound.play('power'); pop('النجوم ×2 ⭐', '12 ثانية'); evt('power'); break;
+          case 'bubble': P.bubbleT = 14; Sound.play('power'); pop('فقاعة أمان 🫧', 'هتحميكي من وقعة'); evt('power'); break;
+          case 'hourglass': P.hgT = 6; Sound.play('power'); pop('الوقت بيبطّأ ⏳', ''); evt('power'); break;
+          case 'balloon': P.balloonT = 3.2; Sound.play('power'); pop('بالونة 🎈', 'لفوق!'); evt('power'); break;
+          case 'gift': {
+            Sound.play('gift'); evt('gift'); save.stats.gifts = (save.stats.gifts || 0) + 1; if (save.stats.gifts >= 10) ach('gift10');
+            const g = Math.random();
+            if (g < 0.45) { const c = 25 + ((Math.random() * 4) | 0) * 25; run.coins += c; pop('هدية 🎁', '+' + c + '⭐'); }
+            else if (g < 0.7) { run.meter = heartCap(); pop('هدية 🎁', 'العداد اتملا 💜'); }
+            else if (g < 0.85) { P.magnetT = 10; pop('هدية 🎁', 'مغناطيس 🧲'); }
+            else { P.glideT = 12; pop('هدية 🎁', 'ريشة 🪶'); }
+            burst(it.x, it.y, 14, ['#c9a6ff', '#ff8fc7', '#ffd45e'], 200, 'star');
+            break;
+          }
         }
       }
     }
   }
+  function stepPigeon(dt) {
+    if (run.attract || run.mode === 'story' && run.chapter < 2) return;
+    if (!pigeon) {
+      if (run.dist > (run.nextPigeon || 350)) {
+        const x = P.x + 750;
+        if (!isGap(x)) { pigeon = { x, y: hAt(x) - 140, t: 0, gone: 0 }; run.nextPigeon = run.dist + 550 + Math.random() * 500; pop('🕊️ حمامة رسايل!', 'الحقيها'); }
+      }
+      return;
+    }
+    const pg = pigeon; pg.t += dt;
+    if (pg.gone) { pg.gone += dt; pg.x += 420 * dt; pg.y -= 260 * dt; if (pg.gone > 2.5) pigeon = null; return; }
+    pg.x += Math.max(220, P.speed * 0.86) * dt;
+    const gy = isGap(pg.x) ? pg.y + 140 : hAt(pg.x);
+    pg.y = lerp(pg.y, gy - 118 + Math.sin(pg.t * 2.2) * 22, Math.min(1, dt * 3));
+    if (Math.abs(pg.x - P.x) < 36 && Math.abs(pg.y - (P.y - 24)) < 46) {
+      pigeon = null;
+      const have = save.notes || (save.notes = []);
+      const left = PIGEON_NOTES.map((_, i) => i).filter(i => !have.includes(i));
+      const idx = left.length ? pick(left) : (Math.random() * PIGEON_NOTES.length) | 0;
+      if (!have.includes(idx)) have.push(idx);
+      run.coins += 50; Sound.play('pigeon'); vibrate([20, 40, 20]);
+      save.stats.pigeons = (save.stats.pigeons || 0) + 1;
+      if (save.stats.pigeons % 5 === 0) { run.coins += 200; pop('5 حمامات! 🎊', '+200⭐'); }
+      ach('pigeon1'); if (have.length >= PIGEON_NOTES.length) ach('notesAll');
+      evt('pigeon'); hooks.note && hooks.note(PIGEON_NOTES[idx], idx);
+      for (let i = 0; i < 16; i++) parts.push({ x: P.x, y: P.y - 40, vx: rnd(-160, 160), vy: rnd(-200, 20), life: 1.2, max: 1.2, size: rnd(3, 6), col: pick(['#ffffff', '#ffd6f2', '#c9a6ff']), type: i % 2 ? 'heart' : 'star' });
+    } else if (pg.t > 22 || P.x > pg.x + 260) pg.gone = 0.001;
+  }
+
+  /* مؤثرات فوق الشاشة (2D و 3D): شهب، حروفنا في النجوم، سحابة قلب، قوس قزح، برق، ألعاب نارية، قصاقيص */
+  function confetti(n = 90) {
+    for (let i = 0; i < n; i++) ofx.push({ x: Math.random() * Wc, y: -20 - Math.random() * Hc * 0.4, vx: rnd(-40, 40), vy: rnd(80, 200), rot: rnd(0, 6), vr: rnd(-6, 6), life: 4, max: 4, col: pick(['#c9a6ff', '#ff8fc7', '#ffd45e', '#8fe3c0', '#7fb8ff', '#ffffff']), k: 'conf' });
+  }
+  function fireworks() {
+    Sound.play('firework');
+    for (let b = 0; b < 4; b++) setTimeout(() => {
+      const cx = Wc * (0.2 + Math.random() * 0.6), cy = Hc * (0.15 + Math.random() * 0.25), col = pick(['#c9a6ff', '#ff8fc7', '#ffd45e', '#8fe3c0']);
+      Sound.play('firework');
+      for (let i = 0; i < 46; i++) { const a = i / 46 * TAU, v = rnd(90, 170); ofx.push({ x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1.6, max: 1.6, col, k: 'spark' }); }
+    }, b * 380);
+  }
+  function makeConstel() {
+    const c = document.createElement('canvas'); c.width = 120; c.height = 50;
+    const x = c.getContext('2d'); x.fillStyle = '#fff'; x.font = '900 40px Cairo, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.direction = 'rtl';
+    x.fillText('م ♥ ف', 60, 26);
+    const d = x.getImageData(0, 0, 120, 50).data, pts2 = [];
+    for (let yy = 0; yy < 50; yy += 3) for (let xx = 0; xx < 120; xx += 3) if (d[(yy * 120 + xx) * 4 + 3] > 120 && Math.random() < 0.55) pts2.push([xx, yy, Math.random() * 6]);
+    return pts2;
+  }
+  function raining() { return Math.sin(time * 0.11) > -0.35; }
+  function drawFx(c, pal, W, H, dt) {
+    const night = pal.night, bid = BIOMES[pal.main].id;
+    // شهب
+    if (night > 0.45 && Math.random() < dt * 0.35) shooting.push({ x: W * (0.3 + Math.random() * 0.7), y: H * Math.random() * 0.25, t: 0 });
+    shooting = shooting.filter(s => (s.t += dt) < 0.9);
+    shooting.forEach(s => {
+      const k = s.t / 0.9, x = s.x - k * W * 0.35, y = s.y + k * H * 0.18;
+      const g = c.createLinearGradient(x, y, x + 60, y - 30); g.addColorStop(0, 'rgba(255,255,255,' + (1 - k) + ')'); g.addColorStop(1, 'rgba(255,255,255,0)');
+      c.strokeStyle = g; c.lineWidth = 2; c.beginPath(); c.moveTo(x, y); c.lineTo(x + 60, y - 30); c.stroke();
+    });
+    // حروفنا في النجوم
+    if (night > 0.55) {
+      constel = constel || makeConstel();
+      const a = Math.min(1, (night - 0.55) * 3), ox = W * 0.1, oy = H * 0.08, sc = Math.min(W, H) / 380;
+      constel.forEach(([xx, yy, ph]) => { c.globalAlpha = a * (0.45 + 0.55 * Math.abs(Math.sin(time * 1.8 + ph))); c.fillStyle = '#fff'; c.fillRect(ox + xx * sc, oy + yy * sc, 1.6 * sc, 1.6 * sc); });
+      c.globalAlpha = 1;
+    }
+    // سحابة قلب بالنهار
+    if (night < 0.3 && !heartCloud && Math.random() < dt * 0.04) heartCloud = { x: W + 80, y: H * (0.08 + Math.random() * 0.15), s: 0.8 + Math.random() * 0.6 };
+    if (heartCloud) {
+      heartCloud.x -= dt * 22;
+      const { x, y, s } = heartCloud; c.globalAlpha = 0.75; c.fillStyle = '#fff';
+      [[-14, -6, 16], [14, -6, 16], [0, 8, 18], [-6, 18, 12], [6, 18, 12], [0, 26, 8]].forEach(([dx, dy, r]) => { c.beginPath(); c.arc(x + dx * s, y + dy * s, r * s, 0, TAU); c.fill(); });
+      c.globalAlpha = 1; if (heartCloud.x < -100) heartCloud = null;
+    }
+    // قوس قزح بعد المطر
+    if (bid === 'forest' && !raining()) {
+      const cx = W * 0.68, cy = H * 0.62, r0 = Math.min(W, H) * 0.55;
+      ['#ff6b6b', '#ffa94d', '#ffd43b', '#69db7c', '#4dabf7', '#9775fa'].forEach((col, i) => { c.globalAlpha = 0.22; c.strokeStyle = col; c.lineWidth = 7; c.beginPath(); c.arc(cx, cy, r0 - i * 7, Math.PI * 1.08, Math.PI * 1.92); c.stroke(); });
+      c.globalAlpha = 1;
+    }
+    // برق
+    if (bid === 'aurora' && !run.attract) {
+      boltT -= dt;
+      if (boltT <= 0) { boltT = 7 + Math.random() * 9; flash = 1; Sound.play('thunder'); shake = Math.max(shake, 4); }
+    }
+    if (flash > 0) { c.fillStyle = 'rgba(235,240,255,' + flash * 0.55 + ')'; c.fillRect(0, 0, W, H); flash = Math.max(0, flash - dt * 2.2); }
+    // ألعاب نارية وقصاقيص
+    ofx = ofx.filter(f => (f.life -= dt) > 0);
+    ofx.forEach(f => {
+      f.x += f.vx * dt; f.y += f.vy * dt;
+      if (f.k === 'conf') { f.rot += f.vr * dt; f.vx += Math.sin(time * 3 + f.y * 0.02) * 20 * dt; c.save(); c.translate(f.x, f.y); c.rotate(f.rot); c.fillStyle = f.col; c.globalAlpha = Math.min(1, f.life); c.fillRect(-4, -2, 8, 4); c.restore(); }
+      else { f.vy += 60 * dt; f.vx *= 0.985; c.globalAlpha = f.life / f.max; c.fillStyle = f.col; c.fillRect(f.x - 1.5, f.y - 1.5, 3, 3); }
+    });
+    c.globalAlpha = 1;
+  }
+
   function hitRocks() {
     for (const r of rocks) {
       if (r.broken) continue;
@@ -634,7 +804,7 @@ const Game = (() => {
         if (P.power > 0 || P.invuln > 0 || run.mode === 'zen') {
           r.broken = 1; Sound.play('smash'); shake = 5;
           burst(r.x, hAt(r.x) - r.h / 2, 16, [cssRock(), '#ffffff'], 220, 'dot');
-          if (P.power > 0) { run.score += 100; pop('سند كسرها 💥', '+100'); }
+          if (P.power > 0) { run.score += 100; pop('سند كسرها 💥', '+100'); evt('smash'); }
         } else { crash('rock'); return; }
       }
     }
@@ -681,6 +851,9 @@ const Game = (() => {
     if (Math.random() < rate * 0.8) {
       if (tr === 'spray' || tr === 'ribbon') parts.push({ x: P.x - 14, y: P.y - 1, vx: rnd(-110, -30), vy: rnd(-90, -20), life: 0.5, max: 0.5, size: rnd(1.5, 3), col: cssEdge(), type: 'dot' });
       if (tr === 'hearts' && Math.random() < 0.4) parts.push({ x: P.x - 16, y: P.y - 4, vx: rnd(-60, -20), vy: rnd(-60, -20), life: 0.8, max: 0.8, size: 3, col: pick(['#ff9cc9', '#c9a6ff']), type: 'heart' });
+      if (tr === 'notes' && Math.random() < 0.25) parts.push({ x: P.x - 16, y: P.y - 10, vx: rnd(-50, -15), vy: rnd(-70, -30), life: 1, max: 1, size: 9, col: pick(['#8b5cf6', '#ff8fc7', '#5b34b0']), type: 'note' });
+      if (tr === 'petals' && Math.random() < 0.4) parts.push({ x: P.x - 16, y: P.y - 6, vx: rnd(-70, -20), vy: rnd(-50, -10), life: 1, max: 1, size: 2.6, col: pick(['#ffbfe0', '#f4b6e0', '#ffffff']), type: 'petal' });
+      if (tr === 'fire' && Math.random() < 0.7) parts.push({ x: P.x - 14 + rnd(-3, 3), y: P.y - 2, vx: rnd(-60, -20), vy: rnd(-90, -40), life: 0.45, max: 0.45, size: rnd(2, 3.5), col: pick(['#ffb347', '#ff7043', '#ffd45e']), type: 'dot' });
       if (tr === 'stars' && Math.random() < 0.4) parts.push({ x: P.x - 16, y: P.y - 4, vx: rnd(-60, -20), vy: rnd(-60, -20), life: 0.8, max: 0.8, size: 3.5, col: pick(['#ffe27a', '#ffffff']), type: 'star' });
     }
   }
@@ -696,8 +869,9 @@ const Game = (() => {
   function frame(now) {
     raf = requestAnimationFrame(frame);
     let dt = Math.min(0.05, (now - last) / 1000 || 0); last = now;
-    if (state === 'paused' || state === 'idle') { if (state === 'idle') draw(dt); return; }
-    if (slowT > 0) { slowT -= dt; slow = 0.45; } else slow = lerp(slow, 1, Math.min(1, dt * 6));
+    if (state === 'paused' || state === 'idle' || state === 'ask') { if (state !== 'paused') draw(dt); return; }
+    if (slowT > 0) { slowT -= dt; slow = 0.45; } else slow = lerp(slow, P && P.hgT > 0 ? 0.6 : 1, Math.min(1, dt * 6));
+    if (P && !run.attract) Sound.setAir(!P.grounded && !P.grind && !P.dead);
     bubbleCd = Math.max(0, bubbleCd - dt);
     const sdt = dt * slow;
     if (run.attract && state === 'play') autopilot(dt);
@@ -731,7 +905,7 @@ const Game = (() => {
       score: Math.floor(run.score), dist: Math.floor(run.dist), coins: run.coins,
       meter: run.meter, cap: heartCap(), charges: run.charges, can: canSummon() && P.power <= 0 && !P.dead,
       power: P.power, powerMax: 8 + (save.up.power || 0) * 2.5, combo: combo.n,
-      glide: P.glideT, magnet: P.magnetT, vstar: P.vstarT, goal: goalProgress(), mode: run.mode,
+      glide: P.glideT, magnet: P.magnetT, vstar: P.vstarT, x2: P.x2T, bubble: P.bubbleT, hg: P.hgT, balloon: P.balloonT, comboT: combo.n ? combo.t / 2.6 : 0, goal: goalProgress(), mode: run.mode,
     };
   }
 
@@ -798,7 +972,7 @@ const Game = (() => {
 
   let view3d = false;
   function world() {
-    return { pts, baseX, DX, rocks, ropes, flowers, items, decor, gaps, P, helper, cam, parts, time, run, save, hAt, angAt, isGap, ropeY, biomeAt, palette, charOpts, helperWho, shake, state, viewW, viewH, Wc, Hc, dpr, slow };
+    return { pts, baseX, DX, rocks, ropes, flowers, items, decor, gaps, P, helper, cam, parts, time, run, save, hAt, angAt, isGap, ropeY, biomeAt, palette, charOpts, helperWho, shake, state, viewW, viewH, Wc, Hc, dpr, slow, pads, signs, pigeon };
   }
   function draw(dt) {
     if (!run) return;
@@ -809,6 +983,7 @@ const Game = (() => {
       c.setTransform(dpr, 0, 0, dpr, 0, 0);
       c.clearRect(0, 0, W, H);
       drawWeather(c, palCur, W, H, dt);
+      drawFx(c, palCur, W, H, dt);
       if (P && (P.boostT > 0 || P.speed > 500)) { // خطوط سرعة
         const a = P.boostT > 0 ? 0.35 : 0.15;
         c.strokeStyle = 'rgba(255,255,255,' + a + ')'; c.lineWidth = 1.5;
@@ -848,7 +1023,10 @@ const Game = (() => {
     for (const r of ropes) if (r.x2 > x0 && r.x1 < x1) drawRope(c, r, pal);
     for (const f of flowers) if (f.x > x0 && f.x < x1) Art.flower(c, f.x, hAt(f.x), time, f.used);
     for (const r of rocks) if (!r.broken && r.x > x0 && r.x < x1) Art.rock(c, r.x, hAt(r.x), r.w, r.h, pal.rock);
+    for (const pd of pads) if (pd.x > x0 && pd.x < x1) Art.pad(c, pd.x, hAt(pd.x) - 0.5, angAt(pd.x), time, pd.used);
+    for (const sg of signs) if (sg.x > x0 - 60 && sg.x < x1) Art.sign(c, sg.x, hAt(sg.x) + 2, sg.text, sg.kind);
     for (const it of items) if (!it.got && it.x > x0 && it.x < x1) drawItem(c, it);
+    if (pigeon) Art.pigeon(c, pigeon.x, pigeon.y, time);
     // الشخصيات
     if (P) drawChars(c);
     // ديكور قدام
@@ -863,6 +1041,7 @@ const Game = (() => {
     // واجهة فوق الشاشة
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
     drawWeather(c, pal, W, H, dt);
+    drawFx(c, pal, W, H, dt);
     drawBubbles(c);
     drawPopups(c, W, H);
     if (P && P.power > 0 && P.power < 2 && Math.sin(time * 20) > 0) { c.fillStyle = 'rgba(201,166,255,.08)'; c.fillRect(0, 0, W, H); }
@@ -995,6 +1174,7 @@ const Game = (() => {
   function drawItem(c, it) {
     const bob = Math.sin(time * 3 + it.x * 0.05) * 3;
     switch (it.type) {
+      case 'gift': case 'x2': case 'bubble': case 'hourglass': case 'balloon': Art.item(c, it.type, it.x, it.y + bob, time); break;
       case 'coin': Art.coin(c, it.x, it.y + bob, time + it.x * 0.01); break;
       case 'heart': c.shadowColor = '#c9a6ff'; c.shadowBlur = 10; Art.heart(c, it.x, it.y + bob, 9, '#b98cff'); c.shadowBlur = 0; Art.heart(c, it.x - 2, it.y + bob - 3, 3, 'rgba(255,255,255,.7)'); break;
       case 'page': Art.page(c, it.x, it.y + bob, time + it.x); break;
@@ -1050,6 +1230,7 @@ const Game = (() => {
       c.stroke();
     }
     Art.rider(c, P.x, P.y, o);
+    if (P.bubbleT > 0) { c.globalAlpha = 0.35 + Math.sin(time * 5) * 0.08; Art.bubble(c, P.x, P.y - 26, time); c.save(); c.translate(P.x, P.y - 26); c.scale(2.6, 2.6); c.translate(-P.x, -P.y + 26); c.restore(); c.strokeStyle = 'rgba(160,210,255,.8)'; c.lineWidth = 2; c.beginPath(); c.arc(P.x, P.y - 26, 34, 0, TAU); c.stroke(); c.globalAlpha = 1; }
   }
 
   function drawParts(c) {
@@ -1057,6 +1238,7 @@ const Game = (() => {
       c.globalAlpha = Math.max(0, p.life / p.max);
       if (p.type === 'heart') Art.heart(c, p.x, p.y, p.size, p.col);
       else if (p.type === 'star') Art.star(c, p.x, p.y, p.size, p.col);
+      else if (p.type === 'note') { c.fillStyle = p.col; c.font = '900 ' + p.size + 'px sans-serif'; c.fillText('♪', p.x, p.y); }
       else if (p.type === 'petal') { c.fillStyle = p.col; c.beginPath(); c.ellipse(p.x, p.y, p.size * 1.6, p.size, p.x * 0.1, 0, TAU); c.fill(); }
       else { c.fillStyle = p.col; c.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size); }
     }
@@ -1083,6 +1265,7 @@ const Game = (() => {
           break;
         case 'rain':
           w.x -= (vx * 0.5 + 0.15) * dt; w.y += 1.3 * dt * w.z;
+          if (!raining() && i % 6) break;
           c.strokeStyle = 'rgba(210,225,255,.45)'; c.lineWidth = 1; c.beginPath(); c.moveTo(w.x * W, w.y * H); c.lineTo(w.x * W - 4, w.y * H + 12 * w.z); c.stroke();
           if (i % 6 === 0) { // ورق شجر
             const lx = ((w.p * 0.13 + time * 0.05) % 1) * W, ly = ((w.p * 0.29 + time * 0.08 * w.z) % 1) * H;
@@ -1198,7 +1381,7 @@ const Game = (() => {
       stats: { flips: 0, grinds: 0, hearts: 0, pages: 0, summons: 0, glides: 0, duos: 0, rescues: 0 },
     };
     if (ch && ch.startFull) run.meter = 999;
-    pts = []; baseX = -400; rocks = []; ropes = []; flowers = []; items = []; decor = []; gaps = []; parts = []; popups = []; bubbles = []; hist = [];
+    pts = []; baseX = -400; rocks = []; ropes = []; flowers = []; items = []; decor = []; gaps = []; pads = []; signs = []; pigeon = null; ofx = []; shooting = []; heartCloud = null; flash = 0; parts = []; popups = []; bubbles = []; hist = [];
     gen = { y: 0, slope: 0.3, after: null };
     P = newPlayer(0);
     run.meter = Math.min(run.meter, heartCap());
@@ -1231,7 +1414,7 @@ const Game = (() => {
   /* شاشة ورا القوايم: تزلج تلقائي هادي */
   function attract(saveRef, biome) {
     start({ mode: 'zen', biome, main: 'w' }, JSON.parse(JSON.stringify(saveRef)));
-    run.attract = true; state = 'play';
+    run.attract = true; state = 'play'; Sound.setMenu && Sound.setMenu();
   }
 
   return {
@@ -1255,7 +1438,19 @@ const Game = (() => {
       return view3d;
     },
     get view3d() { return view3d; },
+    confetti, fireworks,
+    grant(k) {
+      if (!P || !run) return;
+      if (k === 'meter') run.meter = heartCap(); else if (k === 'feather') P.glideT = 12; else if (k === 'bubble') P.bubbleT = 14; else if (k === 'magnet') P.magnetT = 10;
+      pop('🎡 جايزة العجلة', { meter: 'عداد مليان 💜', feather: 'ريشة 🪶', bubble: 'فقاعة 🫧', magnet: 'مغناطيس 🧲' }[k] || '');
+    },
+    revive() {
+      if (state !== 'ask') return;
+      run.revived = true; safePlace(); P.invuln = 2.5; P.dead = false; state = 'play'; last = performance.now();
+      Sound.play('rescue'); ach('revive'); pop('كمّلي 💜', '');
+    },
+    giveUp() { if (state === 'ask') { state = 'play'; finish(false); } },
     setQuality(q) { quality = q; if (save) resize(); },
-    _debug: () => ({ P, run, cam, pts: pts.length, rocks, gaps, ropes, flowers, items, hAt, isGap, gapAt, down: (v) => v ? onDown() : onUp() }),
+    _debug: () => ({ P, run, cam, pts: pts.length, rocks, gaps, ropes, flowers, items, pads, signs, hAt, isGap, gapAt, down: (v) => v ? onDown() : onUp() }),
   };
 })();

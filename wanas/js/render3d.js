@@ -14,7 +14,8 @@ const R3 = (() => {
   let terrGeo, terrPos, terrCol, terr;
   let trailGeo, trailMesh, glitter, glitterGeo, sea;
   const clouds = [], farLayers = [], aurora = [];
-  const pools = { decor: new Map(), item: new Map(), rock: new Map(), flower: new Map(), rope: new Map() };
+  const pools = { decor: new Map(), item: new Map(), rock: new Map(), flower: new Map(), rope: new Map(), pad: new Map(), sign: new Map() };
+  let pigeonS = null, bubbleM = null;
   const chars = {};
   let partGeo, partAddGeo, blobP, blobH, shield, duoHeart;
   const camPos = new T.Vector3(), camLook = new T.Vector3(), lookT = new T.Vector3(), shk = new T.Vector3();
@@ -93,6 +94,9 @@ const R3 = (() => {
     vstar: () => spr('vstar', () => tex('vstar', x => { x.shadowColor = '#b27cff'; x.shadowBlur = 14; Art.star(x, 0, 0, 26, '#a66bff'); Art.star(x, 0, 0, 11, '#fff'); })),
     flower: () => spr('flower', () => tex('flower', x => { x.scale(2.2, 2.2); Art.flower(x, 0, 12, 0, 0); })),
     glow: (c) => { const m = spr('glow', T_.glow, true).clone(); m.color.set(c); return m; },
+    gen: (type) => spr('gen' + type, () => tex('gen' + type, x => { x.scale(2.3, 2.3); Art.item(x, type, 0, 0, 0); })),
+    sign: (text, kind) => new T.SpriteMaterial({ map: (() => { const c = document.createElement('canvas'); c.width = 256; c.height = 96; const x = c.getContext('2d'); x.translate(128, 140); x.scale(2, 2); Art.sign(x, 0, 0, text, kind); const t = new T.CanvasTexture(c); t.minFilter = T.LinearFilter; return t; })(), depthWrite: true }),
+    pigeon: (k) => spr('pig' + k, () => tex('pig' + k, x => { x.scale(2.6, 2.6); Art.pigeon(x, 0, 0, k ? Math.PI / 32 : -Math.PI / 32); }, 96)),
   };
 
   /* ---------- البداية ---------- */
@@ -182,6 +186,8 @@ const R3 = (() => {
     blobP = new T.Mesh(cg, M.blob); blobH = new T.Mesh(cg, M.blob); scene.add(blobP, blobH);
     shield = new T.Mesh(G.sph, M.shield); scene.add(shield);
     duoHeart = new T.Mesh(G.heart, M.heart); duoHeart.scale.setScalar(0.9); scene.add(duoHeart);
+    pigeonS = new T.Sprite(S.pigeon(0)); pigeonS.scale.set(44, 44, 1); scene.add(pigeonS);
+    bubbleM = new T.Mesh(G.sph, new T.MeshBasicMaterial({ color: 0xa8d8ff, transparent: true, opacity: 0.22, depthWrite: false })); scene.add(bubbleM);
     R.ok = true;
   }
 
@@ -596,7 +602,7 @@ const R3 = (() => {
         m.scale.setScalar(it.type === 'coin' ? 0.85 : 1.05); g.add(m);
         const gl = new T.Sprite(S.glow(it.type === 'coin' ? '#ffcf5a' : '#b98cff')); gl.scale.set(36, 36, 1); gl.material.opacity = 0.55; g.add(gl);
       } else {
-        const s = new T.Sprite(S[it.type]()); const sc = { page: 34, feather: 36, magnet: 34, vstar: 38 }[it.type] || 30; s.scale.set(sc, sc, 1); g.add(s);
+        const s = new T.Sprite(S[it.type] ? S[it.type]() : S.gen(it.type)); const sc = { page: 34, feather: 36, magnet: 34, vstar: 38, gift: 34, x2: 30, bubble: 30, hourglass: 32, balloon: 34 }[it.type] || 30; s.scale.set(sc, sc, 1); g.add(s);
         const gl = new T.Sprite(S.glow('#c9a6ff')); gl.scale.set(60, 60, 1); gl.material.opacity = 0.5; g.add(gl);
       }
       return g;
@@ -622,6 +628,26 @@ const R3 = (() => {
         m.position.set(x, -hAt(x), 0);
       }
     }
+    sync(pools.pad, Wd.pads || [], () => {
+      const g = new T.Group();
+      g.add(mesh(G.box, new T.MeshBasicMaterial({ color: 0x8b5cf6 }), 44, 1.4, 38, 0, 0.6, -2, false));
+      for (let i = 0; i < 3; i++) { const a = mesh(G.box, new T.MeshBasicMaterial({ color: 0xffffff }), 6, 1.8, 14, -12 + i * 12, 1.2, -2, false); a.rotation.y = 0.0; g.add(a); }
+      const gl = new T.Sprite(S.glow('#b27cff')); gl.scale.set(80, 40, 1); gl.position.y = 4; g.add(gl);
+      return g;
+    }, (pd, g) => {
+      g.position.set(pd.x, -hAt(pd.x), 0); g.rotation.z = -Wd.angAt(pd.x);
+      g.children.forEach((ch, i) => { if (ch.material) ch.material.opacity = pd.used ? 0.35 : 1; ch.material && (ch.material.transparent = !!pd.used); if (i > 0 && i < 4) ch.position.x = -14 + (((time * 3 + (i - 1) / 3) % 1) * 30); });
+    }, x0, x1);
+    sync(pools.sign, Wd.signs || [], sg => {
+      const g = new T.Group(), sp = new T.Sprite(S.sign(sg.text, sg.kind));
+      sp.scale.set(96, 36, 1); sp.position.set(0, 58, 0); g.add(sp);
+      g.add(mesh(G.cyl, M.trunk, 1.8, 46, 1.8, 0, 23, 0));
+      return g;
+    }, (sg, g) => { g.position.set(sg.x, -hAt(sg.x), sg.kind === 'mile' ? 0 : -90); }, x0, x1);
+    pigeonS.visible = !!Wd.pigeon;
+    if (Wd.pigeon) { pigeonS.material = S.pigeon(Math.sin(time * 16) > 0 ? 1 : 0); pigeonS.position.set(Wd.pigeon.x, -Wd.pigeon.y, 0); }
+    bubbleM.visible = P.bubbleT > 0;
+    if (bubbleM.visible) { bubbleM.position.set(P.x, -P.y + 26, 6); bubbleM.scale.setScalar(36 + Math.sin(time * 5) * 1.5); }
     sync(pools.rope, Wd.ropes, r => {
       const g = new T.Group(), city = BIOMES[Wd.biomeAt(r.x1).i].id === 'city';
       [[r.x1, r.y1], [r.x2, r.y2]].forEach(([x, y]) => { const h = hAt(x) - y + 10; g.add(mesh(G.cyl, M.pole, 2.2, h, 2.2, x, -y - h / 2 + 6, 0)); });

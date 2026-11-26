@@ -19,7 +19,7 @@
   let current = null, lastCfg = null, menuBiome = 0;
 
   /* ---------- شاشات ---------- */
-  const SCREENS = ['menu', 'story', 'setup', 'shop', 'ach', 'set', 'pause', 'results', 'dlg', 'letter'];
+  const SCREENS = ['menu', 'story', 'setup', 'shop', 'ach', 'set', 'pause', 'results', 'dlg', 'letter', 'extra', 'revive'];
   function show(id) {
     SCREENS.forEach(s => $('#' + s).classList.toggle('hidden', s !== id));
     $('#hud').classList.toggle('hidden', id !== null && id !== 'pause' || !Game.run || Game.run.attract);
@@ -32,7 +32,7 @@
   function loadScript(src) { return new Promise((ok, fail) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = fail; document.head.appendChild(s); }); }
   function ensure3D() {
     if (window.R3 && R3.ok) return Promise.resolve(true);
-    if (!r3Promise) r3Promise = loadScript('js/three.min.js?v=2').then(() => loadScript('js/render3d.js?v=4')).then(() => {
+    if (!r3Promise) r3Promise = loadScript('js/three.min.js?v=2').then(() => loadScript('js/render3d.js?v=5')).then(() => {
       try { R3.init($('#c3')); return R3.ok; } catch (e) { console.error(e); return false; }
     }).catch(e => { console.error(e); r3Promise = null; return false; });
     return r3Promise;
@@ -61,6 +61,7 @@
     Game.attract(save, menuBiome);
     $('#note').textContent = '💌 ' + NOTES[Math.floor(Date.now() / 864e5) % NOTES.length];
     show('menu');
+    Extras.menuExtras();
     $('#hud').classList.add('hidden');
   }
   function click() { Sound.init(); Sound.play('click'); }
@@ -128,7 +129,7 @@
   function letter(done) {
     show('letter');
     $('#lTo').textContent = ''; $('#lBody').innerHTML = ''; $('#lSign').textContent = ''; $('#lDone').classList.add('hidden');
-    const seq = [['#lTo', LETTER.to], ...LETTER.body.map(t => ['p', t]), ['#lSign', LETTER.sign]];
+    const seq = [['#lTo', LETTER.to], ...Extras.letterBody().map(t => ['p', t]), ['#lSign', LETTER.sign]];
     let i = 0;
     const nextPart = () => {
       if (i >= seq.length) { $('#lDone').classList.remove('hidden'); return; }
@@ -185,6 +186,8 @@
     tryFullscreen();
     Game.start(cfg, save);
     show(null);
+    if (save.pending) { const k = save.pending; save.pending = null; persist(); setTimeout(() => Game.grant(k), 600); }
+    Extras.autoQuality();
     const helper = cfg.main === 'w' ? 's' : 'w';
     $('#sumImg').src = helper === 's' ? 'img/sanad.png' : 'img/wanas.png';
     $('#tip img').src = helper === 's' ? 'img/sanad.png' : 'img/wanas.png';
@@ -229,6 +232,11 @@
       if (h.glide > 0) pu.push('🪶 ' + Math.ceil(h.glide));
       if (h.magnet > 0) pu.push('🧲 ' + Math.ceil(h.magnet));
       if (h.vstar > 0) pu.push('✨ ' + Math.ceil(h.vstar));
+      if (h.x2 > 0) pu.push('×2 ' + Math.ceil(h.x2));
+      if (h.bubble > 0) pu.push('🫧 ' + Math.ceil(h.bubble));
+      if (h.hg > 0) pu.push('⏳ ' + Math.ceil(h.hg));
+      if (h.balloon > 0) pu.push('🎈');
+      $('#cbar').classList.toggle('on', h.combo > 1); $('#cbar i').style.width = (h.comboT * 100) + '%';
       const puH = pu.map(x => `<span>${x}</span>`).join('');
       if (puH !== lastHud.puH) $('#pups').innerHTML = puH;
       if (h.goal) {
@@ -242,10 +250,13 @@
       if (save.ach.includes(id)) return;
       const a = ACHIEVEMENTS.find(x => x.id === id); if (!a) return;
       save.ach.push(id); save.coins += a.reward; persist();
-      Sound.play('ach');
+      Sound.play('ach'); Game.confetti(40);
       toast(`🏆 ${a.name} <small style="opacity:.7">+${a.reward}⭐</small>`);
     },
     toast(t) { toast(t); },
+    evt(n, v) { Extras.evt(n, v); },
+    note(t) { toast('🕊️ ' + t, 5000); },
+    revive() { Extras.revive(); },
     biome(i) { toast('🗺️ ' + BIOMES[i].name, 1600); },
     over(r) {
       setTimeout(() => results(r), 200);
@@ -256,6 +267,7 @@
       if (first) save.story.done.push(i);
       save.story.unlocked = Math.max(save.story.unlocked, Math.min(STORY.length - 1, i + 1));
       const bonus = first ? 150 + i * 50 : 30;
+      Extras.onResults(r); Game.confetti(120);
       save.coins += r.earned + bonus;
       persist();
       Game.pause();
@@ -278,6 +290,8 @@
     save.stats.coins = (save.stats.coins || 0) + r.coins;
     if (save.stats.coins >= 2000) hooks.achieve('coins2000');
     persist();
+    const extraLines = Extras.onResults(r);
+    lastResult = r;
     const story = r.mode === 'story';
     $('#rT').textContent = story ? 'وقعتي… بس عادي 🤍' : 'خلصت الجولة!';
     $('#rScore').textContent = r.score.toLocaleString('ar-EG');
@@ -285,12 +299,15 @@
     $('#rKv').innerHTML = `<div>📏 ${r.dist}م</div><div>⭐ +${earned}</div><div>🔄 ${r.stats.flips}</div><div>💜 ${r.stats.hearts}</div>${best}`;
     const L = Game.run.main === 'w' ? ['ولا يهمك يا فطومتي، قومي تاني 🤍', 'المرة الجاية هتبقى أحلى… أنا متأكد', 'إيكادولي… يلا تاني؟', 'دي تربيتي وأنا عارف إنك هتعمليها 😌'] : ['قوم يا سند… أنا جنبك 💜', 'إيكادولي! يلا تاني', 'مفيش حاجة اسمها لوحدي 💜'];
     $('#rLine').textContent = (Game.run.main === 'w' ? 'سند: ' : 'ونس: ') + L[(Math.random() * L.length) | 0];
+    $('#rExtra').innerHTML = extraLines.join('<br>');
     if (story && save.settings.autoRescue === false) $('#rLine').textContent += ' (شغّلي "سند ينقذك لوحده" من الإعدادات)';
     show('results');
   }
   $('#rAgain').addEventListener('click', () => { click(); startRun(lastCfg); });
   $('#rMenu').addEventListener('click', () => { click(); toMenu(); });
   $('#rPhoto').addEventListener('click', () => { click(); photo(); });
+  let lastResult = null;
+  $('#rShare').addEventListener('click', () => { click(); if (lastResult) Extras.scoreCard(lastResult); });
 
   /* ---------- إيقاف ---------- */
   $('#bPause').addEventListener('click', e => { e.stopPropagation(); click(); pause(); });
@@ -298,11 +315,13 @@
     if (current !== null || !Game.run || Game.run.attract) return;
     Game.pause();
     $('#pauseNote').textContent = '💌 ' + NOTES[(Math.random() * NOTES.length) | 0];
+    $('#pauseMis').innerHTML = Extras.missionsHTML();
+    Sound.setPaused(true);
     show('pause');
   }
-  $('#bResume').addEventListener('click', () => { click(); show(null); Game.resume(); });
-  $('#bRestart').addEventListener('click', () => { click(); startRun(lastCfg); });
-  $('#bQuit').addEventListener('click', () => { click(); Game.stop(); toMenu(); });
+  $('#bResume').addEventListener('click', () => { click(); Sound.setPaused(false); show(null); Game.resume(); });
+  $('#bRestart').addEventListener('click', () => { click(); Sound.setPaused(false); startRun(lastCfg); });
+  $('#bQuit').addEventListener('click', () => { click(); Sound.setPaused(false); Game.stop(); toMenu(); });
   $('#bPhoto').addEventListener('click', () => { click(); photo(); });
   $('#sum').addEventListener('pointerdown', e => { e.stopPropagation(); e.preventDefault(); Sound.init(); if (!Game.summon()) { Sound.play('click'); } });
 
@@ -312,7 +331,7 @@
 
   async function photo() {
     const url = Game.snapshot();
-    hooks.achieve('photo');
+    hooks.achieve('photo'); Extras.savePhoto(url);
     try {
       const blob = await (await fetch(url)).blob();
       const file = new File([blob], 'sanad-wanas.png', { type: 'image/png' });
@@ -412,7 +431,8 @@
       ['autoRescue', '🤍 سند ينقذك لوحده لما تقعي'], ['solo', '🏂 شخصية لوحدها (التاني ييجي بس لما تستدعيه)'], ['view3d', '🧊 وضع 3D'], ['cam3d', '🎬 كاميرا 3D: ' + ({ behind: 'ورا', chase: 'مايلة', side: 'جنب' }[S.cam3d || 'behind']) + ' (دوسي تغيّريها)'], ['quality', '✨ جودة عالية (اقفليها لو الموبايل تقيل)'],
     ];
     $('#setList').innerHTML = rows.map(([k, n]) => `<div class="row"><span>${n}</span><button class="tog ${k === 'cam3d' ? 'on' : (k === 'view3d' || k === 'solo') ? (S[k] ? 'on' : '') : (S[k] !== false && S[k] !== 0 ? 'on' : '')}" data-k="${k}"></button></div>`).join('')
-      + `<div class="row"><span>🏅 أحسن سكور: ${save.best.free.toLocaleString('ar-EG')} · أبعد مسافة: ${save.best.freeDist}م</span></div>`;
+      + Extras.settingsHTML() + `<div class="row"><span>🏅 أحسن سكور: ${save.best.free.toLocaleString('ar-EG')} · أبعد مسافة: ${save.best.freeDist}م</span></div>`;
+    Extras.bindSettings();
     $$('#setList .tog').forEach(t => t.onclick = () => {
       click();
       const k = t.dataset.k;
@@ -474,6 +494,7 @@
     applySettings();
     await applyView();
     menuBiome = STORY[Math.min(save.story.unlocked, 7)].biome;
+    Extras.init({ get save() { return save; }, persist, toast, show, click, startRun, toMenu, ach: id => hooks.achieve(id) });
     toMenu();
     $('#load').remove();
     document.addEventListener('pointerdown', () => Sound.init(), { once: true });
